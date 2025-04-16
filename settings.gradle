@@ -1,12 +1,14 @@
 rootProject.name = 'backend'
 
-include ':entities'
-findProject(':entities')?.name = 'entities'
+include ':domain'
+findProject(':domain')?.name = 'domain'
 
-include ':use_cases'
-findProject(':use_cases')?.name = 'use_cases'
+include ':service'
+findProject(':service')?.name = 'service'
 
-include ':interfaces'
-findProject(':interfaces')?.name = 'interfaces'
+include ':repo'
+findProject(':repo')?.name = 'repo'
 include 'presenter'
+include 'service:public'
+findProject(':service:public')?.name = 'public'
 

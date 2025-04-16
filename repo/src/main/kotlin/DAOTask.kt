@@ -1,5 +1,7 @@
-import hernanbosqued.backend.entities.IdTask
-import hernanbosqued.backend.entities.Priority
+package hernanbosqued.backend.repo
+
+import hernanbosqued.backend.domain.IdTask
+import hernanbosqued.backend.domain.Priority
 
 data class DAOTask(
     override val id: Int,

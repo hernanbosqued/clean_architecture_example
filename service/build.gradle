@@ -11,8 +11,7 @@ repositories {
 
 dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
-
-    api project(":entities")
+    api project(":service:public")
 }
 
 test {

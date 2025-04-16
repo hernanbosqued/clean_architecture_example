@@ -12,7 +12,7 @@ repositories {
 dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 
-    implementation project(":use_cases")
+    implementation project(":service")
     implementation "com.google.code.gson:gson:$gson_version"
 }
 

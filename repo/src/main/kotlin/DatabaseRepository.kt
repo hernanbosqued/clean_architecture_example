@@ -1,13 +1,16 @@
+package hernanbosqued.backend.repo
+
 import com.google.gson.Gson
-import hernanbosqued.backend.entities.IdTask
-import hernanbosqued.backend.entities.Priority
-import hernanbosqued.backend.entities.Repository
-import hernanbosqued.backend.entities.Task
+import hernanbosqued.backend.domain.IdTask
+import hernanbosqued.backend.domain.Priority
+import hernanbosqued.backend.domain.Repository
+import hernanbosqued.backend.domain.Task
 import java.io.File
+import java.nio.file.Paths
 
 class DatabaseRepository : Repository {
 
-    private val db = File("C:/Users/hernan/dev/backend/interfaces/src/main/resources/db.json")
+    private val db = File(Paths.get("").toAbsolutePath().toString() + "/repo/src/main/resources/db.json")
 
     private fun getDb(): List<DAOTask> = Gson().fromJson(db.readText(), Array<DAOTask>::class.java).toList()
 

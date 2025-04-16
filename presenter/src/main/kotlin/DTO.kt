@@ -1,8 +1,8 @@
-package hernanbosqued.backed.presenter
+package hernanbosqued.backend.presenter
 
-import hernanbosqued.backend.entities.IdTask
-import hernanbosqued.backend.entities.Priority
-import hernanbosqued.backend.entities.Task
+import hernanbosqued.backend.domain.IdTask
+import hernanbosqued.backend.domain.Priority
+import hernanbosqued.backend.domain.Task
 import kotlinx.serialization.Serializable
 
 @Serializable

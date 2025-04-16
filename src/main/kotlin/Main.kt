@@ -1,12 +1,13 @@
 package hernanbosqued.backend
 
-import DatabaseRepository
-import hernanbosqued.backed.presenter.DTOTask
-import hernanbosqued.backed.presenter.Presenter
-import hernanbosqued.backed.presenter.Result
-import hernanbosqued.backed.presenter.StatusCode
-import hernanbosqued.backend.entities.Repository
-import hernanbosqued.backend.use_cases.UseCase
+import hernanbosqued.backend.domain.Repository
+import hernanbosqued.backend.presenter.DTOTask
+import hernanbosqued.backend.presenter.Presenter
+import hernanbosqued.backend.presenter.StatusCode
+import hernanbosqued.backend.presenter.Result
+import hernanbosqued.backend.repo.DatabaseRepository
+import hernanbosqued.backend.service.public.Service
+import hernanbosqued.backend.use_cases.ServiceImpl
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -22,9 +23,20 @@ import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
 
 fun getModule() = module {
-    factory<Repository> { DatabaseRepository() }
-    single<UseCase> { UseCase(get()) }
-    single<Presenter> { Presenter(get()) }
+    factory<Repository> {
+        DatabaseRepository()
+    }
+
+    single<Service> {
+        ServiceImpl(
+            repository = get()
+        )
+    }
+    single<Presenter> {
+        Presenter(
+            service = get()
+        )
+    }
 }
 
 fun main() {
