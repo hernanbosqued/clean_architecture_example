@@ -1,0 +1,12 @@
+rootProject.name = 'backend'
+
+include ':entities'
+findProject(':entities')?.name = 'entities'
+
+include ':use_cases'
+findProject(':use_cases')?.name = 'use_cases'
+
+include ':interfaces'
+findProject(':interfaces')?.name = 'interfaces'
+include 'presenter'
+
