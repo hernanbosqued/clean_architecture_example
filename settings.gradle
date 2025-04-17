@@ -1,14 +1,18 @@
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
 rootProject.name = 'backend'
 
-include ':domain'
-findProject(':domain')?.name = 'domain'
+include(":domain")
 
-include ':service'
-findProject(':service')?.name = 'service'
+include(":presenter:di")
+include(":presenter:public")
+include(":presenter:impl")
 
-include ':repo'
-findProject(':repo')?.name = 'repo'
-include 'presenter'
-include 'service:public'
-findProject(':service:public')?.name = 'public'
+include(":controller:di")
+include(":controller:impl")
+
+include(":use_case:impl")
+include(":use_case:public")
+include(":use_case:di")
 

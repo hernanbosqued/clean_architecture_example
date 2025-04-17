@@ -1,8 +1,8 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "$kotlin_version"
+    id "org.jetbrains.kotlin.jvm"
 }
 
-group = 'org.example'
+group = 'hernanbosqued.backend.domain'
 version = '1.0-SNAPSHOT'
 
 repositories {

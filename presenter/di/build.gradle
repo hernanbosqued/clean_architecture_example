@@ -1,0 +1,28 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm"
+}
+
+group = 'hernanbosqued.backend.presenter'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation("io.insert-koin:koin-core:$koin_version")
+
+    implementation project(":use_case:public")
+    implementation project(":presenter:impl")
+    api project(":presenter:public")
+}
+
+test {
+    useJUnitPlatform()
+}
+kotlin {
+    jvmToolchain(13)
+}

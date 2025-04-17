@@ -1,19 +1,12 @@
-
 plugins {
     id "org.jetbrains.kotlin.jvm" version "$kotlin_version"
-    id "com.google.devtools.ksp" version "$kotlin_version-1.0.32"
 }
 
-group = 'org.example'
+group = 'hernanbosqued.backend'
 version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
-}
-
-
-ksp{
-    arg("KOIN_CONFIG_CHECK", "true")
 }
 
 dependencies {
@@ -24,11 +17,11 @@ dependencies {
     implementation "io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor"
 
     //koin
-    implementation("io.insert-koin:koin-annotations:$koin_annotations_version")
     implementation("io.insert-koin:koin-ktor:$koin_version")
-    ksp("io.insert-koin:koin-ksp-compiler:$koin_annotations_version")
 
-    implementation project(":presenter")
+    implementation project(":presenter:di")
+    implementation project(":controller:di")
+    implementation project(":use_case:di")
 }
 
 test {

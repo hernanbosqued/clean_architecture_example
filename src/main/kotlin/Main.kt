@@ -1,6 +1,12 @@
 package hernanbosqued.backend
 
-import hernanbosqued.backend.presenter.*
+import hernanbosqued.backend.controller.di.RepositoryModule
+import hernanbosqued.backend.presenter.DTOTask
+import hernanbosqued.backend.presenter.Presenter
+import hernanbosqued.backend.presenter.Result
+import hernanbosqued.backend.presenter.StatusCode
+import hernanbosqued.backend.presenter.di.PresenterModule
+import hernanbosqued.backend.service.di.ServiceModule
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -11,28 +17,28 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.koin.core.annotation.ComponentScan
-import org.koin.core.annotation.Module
-import org.koin.ksp.generated.module
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
+import java.nio.file.Paths
 
-@Module(includes = [PresenterModule::class])
-@ComponentScan
-class AppModule
+fun getModules() = listOf(
+    RepositoryModule.getModule(
+        path = Paths.get("").toAbsolutePath().toString() + "/controller/impl/src/main/resources/db.json"
+    ),
+    PresenterModule.getModule(),
+    ServiceModule.getModule()
+)
 
 fun main() {
     embeddedServer(
-        Netty,
-        port = 8080, // This is the port on which Ktor is listening
-        host = "0.0.0.0",
-        module = Application::main
+        Netty, port = 8080, // This is the port on which Ktor is listening
+        host = "0.0.0.0", module = Application::main
     ).start(wait = true)
 }
 
 fun Application.main() {
     install(Koin) {
-        modules(AppModule().module)
+        modules(getModules())
     }
 
     install(ContentNegotiation) {
