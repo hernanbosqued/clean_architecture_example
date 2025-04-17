@@ -1,26 +1,33 @@
+
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '2.1.10'
+    id "org.jetbrains.kotlin.jvm" version "$kotlin_version"
+    id "com.google.devtools.ksp" version "$kotlin_version-1.0.32"
 }
 
 group = 'org.example'
 version = '1.0-SNAPSHOT'
-ext.ktor = '2.3.7'
-ext.gson_version = '2.13.0'
-ext.koin_version = "3.5.0"
 
 repositories {
     mavenCentral()
 }
 
+
+ksp{
+    arg("KOIN_CONFIG_CHECK", "true")
+}
+
 dependencies {
+    //ktor
     implementation "io.ktor:ktor-server-core:$ktor"
     implementation "io.ktor:ktor-server-netty:$ktor"
     implementation "io.ktor:ktor-server-content-negotiation-jvm:$ktor"
     implementation "io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor"
-    implementation("io.insert-koin:koin-ktor:$koin_version")
 
-    implementation project(":service")
-    implementation project(":repo")
+    //koin
+    implementation("io.insert-koin:koin-annotations:$koin_annotations_version")
+    implementation("io.insert-koin:koin-ktor:$koin_version")
+    ksp("io.insert-koin:koin-ksp-compiler:$koin_annotations_version")
+
     implementation project(":presenter")
 }
 

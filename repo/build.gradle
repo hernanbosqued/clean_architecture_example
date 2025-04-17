@@ -1,5 +1,6 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm'
+    id "org.jetbrains.kotlin.jvm" version "$kotlin_version"
+    id "com.google.devtools.ksp" version "$kotlin_version-1.0.32"
 }
 
 group = 'org.example'
@@ -12,8 +13,12 @@ repositories {
 dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 
-    implementation project(":service")
     implementation "com.google.code.gson:gson:$gson_version"
+    implementation "io.insert-koin:koin-annotations:$koin_annotations_version"
+    implementation("io.insert-koin:koin-core:$koin_version")
+    ksp("io.insert-koin:koin-ksp-compiler:$koin_annotations_version")
+
+    implementation project(":domain")
 }
 
 test {

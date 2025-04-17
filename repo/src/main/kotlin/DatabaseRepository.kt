@@ -5,9 +5,15 @@ import hernanbosqued.backend.domain.IdTask
 import hernanbosqued.backend.domain.Priority
 import hernanbosqued.backend.domain.Repository
 import hernanbosqued.backend.domain.Task
+import org.koin.core.annotation.*
 import java.io.File
 import java.nio.file.Paths
 
+@Module
+@ComponentScan
+class RepositoryModule
+
+@Single
 class DatabaseRepository : Repository {
 
     private val db = File(Paths.get("").toAbsolutePath().toString() + "/repo/src/main/resources/db.json")

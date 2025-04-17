@@ -2,7 +2,16 @@ package hernanbosqued.backend.presenter
 
 import hernanbosqued.backend.domain.Priority
 import hernanbosqued.backend.service.public.Service
+import hernanbosqued.backend.service.ServiceModule
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Factory
+import org.koin.core.annotation.Module
 
+@Module(includes = [ServiceModule::class])
+@ComponentScan
+class PresenterModule
+
+@Factory
 class Presenter(
     private val service: Service
 ) {

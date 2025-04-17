@@ -1,13 +1,6 @@
 package hernanbosqued.backend
 
-import hernanbosqued.backend.domain.Repository
-import hernanbosqued.backend.presenter.DTOTask
-import hernanbosqued.backend.presenter.Presenter
-import hernanbosqued.backend.presenter.StatusCode
-import hernanbosqued.backend.presenter.Result
-import hernanbosqued.backend.repo.DatabaseRepository
-import hernanbosqued.backend.service.public.Service
-import hernanbosqued.backend.use_cases.ServiceImpl
+import hernanbosqued.backend.presenter.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -18,26 +11,15 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.koin.dsl.module
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Module
+import org.koin.ksp.generated.module
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
 
-fun getModule() = module {
-    factory<Repository> {
-        DatabaseRepository()
-    }
-
-    single<Service> {
-        ServiceImpl(
-            repository = get()
-        )
-    }
-    single<Presenter> {
-        Presenter(
-            service = get()
-        )
-    }
-}
+@Module(includes = [PresenterModule::class])
+@ComponentScan
+class AppModule
 
 fun main() {
     embeddedServer(
@@ -50,14 +32,14 @@ fun main() {
 
 fun Application.main() {
     install(Koin) {
-        modules(getModule())
+        modules(AppModule().module)
     }
 
     install(ContentNegotiation) {
         json()
     }
 
-    val presenter by inject<Presenter>()
+    val presenter: Presenter by inject()
 
     routing {
         staticResources("static", "static")
@@ -70,7 +52,7 @@ fun Application.main() {
             get("/id/{taskId}") {
                 val taskId = call.parameters["taskId"]?.toIntOrNull()
 
-                when(val result = presenter.taskById(taskId)){
+                when (val result = presenter.taskById(taskId)) {
                     is Result.Success -> call.respond(result.value)
                     is Result.Error -> call.respond(result.error.map())
                 }
@@ -79,7 +61,7 @@ fun Application.main() {
             get("/priority/{priority}") {
                 val priorityAsText = call.parameters["priority"]?.lowercase()
 
-                when(val result = presenter.taskByPriority(priorityAsText)){
+                when (val result = presenter.taskByPriority(priorityAsText)) {
                     is Result.Success -> call.respond(result.value)
                     is Result.Error -> call.respond(result.error.map())
                 }
@@ -93,7 +75,7 @@ fun Application.main() {
 
             delete("/{taskId}") {
                 val taskId = call.parameters["taskId"]?.toIntOrNull()
-                when(val result = presenter.removeTask(taskId)){
+                when (val result = presenter.removeTask(taskId)) {
                     is Result.Success -> call.respond(HttpStatusCode.Accepted)
                     is Result.Error -> call.respond(result.error.map())
                 }
@@ -102,10 +84,9 @@ fun Application.main() {
     }
 }
 
-private fun StatusCode.map(): HttpStatusCode{
-    return when(this){
+private fun StatusCode.map(): HttpStatusCode {
+    return when (this) {
         StatusCode.BadRequest -> HttpStatusCode.BadRequest
         StatusCode.NotFound -> HttpStatusCode.NotFound
     }
 }
-
