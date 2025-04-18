@@ -1,4 +1,5 @@
 rootProject.name = "clean_architecture_example"
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -16,19 +17,16 @@ dependencyResolutionManagement {
     }
 }
 
-include(":ui")
+include(":frontend:ui")
 
-include(":domain")
-
-include(":presenter:di")
-include(":presenter:public")
-include(":presenter:impl")
-
-include(":controller:di")
-include(":controller:impl")
-
-include(":use_case:impl")
-include(":use_case:public")
-include(":use_case:di")
-include("backend")
+include(":backend:domain")
+include(":backend:presenter:di")
+include(":backend:presenter:public")
+include(":backend:presenter:impl")
+include(":backend:controller:di")
+include(":backend:controller:impl")
+include(":backend:use_case:impl")
+include(":backend:use_case:public")
+include(":backend:use_case:di")
+include(":backend")
 

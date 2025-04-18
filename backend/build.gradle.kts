@@ -17,7 +17,7 @@ dependencies {
     //koin
     implementation(libs.koin.ktor)
 
-    implementation(project(":presenter:di"))
-    implementation(project(":controller:di"))
-    implementation(project(":use_case:di"))
+    implementation(project(":backend:presenter:di"))
+    implementation(project(":backend:controller:di"))
+    implementation(project(":backend:use_case:di"))
 }

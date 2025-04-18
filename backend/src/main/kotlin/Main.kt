@@ -23,7 +23,7 @@ import java.nio.file.Paths
 
 fun getModules() = listOf(
     RepositoryModule.getModule(
-        path = Paths.get("").toAbsolutePath().toString() + "/controller/impl/src/main/resources/db.json"
+        path = Paths.get("").toAbsolutePath().toString() + "/backend/controller/impl/src/main/resources/db.json"
     ),
     PresenterModule.getModule(),
     ServiceModule.getModule()
