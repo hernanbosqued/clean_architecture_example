@@ -18,6 +18,8 @@ dependencyResolutionManagement {
 }
 
 include(":frontend:ui")
+include(":frontend:repository:di")
+include(":frontend:repository:impl")
 
 include(":backend:domain")
 include(":backend:presenter:di")
