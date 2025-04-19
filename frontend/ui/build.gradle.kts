@@ -48,6 +48,7 @@ kotlin {
             implementation(libs.koin.compose)
 
             implementation(project(":frontend:repository:di"))
+            implementation(project(":backend:presenter:public"))
         }
 
         desktopMain.dependencies {

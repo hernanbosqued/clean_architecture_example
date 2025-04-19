@@ -1,9 +1,24 @@
 plugins {
-    kotlin("jvm")
+    alias(libs.plugins.kotlinMultiplatform)
 }
 
 group = "hernanbosqued.backend.domain"
 version = "1.0"
 
-dependencies {
+kotlin {
+    jvm()
+    wasmJs {
+        browser()
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+        }
+
+        jvmMain.dependencies {
+        }
+
+        wasmJsMain.dependencies {
+        }
+    }
 }

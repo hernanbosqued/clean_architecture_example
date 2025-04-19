@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.serialization)
 }
 
 group = "hernanbosqued.frontend.repository"
@@ -20,16 +21,17 @@ kotlin {
             implementation(libs.ktor.client.auth)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.serialization.kotlinx.json)
-            // implementation(project(":backend:domain"))
+
+            implementation(project(":backend:presenter:public"))
         }
 
         jvmMain.dependencies {
+            implementation(libs.ktor.client.serialization.gson)
             implementation(libs.ktor.client.okhttp) // Add this line for JVM target
         }
 
         wasmJsMain.dependencies {
             implementation(libs.ktor.client.js) // Basic client for Wasm
         }
-
     }
 }
