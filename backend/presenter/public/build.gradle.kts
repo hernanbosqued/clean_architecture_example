@@ -14,8 +14,8 @@ kotlin {
     }
 
     sourceSets {
-        jvmTest.dependencies {
-            implementation(libs.kotlin.test.junit)
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
 
         commonMain.dependencies {
