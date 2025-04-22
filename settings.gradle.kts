@@ -7,6 +7,7 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven("https://plugins.gradle.org/m2/")
     }
 }
 
@@ -31,4 +32,3 @@ include(":backend:use_case:impl")
 include(":backend:use_case:public")
 include(":backend:use_case:di")
 include(":backend")
-

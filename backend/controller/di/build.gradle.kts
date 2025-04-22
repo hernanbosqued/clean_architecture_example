@@ -6,7 +6,7 @@ group = "hernanbosqued.backend.controller"
 version = "1.0"
 
 dependencies {
-    //koin
+    // koin
     implementation(libs.koin.core)
 
     implementation(project(":backend:presenter:di"))

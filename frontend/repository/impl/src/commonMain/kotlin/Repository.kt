@@ -3,27 +3,32 @@ package hernanbosqued.frontend.repository
 import hernanbosqued.backend.domain.Priority
 import hernanbosqued.backend.presenter.DTOIdTask
 import hernanbosqued.backend.presenter.DTOTask
-import hernanbosqued.backend.presenter.Result
-import hernanbosqued.backend.presenter.StatusCode
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.logging.*
-import io.ktor.client.request.*
-import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
-
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.logging.SIMPLE
+import io.ktor.client.request.delete
+import io.ktor.client.request.get
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
+import io.ktor.serialization.kotlinx.json.json
 
 class Repository {
-    private val client = HttpClient {
-        install(ContentNegotiation) {
-            json()
+    private val client =
+        HttpClient {
+            install(ContentNegotiation) {
+                json()
+            }
+            install(Logging) {
+                logger = Logger.SIMPLE
+                level = LogLevel.ALL
+            }
         }
-        install(Logging) {
-            logger = Logger.SIMPLE
-            level = LogLevel.ALL
-        }
-    }
 
     suspend fun allTasks(): List<DTOIdTask> = client.get("http://localhost:8081/tasks").body()
 
@@ -44,4 +49,3 @@ class Repository {
         }
     }
 }
-

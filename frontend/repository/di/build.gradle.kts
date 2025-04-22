@@ -16,7 +16,6 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.koin.core)
             api(project(":frontend:repository:impl"))
-
         }
 
         jvmMain.dependencies {

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import hernanbosqued.backend.domain.Priority
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PrioritySelector(
     initialPriority: Priority,
@@ -25,17 +23,21 @@ fun PrioritySelector(
     var priority by rememberSaveable { mutableStateOf(initialPriority) }
 
     Card(
-        modifier = Modifier.Companion.fillMaxWidth(0.5f).padding(16.dp), elevation = 4.dp
+        modifier = Modifier.Companion.fillMaxWidth(0.5f).padding(16.dp),
+        elevation = 4.dp,
     ) {
         Column(
-            modifier = Modifier.Companion.padding(16.dp).fillMaxWidth()
+            modifier = Modifier.Companion.padding(16.dp).fillMaxWidth(),
         ) {
             PriorityDropdown(
-                selectedPriority = priority, onPrioritySelected = { priority = it })
+                selectedPriority = priority,
+                onPrioritySelected = { priority = it },
+            )
             Button(
                 onClick = {
                     onPrioritySelected(priority)
-                }) {
+                },
+            ) {
                 Text("Go")
             }
         }

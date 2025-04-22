@@ -1,8 +1,12 @@
 package hernanbosqued.frontend.ui
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import hernanbosqued.backend.presenter.DTOIdTask
 import hernanbosqued.frontend.repository.Repository
 import hernanbosqued.frontend.repository.di.RepositoryModule

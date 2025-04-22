@@ -8,14 +8,14 @@ version = "1.0"
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
 
-    //ktor
-    implementation (libs.ktor.server.core)
-    implementation (libs.ktor.server.cors)
-    implementation (libs.ktor.server.netty)
-    implementation (libs.ktor.server.content)
-    implementation (libs.ktor.server.serialization)
+    // ktor
+    implementation(libs.ktor.server.core)
+    implementation(libs.ktor.server.cors)
+    implementation(libs.ktor.server.netty)
+    implementation(libs.ktor.server.content)
+    implementation(libs.ktor.server.serialization)
 
-    //koin
+    // koin
     implementation(libs.koin.ktor)
 
     implementation(project(":backend:presenter:di"))

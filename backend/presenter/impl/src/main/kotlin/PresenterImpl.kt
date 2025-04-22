@@ -1,13 +1,17 @@
 package hernanbosqued.backend.presenter.impl
 
 import hernanbosqued.backend.domain.Priority
-import hernanbosqued.backend.presenter.*
+import hernanbosqued.backend.presenter.DTOIdTask
+import hernanbosqued.backend.presenter.DTOTask
+import hernanbosqued.backend.presenter.Presenter
+import hernanbosqued.backend.presenter.Result
+import hernanbosqued.backend.presenter.StatusCode
+import hernanbosqued.backend.presenter.toDto
 import hernanbosqued.backend.service.public.Service
 
 class PresenterImpl(
-    private val service: Service
+    private val service: Service,
 ) : Presenter {
-
     override fun allTasks(): List<DTOIdTask> = service.allTasks().map { it.toDto() }
 
     override fun taskById(taskId: Int?): Result<DTOIdTask, StatusCode> {

@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class JsonControllerTest {
-
     @Test
     fun `primer test`() {
         val path = Paths.get("").toAbsolutePath().toString() + "/src/main/resources/db.json"

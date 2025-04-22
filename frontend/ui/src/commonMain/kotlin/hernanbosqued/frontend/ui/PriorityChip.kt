@@ -13,25 +13,32 @@ import hernanbosqued.backend.domain.Priority
 
 @Composable
 fun PriorityChip(priority: Priority) {
-    val backgroundColor = when (priority) {
-        Priority.High -> Color(0xFFFFEBEE)   // Light Red
-        Priority.Medium -> Color(0xFFFFF3E0)  // Light Orange
-        Priority.Low -> Color(0xFFE8F5E9)     // Light Green
-        Priority.Vital -> Color(0xFF000000)     // Black
-    }
+    val backgroundColor =
+        when (priority) {
+            Priority.High -> Color(0xFFFFEBEE) // Light Red
+            Priority.Medium -> Color(0xFFFFF3E0) // Light Orange
+            Priority.Low -> Color(0xFFE8F5E9) // Light Green
+            Priority.Vital -> Color(0xFF000000) // Black
+        }
 
-    val textColor = when (priority) {
-        Priority.High -> Color(0xFFD32F2F)    // Dark Red
-        Priority.Medium -> Color(0xFFF57C00)   // Dark Orange
-        Priority.Low -> Color(0xFF388E3C)      // Dark Green
-        Priority.Vital -> Color(0xFFFFFFFF)  // White
-    }
+    val textColor =
+        when (priority) {
+            Priority.High -> Color(0xFFD32F2F) // Dark Red
+            Priority.Medium -> Color(0xFFF57C00) // Dark Orange
+            Priority.Low -> Color(0xFF388E3C) // Dark Green
+            Priority.Vital -> Color(0xFFFFFFFF) // White
+        }
 
     Surface(
-        color = backgroundColor, shape = RoundedCornerShape(16.dp), modifier = Modifier.Companion.padding(start = 8.dp)
+        color = backgroundColor,
+        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.Companion.padding(start = 8.dp),
     ) {
         Text(
-            text = priority.toString(), modifier = Modifier.Companion.padding(horizontal = 12.dp, vertical = 4.dp), style = MaterialTheme.typography.caption, color = textColor
+            text = priority.toString(),
+            modifier = Modifier.Companion.padding(horizontal = 12.dp, vertical = 4.dp),
+            style = MaterialTheme.typography.caption,
+            color = textColor,
         )
     }
 }

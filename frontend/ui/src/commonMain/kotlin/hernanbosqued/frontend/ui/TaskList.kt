@@ -20,17 +20,18 @@ fun TaskList(tasks: List<DTOIdTask>) {
     val scrollState = rememberScrollState()
 
     Box(
-        modifier = Modifier.Companion.fillMaxSize()
+        modifier = Modifier.Companion.fillMaxSize(),
     ) {
         Column(
-            modifier = Modifier.Companion.verticalScroll(scrollState).fillMaxWidth()
+            modifier = Modifier.Companion.verticalScroll(scrollState).fillMaxWidth(),
         ) {
             tasks.forEach { task ->
                 TaskItem(task = task)
             }
         }
         VerticalScrollbar(
-            modifier = Modifier.Companion.align(Alignment.Companion.CenterEnd), adapter = rememberScrollbarAdapter(scrollState)
+            modifier = Modifier.Companion.align(Alignment.Companion.CenterEnd),
+            adapter = rememberScrollbarAdapter(scrollState),
         )
     }
 }

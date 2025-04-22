@@ -1,9 +1,19 @@
 package hernanbosqued.frontend.ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import hernanbosqued.backend.domain.Priority
@@ -12,12 +22,14 @@ import hernanbosqued.frontend.repository.Repository
 import kotlinx.coroutines.launch
 
 enum class IdSelectorAction {
-    SELECT, REMOVE
+    SELECT,
+    REMOVE,
 }
 
 @Composable
 fun RepositoryActions(
-    repository: Repository, onTasksUpdated: (List<DTOIdTask>) -> Unit
+    repository: Repository,
+    onTasksUpdated: (List<DTOIdTask>) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     var showAddTaskForm by remember { mutableStateOf(false) }
@@ -28,7 +40,8 @@ fun RepositoryActions(
 
     Column {
         Row(
-            modifier = Modifier.Companion.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
+            modifier = Modifier.Companion.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             Button(
                 onClick = {
@@ -36,7 +49,8 @@ fun RepositoryActions(
                         onTasksUpdated(repository.allTasks())
                         showAddTaskForm = false
                     }
-                }) {
+                },
+            ) {
                 Text("Get All Tasks")
             }
 
@@ -46,7 +60,8 @@ fun RepositoryActions(
                 onClick = {
                     idSelectorAction = IdSelectorAction.SELECT
                     showIdSelector = !showIdSelector
-                }) {
+                },
+            ) {
                 Text("Get Task By ID")
             }
 
@@ -55,7 +70,8 @@ fun RepositoryActions(
             Button(
                 onClick = {
                     showPrioritySelector = !showPrioritySelector
-                }) {
+                },
+            ) {
                 Text("Get By Priority")
             }
 
@@ -64,7 +80,8 @@ fun RepositoryActions(
             Button(
                 onClick = {
                     showAddTaskForm = !showAddTaskForm
-                }) {
+                },
+            ) {
                 Text(if (showAddTaskForm) "Hide Form" else "Add Task")
             }
 
@@ -74,7 +91,8 @@ fun RepositoryActions(
                 onClick = {
                     idSelectorAction = IdSelectorAction.REMOVE
                     showIdSelector = !showIdSelector
-                }) {
+                },
+            ) {
                 Text("Remove Task")
             }
         }

@@ -1,15 +1,14 @@
 package hernanbosqued.backend.service.impl
 
+import hernanbosqued.backend.domain.Controller
 import hernanbosqued.backend.domain.IdTask
 import hernanbosqued.backend.domain.Priority
-import hernanbosqued.backend.domain.Controller
 import hernanbosqued.backend.domain.Task
 import hernanbosqued.backend.service.public.Service
 
 class ServiceImpl(
-    private val repository: Controller
+    private val repository: Controller,
 ) : Service {
-
     override fun allTasks(): List<IdTask> {
         return repository.allTasks()
     }

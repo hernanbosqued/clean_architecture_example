@@ -22,16 +22,22 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun TaskItem(task: DTOIdTask) {
     Card(
-        modifier = Modifier.Companion.fillMaxWidth(0.5f).padding(8.dp), elevation = 4.dp, backgroundColor = MaterialTheme.colors.surface
+        modifier = Modifier.Companion.fillMaxWidth(0.5f).padding(8.dp),
+        elevation = 4.dp,
+        backgroundColor = MaterialTheme.colors.surface,
     ) {
         Column(
-            modifier = Modifier.Companion.padding(16.dp).fillMaxWidth()
+            modifier = Modifier.Companion.padding(16.dp).fillMaxWidth(),
         ) {
             Row(
-                modifier = Modifier.Companion.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.Companion.CenterVertically
+                modifier = Modifier.Companion.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Companion.CenterVertically,
             ) {
                 Text(
-                    text = task.name, style = MaterialTheme.typography.h6, modifier = Modifier.Companion.weight(1f)
+                    text = task.name,
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.Companion.weight(1f),
                 )
                 PriorityChip(priority = task.priority)
             }
@@ -39,15 +45,20 @@ fun TaskItem(task: DTOIdTask) {
             Spacer(modifier = Modifier.Companion.height(8.dp))
 
             Text(
-                text = task.description, style = MaterialTheme.typography.body1, modifier = Modifier.Companion.padding(vertical = 4.dp)
+                text = task.description,
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier.Companion.padding(vertical = 4.dp),
             )
 
             Divider(
-                modifier = Modifier.Companion.padding(vertical = 8.dp), color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
+                modifier = Modifier.Companion.padding(vertical = 8.dp),
+                color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
             )
 
             Text(
-                text = "ID: ${task.id}", style = MaterialTheme.typography.caption, color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f)
+                text = "ID: ${task.id}",
+                style = MaterialTheme.typography.caption,
+                color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
             )
         }
     }
