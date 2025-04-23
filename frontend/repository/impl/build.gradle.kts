@@ -1,10 +1,14 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.serialization)
 }
 
 group = "hernanbosqued.frontend.repository"
-version = "1.0"
+
 
 kotlin {
     jvm()

@@ -13,6 +13,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
+import io.ktor.server.application.log
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.http.content.staticResources
 import io.ktor.server.netty.Netty
@@ -27,13 +28,10 @@ import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
-import java.nio.file.Paths
 
 fun getModules() =
     listOf(
-        ControllerModule.getModule(
-            path = Paths.get("").toAbsolutePath().toString() + "/backend/controller/impl/src/main/resources/db.json",
-        ),
+        ControllerModule.getModule(),
         PresenterModule.getModule(),
         ServiceModule.getModule(),
     )
@@ -48,6 +46,8 @@ fun main() {
 }
 
 fun Application.main() {
+    log.info("Hello from module!")
+
     install(Koin) {
         modules(getModules())
     }
@@ -75,7 +75,7 @@ fun Application.main() {
             }
 
             get("/id/{taskId}") {
-                val taskId = call.parameters["taskId"]?.toIntOrNull()
+                val taskId = call.parameters["taskId"]?.toLongOrNull()
 
                 when (val result = presenter.taskById(taskId)) {
                     is Result.Success -> call.respond(result.value)
@@ -99,7 +99,7 @@ fun Application.main() {
             }
 
             delete("/{taskId}") {
-                val taskId = call.parameters["taskId"]?.toIntOrNull()
+                val taskId = call.parameters["taskId"]?.toLongOrNull()
                 when (val result = presenter.removeTask(taskId)) {
                     is Result.Success -> call.respond(HttpStatusCode.Accepted)
                     is Result.Error -> call.respond(result.error.map())

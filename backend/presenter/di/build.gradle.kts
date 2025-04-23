@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "hernanbosqued.backend.presenter"
-version = "1.0"
+
 
 dependencies {
     testImplementation(libs.kotlin.test.junit)

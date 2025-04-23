@@ -1,5 +1,5 @@
 package hernanbosqued.backend.domain
 
 interface Id {
-    val id: Int
+    val id: Long
 }

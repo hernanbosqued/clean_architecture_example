@@ -1,14 +1,14 @@
 package hernanbosqued.backend.controller.di
 
-import hernanbosqued.backend.controller.JsonController
+import hernanbosqued.backend.db_controller.DbController
 import hernanbosqued.backend.domain.Controller
 import org.koin.dsl.module
 
 object ControllerModule {
-    fun getModule(path: String) =
+    fun getModule() =
         module {
             single<Controller> {
-                JsonController(path)
+                DbController()
             }
         }
 }

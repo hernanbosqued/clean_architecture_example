@@ -1,0 +1,38 @@
+[
+  {
+    "id": 0,
+    "name": "cleaning",
+    "description": "Clean the house",
+    "priority": "Low"
+  },
+  {
+    "id": 2,
+    "name": "shopping",
+    "description": "Buy the groceries",
+    "priority": "High"
+  },
+  {
+    "id": 3,
+    "name": "painting",
+    "description": "Paint the fence",
+    "priority": "Medium"
+  },
+  {
+    "id": 4,
+    "name": "atlanta",
+    "description": "Atlanta te amo",
+    "priority": "Medium"
+  },
+  {
+    "id": 5,
+    "name": "Hernan",
+    "description": "Atlanta",
+    "priority": "Vital"
+  },
+  {
+    "id": 6,
+    "name": "Atlanta",
+    "description": "Atlanta",
+    "priority": "Vital"
+  }
+]

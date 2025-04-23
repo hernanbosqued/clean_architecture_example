@@ -1,0 +1,8 @@
+selectAll:
+SELECT * FROM taskEntity;
+
+insert:
+INSERT INTO taskEntity (name, description, priority) VALUES (?, ?, ?);
+
+remove:
+DELETE FROM taskEntity WHERE id = ?;

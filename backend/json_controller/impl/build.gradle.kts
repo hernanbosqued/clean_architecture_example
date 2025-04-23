@@ -2,8 +2,8 @@ plugins {
     kotlin("jvm")
 }
 
-group = "hernanbosqued.backend.controller"
-version = "1.0"
+group = "hernanbosqued.backend.json_controller"
+
 
 dependencies {
     testImplementation(libs.kotlin.test.junit)

@@ -9,9 +9,9 @@ interface Service {
 
     fun addTask(task: Task)
 
-    fun removeTask(id: Int): Boolean
+    fun removeTask(id: Long): Boolean
 
     fun tasksByPriority(priority: Priority): List<IdTask>
 
-    fun taskById(taskId: Int): IdTask?
+    fun taskById(taskId: Long): IdTask?
 }

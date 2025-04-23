@@ -10,6 +10,8 @@ plugins {
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
+    version = "1.0"
+
     ktlint {
         filter {
             exclude("**/generated/**")

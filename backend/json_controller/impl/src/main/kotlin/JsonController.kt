@@ -1,4 +1,4 @@
-package hernanbosqued.backend.controller
+package hernanbosqued.backend.json_controller
 
 import com.google.gson.Gson
 import hernanbosqued.backend.domain.Controller
@@ -16,7 +16,7 @@ class JsonController(path: String) : Controller {
 
     override fun tasksByPriority(priority: Priority): List<IdTask> = getDb().filter { it.priority == priority }
 
-    override fun taskById(taskId: Int) = getDb().find { it.id == taskId }
+    override fun taskById(taskId: Long) = getDb().find { it.id == taskId }
 
     override fun addTask(task: Task) {
         val allTasks =
@@ -37,7 +37,7 @@ class JsonController(path: String) : Controller {
         }
     }
 
-    override fun removeTask(id: Int): Boolean {
+    override fun removeTask(id: Long): Boolean {
         val allTasks = getDb().toMutableList()
 
         return allTasks.removeIf { it.id == id }.also { response ->

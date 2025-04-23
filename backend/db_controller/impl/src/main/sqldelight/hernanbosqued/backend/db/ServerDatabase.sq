@@ -1,0 +1,8 @@
+CREATE TABLE taskEntity (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL,
+  priority TEXT NOT NULL
+);
+
+INSERT INTO taskEntity (name, description, priority) VALUES ('cleaning', 'Clean the house', 'Low');

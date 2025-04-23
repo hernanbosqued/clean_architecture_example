@@ -17,7 +17,7 @@ class ServiceImpl(
         repository.addTask(task)
     }
 
-    override fun removeTask(id: Int): Boolean {
+    override fun removeTask(id: Long): Boolean {
         return repository.removeTask(id)
     }
 
@@ -25,7 +25,7 @@ class ServiceImpl(
         return repository.tasksByPriority(priority)
     }
 
-    override fun taskById(taskId: Int): IdTask? {
+    override fun taskById(taskId: Long): IdTask? {
         return repository.taskById(taskId)
     }
 }

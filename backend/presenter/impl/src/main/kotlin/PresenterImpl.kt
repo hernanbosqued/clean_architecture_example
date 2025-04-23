@@ -1,5 +1,8 @@
 package hernanbosqued.backend.presenter.impl
 
+//import DriverFactory
+//import createDatabase
+//import hernanbosqued.backend.db.PlayerQueries
 import hernanbosqued.backend.domain.Priority
 import hernanbosqued.backend.presenter.DTOIdTask
 import hernanbosqued.backend.presenter.DTOTask
@@ -12,9 +15,15 @@ import hernanbosqued.backend.service.public.Service
 class PresenterImpl(
     private val service: Service,
 ) : Presenter {
-    override fun allTasks(): List<DTOIdTask> = service.allTasks().map { it.toDto() }
+    override fun allTasks(): List<DTOIdTask> {
+//            val database = createDatabase(DriverFactory())
+//            val playerQueries: PlayerQueries = database.playerQueries
+//            println(playerQueries.selectAll().executeAsList())
 
-    override fun taskById(taskId: Int?): Result<DTOIdTask, StatusCode> {
+        return service.allTasks().map { it.toDto() }
+    }
+
+    override fun taskById(taskId: Long?): Result<DTOIdTask, StatusCode> {
         if (taskId == null) return Result.Error(StatusCode.BadRequest)
 
         return when (val task = service.taskById(taskId)) {
@@ -39,7 +48,7 @@ class PresenterImpl(
         return Result.Success(Unit)
     }
 
-    override fun removeTask(taskId: Int?): Result<Unit, StatusCode> {
+    override fun removeTask(taskId: Long?): Result<Unit, StatusCode> {
         if (taskId == null) return Result.Error(StatusCode.BadRequest)
 
         return when (service.removeTask(taskId)) {
