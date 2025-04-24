@@ -8,7 +8,6 @@ plugins {
 
 group = "hernanbosqued.frontend.repository"
 
-
 kotlin {
     jvm()
 

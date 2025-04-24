@@ -13,7 +13,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
-import io.ktor.server.application.log
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.http.content.staticResources
 import io.ktor.server.netty.Netty
@@ -29,27 +28,24 @@ import io.ktor.server.routing.routing
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
 
-fun getModules() =
+fun getModules(dbPath: String) =
     listOf(
-        ControllerModule.getModule(),
+        ControllerModule.getModule(dbPath),
         PresenterModule.getModule(),
         ServiceModule.getModule(),
     )
 
-fun main() {
+fun main(args: Array<String>) {
     embeddedServer(
         Netty,
         port = 8081,
-        host = "0.0.0.0",
-        module = Application::main,
+        module = { main(args[0]) }
     ).start(wait = true)
 }
 
-fun Application.main() {
-    log.info("Hello from module!")
-
+fun Application.main(path: String) {
     install(Koin) {
-        modules(getModules())
+        modules(getModules(path))
     }
 
     install(ContentNegotiation) {

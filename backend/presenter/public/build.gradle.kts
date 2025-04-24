@@ -9,7 +9,6 @@ plugins {
 
 group = "hernanbosqued.backend.presenter"
 
-
 kotlin {
     jvm()
 

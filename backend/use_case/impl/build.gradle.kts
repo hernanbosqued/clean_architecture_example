@@ -4,7 +4,6 @@ plugins {
 
 group = "hernanbosqued.backend.use_case"
 
-
 dependencies {
     testImplementation(libs.kotlin.test.junit)
 

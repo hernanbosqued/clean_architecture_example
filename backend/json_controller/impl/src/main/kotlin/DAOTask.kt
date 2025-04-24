@@ -1,4 +1,4 @@
-package hernanbosqued.backend.json_controller
+package hernanbosqued.backend.jsonController
 
 import hernanbosqued.backend.domain.IdTask
 import hernanbosqued.backend.domain.Priority

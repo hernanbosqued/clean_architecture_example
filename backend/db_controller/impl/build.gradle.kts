@@ -5,7 +5,6 @@ plugins {
 
 group = "hernanbosqued.backend.db_controller"
 
-
 dependencies {
     testImplementation(libs.kotlin.test.junit)
     implementation(libs.gson)

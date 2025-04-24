@@ -1,4 +1,4 @@
-package hernanbosqued.backend.json_controller
+package hernanbosqued.backend.jsonController
 
 import com.google.gson.Gson
 import hernanbosqued.backend.domain.Controller

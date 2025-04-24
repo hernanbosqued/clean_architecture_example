@@ -1,7 +1,7 @@
-//import hernanbosqued.backend.db.PlayerQueries
-//import kotlin.test.Test
+// import hernanbosqued.backend.db.PlayerQueries
+// import kotlin.test.Test
 //
-//class PresenterImplTest {
+// class PresenterImplTest {
 //
 //    @Test
 //    fun allTasks(){
@@ -9,4 +9,4 @@
 //        val playerQueries: PlayerQueries = database.playerQueries
 //        println(playerQueries.selectAll().executeAsList())
 //    }
-//}
+// }

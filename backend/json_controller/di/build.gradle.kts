@@ -4,7 +4,6 @@ plugins {
 
 group = "hernanbosqued.backend.json_controller"
 
-
 dependencies {
     // koin
     implementation(libs.koin.core)
