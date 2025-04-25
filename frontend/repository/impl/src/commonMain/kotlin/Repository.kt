@@ -18,7 +18,9 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 
-class Repository {
+class Repository(
+    val url: String
+) {
     private val client =
         HttpClient {
             install(ContentNegotiation) {
@@ -30,21 +32,21 @@ class Repository {
             }
         }
 
-    suspend fun allTasks(): List<DTOIdTask> = client.get("http://localhost:8081/tasks").body()
+    suspend fun allTasks(): List<DTOIdTask> = client.get("$url/tasks").body()
 
-    suspend fun taskById(taskId: Int): DTOIdTask = client.get("http://localhost:8081/tasks/id/$taskId").body()
+    suspend fun taskById(taskId: Int): DTOIdTask = client.get("$url/tasks/id/$taskId").body()
 
-    suspend fun taskByPriority(priority: Priority): List<DTOIdTask> = client.get("http://localhost:8081/tasks/priority/$priority").body()
+    suspend fun taskByPriority(priority: Priority): List<DTOIdTask> = client.get("$url/tasks/priority/$priority").body()
 
     suspend fun addTask(task: DTOTask) {
-        client.post("http://localhost:8081/tasks") {
+        client.post("$url/tasks") {
             contentType(ContentType.Application.Json)
             setBody(task)
         }
     }
 
     suspend fun removeTask(taskId: Int?) {
-        client.delete("http://localhost:8081/tasks/$taskId") {
+        client.delete("$url/tasks/$taskId") {
             contentType(ContentType.Application.Json)
         }
     }

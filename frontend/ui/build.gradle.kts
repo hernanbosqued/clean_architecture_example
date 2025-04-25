@@ -1,8 +1,13 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
+import com.codingfeline.buildkonfig.gradle.TargetConfigDsl
+import org.gradle.kotlin.dsl.support.uppercaseFirstChar
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import java.util.Properties
 
 plugins {
+    alias(libs.plugins.buildKonfig)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
@@ -58,6 +63,54 @@ kotlin {
             implementation(libs.kotlinx.coroutines.swing)
         }
     }
+
+    buildkonfig {
+        project.extra.set("buildkonfig.flavor", currentBuildVariant())
+
+        packageName = "hernanbosqued.frontend.buildconfig"
+
+        defaultConfigs {
+            configsFromProperties("local.properties")
+        }
+
+        defaultConfigs("remote") {
+            configsFromProperties("remote.properties")
+        }
+    }
+}
+
+private fun currentBuildVariant(): String {
+    val variants = setOf("local", "remote")
+    return System.getenv()["variant"].toString().takeIf { it in variants } ?: "local"
+}
+
+private fun TargetConfigDsl.configsFromProperties(file: String) {
+    val properties = Properties().apply {
+        val propertiesFile = rootProject.layout.projectDirectory.file("config/$file").asFile
+        load(propertiesFile.inputStream())
+    }
+
+    properties.stringPropertyNames()
+        .forEach { key ->
+            field(key.asConfigKey(), properties.getProperty(key))
+        }
+}
+
+private fun String.asConfigKey() = this.split(".", "-")
+    .mapIndexed { index: Int, s: String -> if (index == 0) s else s.uppercaseFirstChar() }
+    .joinToString("")
+
+private fun <T> TargetConfigDsl.field(key: String, value: T) {
+    val spec = when (value) {
+        is String -> FieldSpec.Type.STRING
+        is Int -> FieldSpec.Type.INT
+        is Float -> FieldSpec.Type.FLOAT
+        is Long -> FieldSpec.Type.LONG
+        is Boolean -> FieldSpec.Type.BOOLEAN
+        else -> error("Unsupported build config value '$value' for '$key'")
+    }
+
+    buildConfigField(spec, key, value.toString().trim().removeSurrounding("\""))
 }
 
 compose.desktop {

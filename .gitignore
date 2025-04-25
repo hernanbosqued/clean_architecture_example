@@ -17,4 +17,5 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 kotlin-js-store
-/backend/output/database/database.db
+backend/output/database/database.db
+config/remote.properties

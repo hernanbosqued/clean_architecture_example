@@ -4,19 +4,10 @@ import hernanbosqued.frontend.repository.Repository // Añadir este import
 import org.koin.dsl.module
 
 object RepositoryModule {
-    fun getModule() =
+    fun getModule(apiUrl: String) =
         module {
-            single {
-//            val retrofit = Retrofit.Builder()
-//                .baseUrl("https://localhost:8080/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build()
-//
-//            retrofit.create(RepositoryInterface::class.java)
-            }
-//
             single<Repository> {
-                Repository()
+                Repository(apiUrl)
             }
         }
 }

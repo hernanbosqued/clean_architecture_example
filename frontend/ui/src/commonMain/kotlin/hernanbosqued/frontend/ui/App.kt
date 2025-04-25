@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import hernanbosqued.backend.presenter.DTOIdTask
+import hernanbosqued.frontend.buildconfig.BuildKonfig
 import hernanbosqued.frontend.repository.Repository
 import hernanbosqued.frontend.repository.di.RepositoryModule
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -18,7 +19,8 @@ import org.koin.core.context.startKoin
 @Composable
 @Preview
 fun App() {
-    startKoin { modules(RepositoryModule.getModule()) }
+    startKoin {
+        modules(RepositoryModule.getModule(BuildKonfig.apiUrl)) }
 
     KoinContext {
         val repository: Repository = koinInject<Repository>()
