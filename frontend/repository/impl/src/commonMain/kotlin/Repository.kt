@@ -19,7 +19,7 @@ import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 
 class Repository(
-    val url: String
+    val url: String,
 ) {
     private val client =
         HttpClient {

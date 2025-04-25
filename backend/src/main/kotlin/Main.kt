@@ -39,7 +39,7 @@ fun main(args: Array<String>) {
     embeddedServer(
         Netty,
         port = 8081,
-        module = { main(args[0]) }
+        module = { main(args[0]) },
     ).start(wait = true)
 }
 

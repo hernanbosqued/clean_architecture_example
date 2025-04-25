@@ -7,9 +7,8 @@ import hernanbosqued.backend.domain.Priority
 import hernanbosqued.backend.domain.Task
 
 class DbController(
-    val db: ServerDatabase
+    val db: ServerDatabase,
 ) : Controller {
-
     private fun getDb(): List<IdTask> =
         db.taskQueries.selectAll().executeAsList().map {
             object : IdTask {

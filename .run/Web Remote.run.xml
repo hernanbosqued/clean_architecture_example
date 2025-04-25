@@ -1,15 +1,10 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Web Remote" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
-      <option name="env">
-        <map>
-          <entry key="variant" value="remote" />
-        </map>
-      </option>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$/frontend/ui" />
       <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="" />
+      <option name="scriptParameters" value="-Dvariant=remote" />
       <option name="taskDescriptions">
         <list />
       </option>

@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Server" type="JetRunConfigurationType">
+    <option name="MAIN_CLASS_NAME" value="hernanbosqued.backend.MainKt" />
+    <module name="clean_architecture_example.backend.main" />
+    <option name="PROGRAM_PARAMETERS" value="output/database/database.db" />
+    <shortenClasspath name="NONE" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -18,7 +18,7 @@ kotlin {
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "frontend.ui"
+        outputModuleName = "frontend.ui"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
@@ -81,14 +81,18 @@ kotlin {
 
 private fun currentBuildVariant(): String {
     val variants = setOf("local", "remote")
-    return System.getenv()["variant"].toString().takeIf { it in variants } ?: "local"
+    val variant = System.getProperty("variant")
+    println("***** El variant pasado por parametro es: $variant *****")
+
+    return variant.takeIf { it in variants } ?: "local"
 }
 
 private fun TargetConfigDsl.configsFromProperties(file: String) {
-    val properties = Properties().apply {
-        val propertiesFile = rootProject.layout.projectDirectory.file("config/$file").asFile
-        load(propertiesFile.inputStream())
-    }
+    val properties =
+        Properties().apply {
+            val propertiesFile = rootProject.layout.projectDirectory.file("config/$file").asFile
+            load(propertiesFile.inputStream())
+        }
 
     properties.stringPropertyNames()
         .forEach { key ->
@@ -96,19 +100,24 @@ private fun TargetConfigDsl.configsFromProperties(file: String) {
         }
 }
 
-private fun String.asConfigKey() = this.split(".", "-")
-    .mapIndexed { index: Int, s: String -> if (index == 0) s else s.uppercaseFirstChar() }
-    .joinToString("")
+private fun String.asConfigKey() =
+    this.split(".", "-")
+        .mapIndexed { index: Int, s: String -> if (index == 0) s else s.uppercaseFirstChar() }
+        .joinToString("")
 
-private fun <T> TargetConfigDsl.field(key: String, value: T) {
-    val spec = when (value) {
-        is String -> FieldSpec.Type.STRING
-        is Int -> FieldSpec.Type.INT
-        is Float -> FieldSpec.Type.FLOAT
-        is Long -> FieldSpec.Type.LONG
-        is Boolean -> FieldSpec.Type.BOOLEAN
-        else -> error("Unsupported build config value '$value' for '$key'")
-    }
+private fun <T> TargetConfigDsl.field(
+    key: String,
+    value: T,
+) {
+    val spec =
+        when (value) {
+            is String -> FieldSpec.Type.STRING
+            is Int -> FieldSpec.Type.INT
+            is Float -> FieldSpec.Type.FLOAT
+            is Long -> FieldSpec.Type.LONG
+            is Boolean -> FieldSpec.Type.BOOLEAN
+            else -> error("Unsupported build config value '$value' for '$key'")
+        }
 
     buildConfigField(spec, key, value.toString().trim().removeSurrounding("\""))
 }
@@ -123,4 +132,14 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+tasks.register<Copy>("copyWasmDistributionToRoot") {
+    dependsOn(tasks.named("wasmJsBrowserDistribution"))
+    from(layout.buildDirectory.dir("dist/wasmJs/productionExecutable"))
+    into(project.layout.projectDirectory.dir("output"))
+}
+
+tasks.named("wasmJsBrowserDistribution") {
+    finalizedBy("copyWasmDistributionToRoot")
 }

@@ -1,0 +1,11 @@
+# Escuchar en el puerto 8080 dentro del contenedor
+:8080 {
+    # Establecer el directorio raíz desde donde servir archivos
+    # Usaremos /srv como directorio de trabajo en el Dockerfile
+    root * /srv
+
+    # Habilitar el servidor de archivos estáticos.
+    # Automáticamente sirve index.html para directorios
+    # y maneja correctamente los tipos MIME (incluido wasm).
+    file_server
+}

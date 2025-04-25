@@ -20,7 +20,8 @@ import org.koin.core.context.startKoin
 @Preview
 fun App() {
     startKoin {
-        modules(RepositoryModule.getModule(BuildKonfig.apiUrl)) }
+        modules(RepositoryModule.getModule(BuildKonfig.apiUrl))
+    }
 
     KoinContext {
         val repository: Repository = koinInject<Repository>()
