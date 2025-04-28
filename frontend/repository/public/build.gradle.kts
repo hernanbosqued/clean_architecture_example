@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.serialization)
 }
 
 group = "hernanbosqued.frontend.repository"
@@ -17,17 +18,14 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.koin.core)
-            api(project(":frontend:repository:impl"))
-            api(project(":frontend:repository:public"))
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(project(":backend:presenter:public"))
         }
 
         jvmMain.dependencies {
-            // JVM-specific dependencies if needed
         }
 
         wasmJsMain.dependencies {
-            // WasmJs-specific dependencies if needed
         }
     }
 }

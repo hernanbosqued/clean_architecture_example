@@ -1,8 +1,9 @@
-package hernanbosqued.frontend.repository
+package hernanbosqued.frontend.repository.impl
 
 import hernanbosqued.backend.domain.Priority
 import hernanbosqued.backend.presenter.DTOIdTask
 import hernanbosqued.backend.presenter.DTOTask
+import hernanbosqued.frontend.repository.Repository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -18,9 +19,9 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 
-class Repository(
+class RepositoryImpl(
     val url: String,
-) {
+): Repository{
     private val client =
         HttpClient {
             install(ContentNegotiation) {
@@ -32,20 +33,20 @@ class Repository(
             }
         }
 
-    suspend fun allTasks(): List<DTOIdTask> = client.get("$url/tasks").body()
+    override suspend fun allTasks(): List<DTOIdTask> = client.get("$url/tasks").body()
 
-    suspend fun taskById(taskId: Int): DTOIdTask = client.get("$url/tasks/id/$taskId").body()
+    override suspend fun taskById(taskId: Int): DTOIdTask = client.get("$url/tasks/id/$taskId").body()
 
-    suspend fun taskByPriority(priority: Priority): List<DTOIdTask> = client.get("$url/tasks/priority/$priority").body()
+    override suspend fun taskByPriority(priority: Priority): List<DTOIdTask> = client.get("$url/tasks/priority/$priority").body()
 
-    suspend fun addTask(task: DTOTask) {
+    override suspend fun addTask(task: DTOTask) {
         client.post("$url/tasks") {
             contentType(ContentType.Application.Json)
             setBody(task)
         }
     }
 
-    suspend fun removeTask(taskId: Int?) {
+    override suspend fun removeTask(taskId: Int?) {
         client.delete("$url/tasks/$taskId") {
             contentType(ContentType.Application.Json)
         }

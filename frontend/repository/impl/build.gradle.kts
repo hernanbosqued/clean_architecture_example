@@ -26,6 +26,7 @@ kotlin {
             implementation(libs.ktor.client.serialization.kotlinx.json)
 
             implementation(project(":backend:presenter:public"))
+            implementation(project(":frontend:repository:public"))
         }
 
         jvmMain.dependencies {
