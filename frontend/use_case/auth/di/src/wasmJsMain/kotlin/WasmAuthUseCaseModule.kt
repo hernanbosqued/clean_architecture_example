@@ -12,6 +12,7 @@ object WasmAuthUseCaseModule {
                     clientId = params.get(),
                     redirectUri = params.get(),
                     scopes = params.get(),
+                    repository = get(),
                 )
             }
         }

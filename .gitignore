@@ -19,3 +19,4 @@ captures
 kotlin-js-store
 backend/output/database/database.db
 config/remote.properties
+gradle.properties

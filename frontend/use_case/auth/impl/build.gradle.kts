@@ -21,6 +21,8 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.koin.core)
             api(project(":frontend:use_case:auth:public"))
+            api(project(":frontend:repository:public"))
+            api(project(":backend:presenter:public"))
             api(project(":backend:domain"))
 
             // ktor

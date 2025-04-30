@@ -11,27 +11,15 @@ import kotlinx.coroutines.CompletableDeferred
 class LocalServer(port: Int) {
     private val codeDeferred = CompletableDeferred<String?>()
 
-    val server =
+    private val server =
         embeddedServer(factory = Netty, port = port) {
             routing {
                 get("/") {
-                    val code = call.request.queryParameters["code"]
-                    codeDeferred.complete(code)
+                    codeDeferred.complete(call.request.queryParameters["code"])
                     call.respondText(
                         """
-                <html>
-                <head>
-                    <title>Autenticación Exitosa</title>
-                </head>
-                <body>
-                    <h1>Autenticación Exitosa</h1>
-                    <p>Puedes cerrar esta ventana.</p>
-                    <script>
-                        window.close();
-                    </script>
-                </body>
-                </html>
-                """,
+                        <html><body><h1>Autenticación Exitosa</h1><p>Puedes cerrar esta ventana.</p><script>window.close();</script></body></html>
+                    """,
                         ContentType.Text.Html,
                     )
                 }

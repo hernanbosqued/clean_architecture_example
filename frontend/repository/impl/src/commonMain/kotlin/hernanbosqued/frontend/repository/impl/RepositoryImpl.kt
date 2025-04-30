@@ -1,8 +1,11 @@
 package hernanbosqued.frontend.repository.impl
 
 import hernanbosqued.backend.domain.Priority
+import hernanbosqued.backend.domain.UserData
 import hernanbosqued.backend.presenter.DTOIdTask
 import hernanbosqued.backend.presenter.DTOTask
+import hernanbosqued.backend.presenter.DTOUserData
+import hernanbosqued.backend.presenter.TokenRequest
 import hernanbosqued.frontend.repository.Repository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -50,5 +53,16 @@ class RepositoryImpl(
         client.delete("$url/tasks/$taskId") {
             contentType(ContentType.Application.Json)
         }
+    }
+
+    override suspend fun sendAuthorizationCode(
+        code: String,
+        clientId: String,
+        redirectUri: String,
+    ): UserData {
+        return client.post("$url/code") {
+            contentType(ContentType.Application.Json)
+            setBody(TokenRequest(clientId, redirectUri, code))
+        }.body<DTOUserData>()
     }
 }

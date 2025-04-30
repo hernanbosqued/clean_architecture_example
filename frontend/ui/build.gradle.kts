@@ -42,6 +42,7 @@ kotlin {
 
         commonMain.dependencies {
             implementation(compose.runtime)
+            implementation(libs.ktor.http)
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(compose.ui)
@@ -51,9 +52,11 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
 
             implementation(project(":frontend:repository:di"))
-            implementation(project(":frontend:use_case:auth:di"))
+            implementation(project(":frontend:use_case:auth:impl"))
             implementation(project(":backend:presenter:public"))
         }
 

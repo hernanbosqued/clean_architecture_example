@@ -18,6 +18,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(":backend:domain"))
+            implementation(project(":backend:presenter:public"))
+            implementation(project(":frontend:repository:public"))
             implementation(libs.ktor.http)
         }
 

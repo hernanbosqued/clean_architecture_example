@@ -1,6 +1,7 @@
 package hernanbosqued.frontend.repository
 
 import hernanbosqued.backend.domain.Priority
+import hernanbosqued.backend.domain.UserData
 import hernanbosqued.backend.presenter.DTOIdTask
 import hernanbosqued.backend.presenter.DTOTask
 
@@ -14,4 +15,10 @@ interface Repository {
     suspend fun addTask(task: DTOTask)
 
     suspend fun removeTask(taskId: Int?)
+
+    suspend fun sendAuthorizationCode(
+        code: String,
+        clientId: String,
+        redirectUri: String,
+    ): UserData
 }

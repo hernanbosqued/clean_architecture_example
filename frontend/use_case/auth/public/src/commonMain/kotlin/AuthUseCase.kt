@@ -1,5 +1,7 @@
 package hernanbosqued.frontend.usecase.auth
 
+import hernanbosqued.backend.domain.UserData
+import hernanbosqued.frontend.repository.Repository
 import io.ktor.http.Parameters
 import io.ktor.http.URLBuilder
 
@@ -7,8 +9,11 @@ interface AuthUseCase {
     val clientId: String
     val redirectUri: String
     val scopes: List<String>
+    val repository: Repository
 
-    suspend fun step1(): String?
+    suspend fun sendAuthCode(authCode: String): UserData {
+        return repository.sendAuthorizationCode(authCode, clientId, redirectUri)
+    }
 
     fun generateAuthorizationUrl(
         clientId: String,
@@ -27,6 +32,7 @@ interface AuthUseCase {
 
         val urlBuilder = URLBuilder("https://accounts.google.com/o/oauth2/v2/auth")
         urlBuilder.parameters.appendAll(parameters)
+        println("URL PARA REDIRECT ----------->  ${urlBuilder.build()}")
         return urlBuilder.buildString()
     }
 }

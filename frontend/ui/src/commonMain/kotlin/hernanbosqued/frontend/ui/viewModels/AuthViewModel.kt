@@ -1,31 +1,30 @@
 package hernanbosqued.frontend.ui.viewModels
 
-import hernanbosqued.frontend.ui.AuthState
+import hernanbosqued.backend.domain.UserData
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.cancel
+import io.ktor.http.Url
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.asStateFlow
 
-class AuthViewModel(
+abstract class AuthViewModel(
     val authUseCase: AuthUseCase,
-    val coroutineScope: CoroutineScope,
 ) {
-    private val _authState = MutableStateFlow(AuthState())
-    val authState: StateFlow<AuthState> = _authState
+    protected val authStateMutable = MutableStateFlow<UserData?>(null)
+    val authState: StateFlow<UserData?> = authStateMutable.asStateFlow()
 
-    fun login() {
-        coroutineScope.launch {
-            val authCode = authUseCase.step1()
-            authCode
-            _authState.value = AuthState(true)
-        }
+    abstract suspend fun login()
+
+    suspend fun processUrl(urlString: String) {
+        val fullUrlString = "http://dummy.com$urlString"
+        val url = Url(fullUrlString)
+        val params = url.parameters
+        val authCode = params["code"]
+        val userData = authUseCase.sendAuthCode(authCode!!)
+        authStateMutable.value = userData
     }
 
     fun logout() {
-        _authState.value = AuthState()
+        authStateMutable.value = null
     }
-
-    fun clean() = coroutineScope.cancel()
 }
