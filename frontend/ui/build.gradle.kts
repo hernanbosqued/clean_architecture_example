@@ -20,17 +20,16 @@ kotlin {
     wasmJs {
         outputModuleName = "frontend.ui"
         browser {
-            val rootDirPath = project.rootDir.path
-            val projectDirPath = project.projectDir.path
             commonWebpackConfig {
                 outputFileName = "frontend_ui.js"
                 devServer =
                     (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                        port = 8082
                         static =
                             (static ?: mutableListOf()).apply {
-                                // Serve sources to debug inside browser
-                                add(rootDirPath)
-                                add(projectDirPath)
+                                add(project.rootDir.path)
+                                add(project.projectDir.path)
+                                add(project.projectDir.parent)
                             }
                     }
             }
@@ -48,19 +47,18 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtime.compose)
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
 
             implementation(project(":frontend:repository:di"))
+            implementation(project(":frontend:use_case:auth:di"))
             implementation(project(":backend:presenter:public"))
         }
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutines.swing)
         }
     }
 
@@ -70,10 +68,12 @@ kotlin {
         packageName = "hernanbosqued.frontend.buildconfig"
 
         defaultConfigs {
+            configsFromProperties("common.properties")
             configsFromProperties("local.properties")
         }
 
         defaultConfigs("remote") {
+            configsFromProperties("common.properties")
             configsFromProperties("remote.properties")
         }
     }
