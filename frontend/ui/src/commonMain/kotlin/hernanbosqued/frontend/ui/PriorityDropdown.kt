@@ -15,7 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import hernanbosqued.backend.domain.Priority
+import hernanbosqued.domain.Priority
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

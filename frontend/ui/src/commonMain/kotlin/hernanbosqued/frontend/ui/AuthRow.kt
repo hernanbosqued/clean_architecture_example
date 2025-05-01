@@ -31,7 +31,7 @@ import org.koin.compose.koinInject
 @Composable
 fun AuthScreen(
     fromUrl: String?,
-    isLogged: (Boolean) -> Unit
+    isLogged: (Boolean) -> Unit,
 ) {
     val viewModel: AuthViewModel = koinInject<AuthViewModel>()
     val coroutineScope = rememberCoroutineScope()

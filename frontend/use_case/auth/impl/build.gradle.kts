@@ -23,7 +23,7 @@ kotlin {
             api(project(":frontend:use_case:auth:public"))
             api(project(":frontend:repository:public"))
             api(project(":backend:presenter:public"))
-            api(project(":backend:domain"))
+            api(project(":domain"))
 
             // ktor
             implementation(libs.ktor.client.core)

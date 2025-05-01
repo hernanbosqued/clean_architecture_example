@@ -1,32 +1,29 @@
 package hernanbosqued.backend.presenter.impl
 
-// import DriverFactory
-// import createDatabase
-// import hernanbosqued.backend.db.PlayerQueries
-import hernanbosqued.backend.domain.Priority
 import hernanbosqued.backend.presenter.DTOIdTask
 import hernanbosqued.backend.presenter.DTOTask
+import hernanbosqued.backend.presenter.DTOTokenRequest
+import hernanbosqued.backend.presenter.DTOUserData
 import hernanbosqued.backend.presenter.Presenter
 import hernanbosqued.backend.presenter.Result
 import hernanbosqued.backend.presenter.StatusCode
 import hernanbosqued.backend.presenter.toDto
-import hernanbosqued.backend.service.public.Service
+import hernanbosqued.backend.use_case.auth.AuthUseCase
+import hernanbosqued.backend.use_case.db.DbUseCase
+import hernanbosqued.domain.Priority
 
 class PresenterImpl(
-    private val service: Service,
+    private val dbUseCase: DbUseCase,
+    private val authUseCase: AuthUseCase,
 ) : Presenter {
     override fun allTasks(): List<DTOIdTask> {
-//            val database = createDatabase(DriverFactory())
-//            val playerQueries: PlayerQueries = database.playerQueries
-//            println(playerQueries.selectAll().executeAsList())
-
-        return service.allTasks().map { it.toDto() }
+        return dbUseCase.allTasks().map { it.toDto() }
     }
 
     override fun taskById(taskId: Long?): Result<DTOIdTask, StatusCode> {
         if (taskId == null) return Result.Error(StatusCode.BadRequest)
 
-        return when (val task = service.taskById(taskId)) {
+        return when (val task = dbUseCase.taskById(taskId)) {
             null -> Result.Error(StatusCode.NotFound)
             else -> Result.Success(task.toDto())
         }
@@ -39,21 +36,25 @@ class PresenterImpl(
 
         return when (priority) {
             null -> Result.Error(StatusCode.BadRequest)
-            else -> Result.Success(service.tasksByPriority(priority).map { it.toDto() })
+            else -> Result.Success(dbUseCase.tasksByPriority(priority).map { it.toDto() })
         }
     }
 
     override fun addTask(task: DTOTask): Result<Unit, StatusCode> {
-        service.addTask(task)
+        dbUseCase.addTask(task)
         return Result.Success(Unit)
     }
 
     override fun removeTask(taskId: Long?): Result<Unit, StatusCode> {
         if (taskId == null) return Result.Error(StatusCode.BadRequest)
 
-        return when (service.removeTask(taskId)) {
+        return when (dbUseCase.removeTask(taskId)) {
             false -> Result.Error(StatusCode.NotFound)
             true -> Result.Success(Unit)
         }
+    }
+
+    override suspend fun getUserData(code: DTOTokenRequest): DTOUserData {
+        return authUseCase.getUserData(code).toDto()
     }
 }

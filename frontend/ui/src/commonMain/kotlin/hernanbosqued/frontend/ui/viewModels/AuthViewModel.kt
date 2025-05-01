@@ -1,6 +1,6 @@
 package hernanbosqued.frontend.ui.viewModels
 
-import hernanbosqued.backend.domain.UserData
+import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
 import io.ktor.http.Url
 import kotlinx.coroutines.flow.MutableStateFlow

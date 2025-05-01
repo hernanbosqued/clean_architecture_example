@@ -1,9 +1,9 @@
 package hernanbosqued.frontend.repository
 
-import hernanbosqued.backend.domain.Priority
-import hernanbosqued.backend.domain.UserData
 import hernanbosqued.backend.presenter.DTOIdTask
 import hernanbosqued.backend.presenter.DTOTask
+import hernanbosqued.domain.Priority
+import hernanbosqued.domain.UserData
 
 interface Repository {
     suspend fun allTasks(): List<DTOIdTask>

@@ -1,6 +1,6 @@
 package hernanbosqued.frontend.usecase.auth.impl
 
-import hernanbosqued.backend.domain.UserData
+import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.repository.Repository
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
 

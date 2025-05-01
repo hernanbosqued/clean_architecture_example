@@ -19,7 +19,7 @@ kotlin {
             implementation(libs.koin.core)
             api(project(":frontend:use_case:auth:public"))
             implementation(project(":frontend:use_case:auth:impl"))
-            implementation(project(":backend:domain"))
+            implementation(project(":domain"))
         }
     }
 }

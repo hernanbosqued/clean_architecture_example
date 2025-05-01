@@ -23,7 +23,7 @@ kotlin {
 
         commonMain.dependencies {
             implementation(libs.kotlinx.serialization.json)
-            api(project(":backend:domain"))
+            api(project(":domain"))
         }
 
         jvmMain.dependencies {

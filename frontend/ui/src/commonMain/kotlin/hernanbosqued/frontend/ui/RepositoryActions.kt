@@ -16,8 +16,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import hernanbosqued.backend.domain.Priority
 import hernanbosqued.backend.presenter.DTOIdTask
+import hernanbosqued.domain.Priority
 import hernanbosqued.frontend.repository.Repository
 import kotlinx.coroutines.launch
 

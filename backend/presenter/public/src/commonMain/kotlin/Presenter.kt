@@ -10,4 +10,6 @@ interface Presenter {
     fun addTask(task: DTOTask): Result<Unit, StatusCode>
 
     fun removeTask(taskId: Long?): Result<Unit, StatusCode>
+
+    suspend fun getUserData(code: DTOTokenRequest): DTOUserData
 }

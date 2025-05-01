@@ -1,11 +1,11 @@
 package hernanbosqued.frontend.repository.impl
 
-import hernanbosqued.backend.domain.Priority
-import hernanbosqued.backend.domain.UserData
 import hernanbosqued.backend.presenter.DTOIdTask
 import hernanbosqued.backend.presenter.DTOTask
+import hernanbosqued.backend.presenter.DTOTokenRequest
 import hernanbosqued.backend.presenter.DTOUserData
-import hernanbosqued.backend.presenter.TokenRequest
+import hernanbosqued.domain.Priority
+import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.repository.Repository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -62,7 +62,7 @@ class RepositoryImpl(
     ): UserData {
         return client.post("$url/code") {
             contentType(ContentType.Application.Json)
-            setBody(TokenRequest(clientId, redirectUri, code))
+            setBody(DTOTokenRequest(clientId, redirectUri, code))
         }.body<DTOUserData>()
     }
 }

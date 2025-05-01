@@ -9,7 +9,8 @@ object PresenterModule {
         module {
             single<Presenter> {
                 PresenterImpl(
-                    service = get(),
+                    authUseCase = get(),
+                    dbUseCase = get(),
                 )
             }
         }
