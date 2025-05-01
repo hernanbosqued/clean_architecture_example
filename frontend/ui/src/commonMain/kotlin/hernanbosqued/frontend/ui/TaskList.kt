@@ -9,10 +9,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import hernanbosqued.backend.presenter.DTOIdTask
 import hernanbosqued.domain.IdTask
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

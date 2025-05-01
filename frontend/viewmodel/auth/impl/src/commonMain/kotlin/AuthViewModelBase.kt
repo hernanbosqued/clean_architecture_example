@@ -1,21 +1,22 @@
-package hernanbosqued.frontend.ui.viewModels
+package hernanbosqued.frontend.viewmodel.auth.impl
 
 import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
+import hernanbosqued.frontend.viewmodel.auth.AuthViewModel
 import io.ktor.http.Url
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-abstract class AuthViewModel(
+abstract class AuthViewModelBase(
     val authUseCase: AuthUseCase,
-) {
+) : AuthViewModel {
     protected val authStateMutable = MutableStateFlow<UserData?>(null)
-    val authState: StateFlow<UserData?> = authStateMutable.asStateFlow()
+    override val authState: StateFlow<UserData?> = authStateMutable.asStateFlow()
 
-    abstract suspend fun login()
+    abstract override suspend fun login()
 
-    suspend fun processUrl(urlString: String) {
+    override suspend fun processUrl(urlString: String) {
         val fullUrlString = "http://dummy.com$urlString"
         val url = Url(fullUrlString)
         val params = url.parameters
@@ -24,7 +25,7 @@ abstract class AuthViewModel(
         authStateMutable.value = userData
     }
 
-    fun logout() {
+    override fun logout() {
         authStateMutable.value = null
     }
 }

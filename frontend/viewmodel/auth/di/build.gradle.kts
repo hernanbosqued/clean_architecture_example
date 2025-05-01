@@ -9,13 +9,15 @@ plugins {
 group = "hernanbosqued.frontend.viewmodel.auth"
 
 kotlin {
-    jvm()
+    jvm("desktop")
 
     wasmJs {
         browser()
     }
 
     sourceSets {
+        val desktopMain by getting
+
         commonMain.dependencies {
             implementation(libs.koin.core)
             api(project(":frontend:viewmodel:auth:public"))
@@ -23,7 +25,7 @@ kotlin {
             implementation(project(":frontend:use_case:auth:public"))
         }
 
-        jvmMain.dependencies {
+        desktopMain.dependencies {
         }
 
         wasmJsMain.dependencies {

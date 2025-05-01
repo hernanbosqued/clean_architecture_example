@@ -30,7 +30,9 @@ fun App(fromUrl: String? = null) {
                         tasks = viewModel.getTasks()
                     }
                     TaskList(tasks = tasks)
-                } else tasks = emptyList()
+                } else {
+                    tasks = emptyList()
+                }
             }
         }
     }

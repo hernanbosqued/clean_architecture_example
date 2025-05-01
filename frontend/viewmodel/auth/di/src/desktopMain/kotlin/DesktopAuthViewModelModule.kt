@@ -1,14 +1,13 @@
-package hernanbosqued.frontend.viewmodel.task.di
+package hernanbosqued.frontend.viewmodel.auth.di
 
 import hernanbosqued.frontend.viewmodel.auth.AuthViewModel
-import hernanbosqued.frontend.viewmodel.auth.impl.AuthViewModelImpl
 import org.koin.dsl.module
 
-object AuthViewModelModule {
+object DesktopAuthViewModelModule {
     fun getModule() =
         module {
             single<AuthViewModel> {
-                AuthViewModelImpl()
+                DesktopAuthViewModel(get())
             }
         }
 }

@@ -8,6 +8,7 @@ object RepositoryModule {
     fun getModule(apiUrl: String) =
         module {
             single<FrontendRepository> {
+                println("Atlanta 3")
                 FrontendRepositoryImpl(apiUrl)
             }
         }

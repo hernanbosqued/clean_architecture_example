@@ -8,7 +8,8 @@ object TaskViewModelModule {
     fun getModule() =
         module {
             single<TaskViewModel> {
-                TaskViewModelImpl( get() )
+                println("Atlanta 2")
+                TaskViewModelImpl(get())
             }
         }
 }

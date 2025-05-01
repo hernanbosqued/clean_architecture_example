@@ -55,9 +55,12 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
 
+            implementation(project(":frontend:viewmodel:auth:di"))
+            implementation(project(":frontend:use_case:auth:di"))
+
             implementation(project(":frontend:viewmodel:task:di"))
-            implementation(project(":frontend:use_case:auth:impl"))
             implementation(project(":frontend:use_case:task:di"))
+
             implementation(project(":frontend:repository:di"))
         }
 

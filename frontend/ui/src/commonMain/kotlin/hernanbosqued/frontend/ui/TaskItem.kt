@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import hernanbosqued.backend.presenter.DTOIdTask
 import hernanbosqued.domain.IdTask
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

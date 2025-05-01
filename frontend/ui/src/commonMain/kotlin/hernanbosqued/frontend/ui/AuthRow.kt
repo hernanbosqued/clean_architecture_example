@@ -24,7 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import hernanbosqued.frontend.ui.viewModels.AuthViewModel
+import hernanbosqued.frontend.viewmodel.auth.AuthViewModel
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 

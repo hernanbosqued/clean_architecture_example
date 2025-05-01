@@ -1,16 +1,17 @@
 package hernanbosqued.frontend.usecase.auth.impl
 
-import hernanbosqued.frontend.repository.Repository
-import hernanbosqued.frontend.usecase.auth.AuthUseCase
+import hernanbosqued.domain.FrontendRepository
+import hernanbosqued.frontend.usecase.auth.WasmAuthUseCase
+import kotlinx.browser.window
 
 class WasmAuthUseCaseImpl(
     override val clientId: String,
     override val redirectUri: String,
     override val scopes: List<String>,
-    override val repository: Repository,
-) : AuthUseCase {
-    fun openPage() {
+    override val repository: FrontendRepository,
+) : WasmAuthUseCase {
+    override fun openPage() {
         val authorizationUrl = generateAuthorizationUrl(clientId, redirectUri, scopes)
-        openWebPage(authorizationUrl)
+        window.location.href = authorizationUrl
     }
 }

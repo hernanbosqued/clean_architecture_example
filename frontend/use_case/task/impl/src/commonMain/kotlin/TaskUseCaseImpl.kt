@@ -5,7 +5,7 @@ import hernanbosqued.domain.IdTask
 import hernanbosqued.frontend.viewmodel.task.TaskUseCase
 
 class TaskUseCaseImpl(
-    private val frontendRepository: FrontendRepository
+    private val frontendRepository: FrontendRepository,
 ) : TaskUseCase {
     override suspend fun allTasks(): List<IdTask> = frontendRepository.allTasks()
 }

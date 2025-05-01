@@ -5,7 +5,7 @@ import hernanbosqued.frontend.viewmodel.task.TaskUseCase
 import hernanbosqued.frontend.viewmodel.task.TaskViewModel
 
 class TaskViewModelImpl(
-    private val taskUseCase: TaskUseCase
+    private val taskUseCase: TaskUseCase,
 ) : TaskViewModel {
     override suspend fun getTasks(): List<IdTask> = taskUseCase.allTasks()
 }

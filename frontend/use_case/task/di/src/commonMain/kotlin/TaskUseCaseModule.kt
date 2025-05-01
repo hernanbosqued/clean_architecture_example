@@ -8,6 +8,7 @@ object TaskUseCaseModule {
     fun getModule() =
         module {
             single<TaskUseCase> {
+                println("Atlanta 4")
                 TaskUseCaseImpl(get())
             }
         }

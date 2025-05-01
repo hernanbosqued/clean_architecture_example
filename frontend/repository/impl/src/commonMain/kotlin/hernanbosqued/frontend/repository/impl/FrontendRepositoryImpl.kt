@@ -6,7 +6,6 @@ import hernanbosqued.backend.presenter.DTOUserData
 import hernanbosqued.domain.FrontendRepository
 import hernanbosqued.domain.Priority
 import hernanbosqued.domain.Task
-import hernanbosqued.domain.UserData
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -25,8 +24,7 @@ import io.ktor.serialization.kotlinx.json.json
 class FrontendRepositoryImpl(
     val url: String,
 ) : FrontendRepository {
-
-    //pasar esto por DI
+    // pasar esto por DI
     private val client =
         HttpClient {
             install(ContentNegotiation) {
