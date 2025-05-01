@@ -16,11 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import hernanbosqued.backend.presenter.DTOIdTask
+import hernanbosqued.domain.IdTask
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun TaskItem(task: DTOIdTask) {
+fun TaskItem(task: IdTask) {
     Card(
         modifier = Modifier.Companion.fillMaxWidth(0.5f).padding(8.dp),
         elevation = 4.dp,

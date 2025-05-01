@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
 }
 
-group = "hernanbosqued.frontend.repository"
+group = "hernanbosqued.frontend.viewmodel.task"
 
 kotlin {
     jvm()
@@ -17,9 +17,9 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.koin.core)
-            api(project(":domain"))
-            api(project(":frontend:repository:impl"))
+            implementation(project(":domain"))
+            implementation(project(":frontend:viewmodel:task:public"))
+            implementation(project(":frontend:use_case:task:public"))
         }
     }
 }

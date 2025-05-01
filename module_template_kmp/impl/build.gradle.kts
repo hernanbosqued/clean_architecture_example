@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
 }
 
-group = "hernanbosqued.frontend.repository"
+group = "hernanbosqued.frontend.viewmodel"
 
 kotlin {
     jvm()
@@ -17,9 +17,12 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.koin.core)
-            api(project(":domain"))
-            api(project(":frontend:repository:impl"))
+        }
+
+        jvmMain.dependencies {
+        }
+
+        wasmJsMain.dependencies {
         }
     }
 }

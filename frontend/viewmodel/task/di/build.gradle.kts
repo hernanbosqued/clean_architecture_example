@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
 }
 
-group = "hernanbosqued.frontend.use_case.auth"
+group = "hernanbosqued.frontend.viewmodel.task"
 
 kotlin {
     jvm()
@@ -17,8 +17,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":domain"))
-            implementation(libs.ktor.http)
+            implementation(libs.koin.core)
+            api(project(":frontend:viewmodel:task:public"))
+            implementation(project(":frontend:viewmodel:task:impl"))
+            implementation(project(":frontend:use_case:task:public"))
         }
 
         jvmMain.dependencies {

@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
-fun AuthScreen(
+fun AuthRow(
     fromUrl: String?,
     isLogged: (Boolean) -> Unit,
 ) {

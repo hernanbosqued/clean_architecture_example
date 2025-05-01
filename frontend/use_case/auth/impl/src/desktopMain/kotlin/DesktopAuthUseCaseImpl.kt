@@ -1,14 +1,14 @@
 package hernanbosqued.frontend.usecase.auth.impl
 
+import hernanbosqued.domain.FrontendRepository
 import hernanbosqued.domain.UserData
-import hernanbosqued.frontend.repository.Repository
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
 
 class DesktopAuthUseCaseImpl(
     override val clientId: String,
     override val redirectUri: String,
     override val scopes: List<String>,
-    override val repository: Repository,
+    override val repository: FrontendRepository,
 ) : AuthUseCase {
     suspend fun openPageAndWaitForResponse(): UserData {
         val localServer = LocalServer(8082)

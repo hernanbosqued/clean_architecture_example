@@ -1,12 +1,12 @@
 package hernanbosqued.frontend.repository.impl
 
 import hernanbosqued.backend.presenter.DTOIdTask
-import hernanbosqued.backend.presenter.DTOTask
 import hernanbosqued.backend.presenter.DTOTokenRequest
 import hernanbosqued.backend.presenter.DTOUserData
+import hernanbosqued.domain.FrontendRepository
 import hernanbosqued.domain.Priority
+import hernanbosqued.domain.Task
 import hernanbosqued.domain.UserData
-import hernanbosqued.frontend.repository.Repository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -22,9 +22,11 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 
-class RepositoryImpl(
+class FrontendRepositoryImpl(
     val url: String,
-) : Repository {
+) : FrontendRepository {
+
+    //pasar esto por DI
     private val client =
         HttpClient {
             install(ContentNegotiation) {
@@ -42,7 +44,7 @@ class RepositoryImpl(
 
     override suspend fun taskByPriority(priority: Priority): List<DTOIdTask> = client.get("$url/tasks/priority/$priority").body()
 
-    override suspend fun addTask(task: DTOTask) {
+    override suspend fun addTask(task: Task) {
         client.post("$url/tasks") {
             contentType(ContentType.Application.Json)
             setBody(task)
@@ -59,10 +61,10 @@ class RepositoryImpl(
         code: String,
         clientId: String,
         redirectUri: String,
-    ): UserData {
+    ): DTOUserData {
         return client.post("$url/code") {
             contentType(ContentType.Application.Json)
             setBody(DTOTokenRequest(clientId, redirectUri, code))
-        }.body<DTOUserData>()
+        }.body()
     }
 }

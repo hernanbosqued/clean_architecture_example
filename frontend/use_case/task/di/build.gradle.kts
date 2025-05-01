@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
 }
 
-group = "hernanbosqued.frontend.repository"
+group = "hernanbosqued.frontend.use_case.task"
 
 kotlin {
     jvm()
@@ -19,7 +19,14 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.koin.core)
             api(project(":domain"))
-            api(project(":frontend:repository:impl"))
+            api(project(":frontend:use_case:task:public"))
+            implementation(project(":frontend:use_case:task:impl"))
+        }
+
+        jvmMain.dependencies {
+        }
+
+        wasmJsMain.dependencies {
         }
     }
 }

@@ -2,8 +2,7 @@ plugins {
     kotlin("jvm")
 }
 
-group = "hernanbosqued.backend.json_controller"
-
+group = "hernanbosqued.backend.db_controller.json"
 dependencies {
     testImplementation(libs.kotlin.test.junit)
     implementation(libs.gson)

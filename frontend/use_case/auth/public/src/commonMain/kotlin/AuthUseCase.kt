@@ -1,7 +1,7 @@
 package hernanbosqued.frontend.usecase.auth
 
+import hernanbosqued.domain.FrontendRepository
 import hernanbosqued.domain.UserData
-import hernanbosqued.frontend.repository.Repository
 import io.ktor.http.Parameters
 import io.ktor.http.URLBuilder
 
@@ -9,7 +9,7 @@ interface AuthUseCase {
     val clientId: String
     val redirectUri: String
     val scopes: List<String>
-    val repository: Repository
+    val repository: FrontendRepository
 
     suspend fun sendAuthCode(authCode: String): UserData {
         return repository.sendAuthorizationCode(authCode, clientId, redirectUri)

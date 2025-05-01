@@ -19,12 +19,26 @@ dependencyResolutionManagement {
 }
 
 include(":frontend:ui")
+
+include(":frontend:viewmodel:auth:di")
+include(":frontend:viewmodel:auth:impl")
+include(":frontend:viewmodel:auth:public")
+
+include(":frontend:viewmodel:task:di")
+include(":frontend:viewmodel:task:impl")
+include(":frontend:viewmodel:task:public")
+
 include(":frontend:repository:di")
 include(":frontend:repository:impl")
 include(":frontend:repository:public")
+
 include(":frontend:use_case:auth:di")
 include(":frontend:use_case:auth:impl")
 include(":frontend:use_case:auth:public")
+
+include(":frontend:use_case:task:di")
+include(":frontend:use_case:task:impl")
+include(":frontend:use_case:task:public")
 
 include(":domain")
 

@@ -55,9 +55,10 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
 
-            implementation(project(":frontend:repository:di"))
+            implementation(project(":frontend:viewmodel:task:di"))
             implementation(project(":frontend:use_case:auth:impl"))
-            implementation(project(":backend:presenter:public"))
+            implementation(project(":frontend:use_case:task:di"))
+            implementation(project(":frontend:repository:di"))
         }
 
         desktopMain.dependencies {
