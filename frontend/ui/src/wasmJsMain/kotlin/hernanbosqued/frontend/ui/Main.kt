@@ -6,8 +6,8 @@ import androidx.compose.ui.window.ComposeViewport
 import hernanbosqued.frontend.buildconfig.BuildKonfig
 import hernanbosqued.frontend.platform_controller.di.WasmPlatformControllerModule
 import hernanbosqued.frontend.repository.di.RepositoryModule
+import hernanbosqued.frontend.use_case.auth.di.WasmAuthUseCaseModule
 import hernanbosqued.frontend.use_case.task.di.TaskUseCaseModule
-import hernanbosqued.frontend.usecase.auth.di.WasmAuthUseCaseModule
 import hernanbosqued.frontend.viewmodel.auth.WasmAuthViewModel
 import hernanbosqued.frontend.viewmodel.auth.di.WasmAuthViewModelModule
 import hernanbosqued.frontend.viewmodel.task.di.TaskViewModelModule
@@ -23,8 +23,6 @@ import org.koin.dsl.module
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    println("Atlanta 1")
-
     startKoin {
         modules(
             module {
@@ -32,16 +30,16 @@ fun main() {
                     CoroutineScope(SupervisorJob() + Dispatchers.Default)
                 }
             },
-            WasmPlatformControllerModule.getModule(
-                clientId = BuildKonfig.clientId,
-                redirectUri = BuildKonfig.webRedirectUri,
-                scopes = listOf("profile", "email"),
-            ),
+            WasmPlatformControllerModule.getModule(),
             TaskViewModelModule.getModule(),
             RepositoryModule.getModule(BuildKonfig.apiUrl),
             TaskUseCaseModule.getModule(),
             WasmAuthViewModelModule.getModule(),
-            WasmAuthUseCaseModule.getModule(),
+            WasmAuthUseCaseModule.getModule(
+                clientId = BuildKonfig.clientId,
+                redirectUri = BuildKonfig.webRedirectUri,
+                scopes = listOf("profile", "email"),
+            ),
         )
     }
 
@@ -51,7 +49,7 @@ fun main() {
 
         if (window.location.search.isBlank().not()) {
             coroutineScope.launch {
-                authViewModel.setUserData(window.location.search)
+                authViewModel.setUserData(getAuthCodeFromQuerystring(window.location.search))
             }
         }
 

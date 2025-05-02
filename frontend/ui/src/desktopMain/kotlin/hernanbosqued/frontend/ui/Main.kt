@@ -6,7 +6,7 @@ import hernanbosqued.frontend.buildconfig.BuildKonfig
 import hernanbosqued.frontend.platform_controller.di.DesktopPlatformControllerModule
 import hernanbosqued.frontend.repository.di.RepositoryModule
 import hernanbosqued.frontend.use_case.task.di.TaskUseCaseModule
-import hernanbosqued.frontend.usecase.auth.di.DesktopAuthUseCaseModule
+import hernanbosqued.frontend.use_case.auth.di.DesktopAuthUseCaseModule
 import hernanbosqued.frontend.viewmodel.auth.di.DesktopAuthViewModelModule
 import hernanbosqued.frontend.viewmodel.task.di.TaskViewModelModule
 import kotlinx.coroutines.CoroutineScope
@@ -24,15 +24,15 @@ fun main() =
                         CoroutineScope(SupervisorJob() + Dispatchers.Default)
                     }
                 },
-                DesktopPlatformControllerModule.getModule(
+                TaskViewModelModule.getModule(),
+                RepositoryModule.getModule(BuildKonfig.apiUrl),
+                TaskUseCaseModule.getModule(),
+                DesktopPlatformControllerModule.getModule(),
+                DesktopAuthUseCaseModule.getModule(
                     clientId = BuildKonfig.clientId,
                     redirectUri = BuildKonfig.desktopRedirectUri,
                     scopes = listOf("profile", "email"),
                 ),
-                TaskViewModelModule.getModule(),
-                RepositoryModule.getModule(BuildKonfig.apiUrl),
-                TaskUseCaseModule.getModule(),
-                DesktopAuthUseCaseModule.getModule(),
                 DesktopAuthViewModelModule.getModule(),
             )
         }

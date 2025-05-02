@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.SharedFlow
 
 interface AuthUseCase {
     val userData: SharedFlow<UserData?>
-
     suspend fun login()
+    suspend fun getUserDataFromAuthCode(authCode: String)
 }

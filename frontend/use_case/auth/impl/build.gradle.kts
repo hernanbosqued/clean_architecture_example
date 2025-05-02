@@ -19,6 +19,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.ktor.http)
 
             api(project(":frontend:platform_controller:public"))
             api(project(":frontend:use_case:auth:public"))

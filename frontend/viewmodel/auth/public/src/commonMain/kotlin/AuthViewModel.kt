@@ -15,6 +15,3 @@ interface AuthViewModel {
     suspend fun getButtonFunction()
 }
 
-interface WasmAuthViewModel : AuthViewModel {
-    suspend fun setUserData(url: String)
-}

@@ -27,11 +27,5 @@ kotlin {
             implementation(project(":frontend:use_case:auth:public"))
             implementation(project(":frontend:platform_controller:public"))
         }
-
-        desktopMain.dependencies {
-        }
-
-        wasmJsMain.dependencies {
-        }
     }
 }
