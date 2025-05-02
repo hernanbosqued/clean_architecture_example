@@ -51,7 +51,7 @@ fun AuthRow() {
 
         Button(
             modifier = Modifier.padding(padding),
-            onClick = { coroutineScope.launch { viewModel.getButtonFunction() } }
+            onClick = { coroutineScope.launch { viewModel.getButtonFunction() } },
         ) {
             Text(viewModel.getButtonText())
         }

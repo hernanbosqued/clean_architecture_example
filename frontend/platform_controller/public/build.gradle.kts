@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
 }
 
-group = "hernanbosqued.frontend.use_case.auth"
+group = "hernanbosqued.frontend.platform_controller"
 
 kotlin {
     jvm("desktop")
@@ -14,15 +14,11 @@ kotlin {
     wasmJs {
         browser()
     }
-
     sourceSets {
         commonMain.dependencies {
             implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
-
-            api(project(":frontend:platform_controller:public"))
-            api(project(":frontend:use_case:auth:public"))
-            api(project(":domain"))
+            implementation(project(":domain"))
         }
     }
 }

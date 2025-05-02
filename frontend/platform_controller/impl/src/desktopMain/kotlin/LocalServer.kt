@@ -1,4 +1,4 @@
-package hernanbosqued.frontend.usecase.auth.impl
+package hernanbosqued.frontend.platform_controller.impl
 
 import io.ktor.http.ContentType
 import io.ktor.server.engine.embeddedServer

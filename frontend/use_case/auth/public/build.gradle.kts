@@ -18,7 +18,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(":domain"))
-            implementation(libs.ktor.http)
+            implementation(libs.kotlinx.coroutines.core)
         }
 
         jvmMain.dependencies {

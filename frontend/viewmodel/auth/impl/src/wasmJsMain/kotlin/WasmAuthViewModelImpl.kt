@@ -1,8 +1,8 @@
 package hernanbosqued.frontend.viewmodel.auth.impl
 
 import hernanbosqued.domain.UserData
-import hernanbosqued.frontend.usecase.auth.AuthUseCase
-import hernanbosqued.frontend.viewmodel.auth.AuthViewModel
+import hernanbosqued.frontend.usecase.auth.WasmAuthUseCase
+import hernanbosqued.frontend.viewmodel.auth.WasmAuthViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,20 +10,20 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class AuthViewModelImpl(
-    private val authUseCase: AuthUseCase,
+class WasmAuthViewModelImpl(
+    private val wasmAuthUseCase: WasmAuthUseCase,
     coroutineScope: CoroutineScope,
-) : AuthViewModel {
+) : WasmAuthViewModel {
     private val _authState = MutableStateFlow<UserData?>(null)
     override val authState: StateFlow<UserData?> = _authState.asStateFlow()
 
     init {
-        authUseCase.userData
+        wasmAuthUseCase.userData
             .onEach { _authState.value = it }
             .launchIn(coroutineScope)
     }
 
-    override suspend fun login() = authUseCase.login()
+    override suspend fun login() = wasmAuthUseCase.login()
 
     override suspend fun logout() {
         _authState.value = null
@@ -35,5 +35,9 @@ class AuthViewModelImpl(
 
     override suspend fun getButtonFunction() {
         return (if (authState.value != null) logout() else login())
+    }
+
+    override suspend fun setUserData(url: String) {
+        wasmAuthUseCase.setUserDataFromUrl(url)
     }
 }

@@ -21,6 +21,7 @@ kotlin {
             api(project(":frontend:viewmodel:auth:public"))
             implementation(project(":frontend:viewmodel:auth:impl"))
             implementation(project(":frontend:use_case:auth:public"))
+            implementation(project(":frontend:platform_controller:public"))
             implementation(libs.kotlinx.coroutines.core)
         }
     }

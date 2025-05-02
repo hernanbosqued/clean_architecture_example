@@ -42,7 +42,6 @@ kotlin {
 
         commonMain.dependencies {
             implementation(compose.runtime)
-            implementation(libs.ktor.http)
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(compose.ui)
@@ -55,6 +54,8 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
 
+            implementation(project(":frontend:platform_controller:di"))
+
             implementation(project(":frontend:viewmodel:auth:di"))
             implementation(project(":frontend:use_case:auth:di"))
 
@@ -66,8 +67,6 @@ kotlin {
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
-            implementation(libs.ktor.server.core)
-            implementation(libs.ktor.server.netty)
         }
     }
 

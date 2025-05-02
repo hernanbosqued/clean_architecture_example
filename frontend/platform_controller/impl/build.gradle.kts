@@ -6,32 +6,31 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
 }
 
-group = "hernanbosqued.frontend.viewmodel.auth"
-
+group = "hernanbosqued.frontend.platform_controller"
 kotlin {
     jvm("desktop")
 
     wasmJs {
         browser()
     }
-
     sourceSets {
         val desktopMain by getting
 
         commonMain.dependencies {
+            implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.http)
 
-            implementation(project(":domain"))
-            implementation(project(":frontend:viewmodel:auth:public"))
-            implementation(project(":frontend:use_case:auth:public"))
             implementation(project(":frontend:platform_controller:public"))
+            implementation(project(":domain"))
         }
-
         desktopMain.dependencies {
+            implementation(libs.ktor.server.core)
+            implementation(libs.ktor.server.netty)
         }
 
         wasmJsMain.dependencies {
+            implementation(libs.kotlinx.browser)
         }
     }
 }

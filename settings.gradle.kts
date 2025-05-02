@@ -20,6 +20,10 @@ dependencyResolutionManagement {
 
 include(":frontend:ui")
 
+include(":frontend:platform_controller:di")
+include(":frontend:platform_controller:impl")
+include(":frontend:platform_controller:public")
+
 include(":frontend:viewmodel:auth:di")
 include(":frontend:viewmodel:auth:impl")
 include(":frontend:viewmodel:auth:public")
