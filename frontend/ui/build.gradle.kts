@@ -66,6 +66,8 @@ kotlin {
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.ktor.server.core)
+            implementation(libs.ktor.server.netty)
         }
     }
 

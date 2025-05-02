@@ -16,19 +16,12 @@ kotlin {
     }
 
     sourceSets {
-        val desktopMain by getting
-
         commonMain.dependencies {
             implementation(libs.koin.core)
             api(project(":frontend:viewmodel:auth:public"))
             implementation(project(":frontend:viewmodel:auth:impl"))
             implementation(project(":frontend:use_case:auth:public"))
-        }
-
-        desktopMain.dependencies {
-        }
-
-        wasmJsMain.dependencies {
+            implementation(libs.kotlinx.coroutines.core)
         }
     }
 }
