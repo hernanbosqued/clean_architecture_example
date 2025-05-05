@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 open class AuthViewModelImpl(
     private val authUseCase: AuthUseCase,
@@ -18,6 +19,10 @@ open class AuthViewModelImpl(
     override val authState: StateFlow<UserData?> = _authState.asStateFlow()
 
     init {
+        coroutineScope.launch {
+            authUseCase.init()
+        }
+
         authUseCase.userData
             .onEach { _authState.value = it }
             .launchIn(coroutineScope)
@@ -26,7 +31,7 @@ open class AuthViewModelImpl(
     override suspend fun login() = authUseCase.login()
 
     override suspend fun logout() {
-        _authState.value = null
+        authUseCase.logout()
     }
 
     override fun getButtonText(): String {

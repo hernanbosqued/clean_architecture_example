@@ -1,5 +1,10 @@
 package hernanbosqued.backend.presenter
 
+import hernanbosqued.domain.dto.DTOIdTask
+import hernanbosqued.domain.dto.DTOTask
+import hernanbosqued.domain.dto.DTOTokenRequest
+import hernanbosqued.domain.dto.DTOUserData
+
 interface Presenter {
     fun allTasks(): List<DTOIdTask>
 

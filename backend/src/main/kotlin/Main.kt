@@ -3,8 +3,8 @@ package hernanbosqued.backend
 import hernanbosqued.backend.auth.di.AuthUseCaseModule
 import hernanbosqued.backend.auth_api_gateway.google.di.GoogleAuthApiGatewayModule
 import hernanbosqued.backend.db_controller.di.DbControllerModule
-import hernanbosqued.backend.presenter.DTOTask
-import hernanbosqued.backend.presenter.DTOTokenRequest
+import hernanbosqued.domain.dto.DTOTask
+import hernanbosqued.domain.dto.DTOTokenRequest
 import hernanbosqued.backend.presenter.Presenter
 import hernanbosqued.backend.presenter.Result
 import hernanbosqued.backend.presenter.StatusCode

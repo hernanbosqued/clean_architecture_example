@@ -25,17 +25,16 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.serialization.kotlinx.json)
 
-            implementation(project(":backend:presenter:public"))
-            implementation(project(":frontend:repository:public"))
+            implementation(project(":domain"))
         }
 
         jvmMain.dependencies {
             implementation(libs.ktor.client.serialization.gson)
-            implementation(libs.ktor.client.okhttp) // Add this line for JVM target
+            implementation(libs.ktor.client.okhttp)
         }
 
         wasmJsMain.dependencies {
-            implementation(libs.ktor.client.js) // Basic client for Wasm
+            implementation(libs.ktor.client.js)
         }
     }
 }

@@ -3,6 +3,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
+    alias(libs.plugins.serialization)
     alias(libs.plugins.kotlinMultiplatform)
 }
 
@@ -16,12 +17,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-        }
-
-        jvmMain.dependencies {
-        }
-
-        wasmJsMain.dependencies {
+            implementation(libs.kotlinx.serialization.json)
         }
     }
 }

@@ -1,9 +1,9 @@
 package hernanbosqued.backend.presenter.impl
 
-import hernanbosqued.backend.presenter.DTOIdTask
-import hernanbosqued.backend.presenter.DTOTask
-import hernanbosqued.backend.presenter.DTOTokenRequest
-import hernanbosqued.backend.presenter.DTOUserData
+import hernanbosqued.domain.dto.DTOIdTask
+import hernanbosqued.domain.dto.DTOTask
+import hernanbosqued.domain.dto.DTOTokenRequest
+import hernanbosqued.domain.dto.DTOUserData
 import hernanbosqued.backend.presenter.Presenter
 import hernanbosqued.backend.presenter.Result
 import hernanbosqued.backend.presenter.StatusCode

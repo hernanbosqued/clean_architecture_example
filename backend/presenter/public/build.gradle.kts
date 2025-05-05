@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.serialization)
 }
 
 group = "hernanbosqued.backend.presenter"
@@ -17,19 +16,8 @@ kotlin {
     }
 
     sourceSets {
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
-
         commonMain.dependencies {
-            implementation(libs.kotlinx.serialization.json)
             api(project(":domain"))
-        }
-
-        jvmMain.dependencies {
-        }
-
-        wasmJsMain.dependencies {
         }
     }
 }

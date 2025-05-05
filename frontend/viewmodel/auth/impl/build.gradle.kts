@@ -25,7 +25,6 @@ kotlin {
             implementation(project(":domain"))
             implementation(project(":frontend:viewmodel:auth:public"))
             implementation(project(":frontend:use_case:auth:public"))
-            implementation(project(":frontend:platform_controller:public"))
         }
     }
 }

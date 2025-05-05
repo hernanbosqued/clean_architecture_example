@@ -1,6 +1,6 @@
 package hernanbosqued.frontend.platform_controller.impl
 
-import hernanbosqued.frontend.platform_controller.DesktopPlatformController
+import hernanbosqued.frontend.usecase.auth.DesktopPlatformController
 import io.ktor.http.Parameters
 import java.awt.Desktop
 import java.net.URI

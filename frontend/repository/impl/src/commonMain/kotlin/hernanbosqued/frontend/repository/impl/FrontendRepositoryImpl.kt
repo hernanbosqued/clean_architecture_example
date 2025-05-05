@@ -1,8 +1,8 @@
 package hernanbosqued.frontend.repository.impl
 
-import hernanbosqued.backend.presenter.DTOIdTask
-import hernanbosqued.backend.presenter.DTOTokenRequest
-import hernanbosqued.backend.presenter.DTOUserData
+import hernanbosqued.domain.dto.DTOIdTask
+import hernanbosqued.domain.dto.DTOTokenRequest
+import hernanbosqued.domain.dto.DTOUserData
 import hernanbosqued.domain.FrontendRepository
 import hernanbosqued.domain.Priority
 import hernanbosqued.domain.Task
@@ -24,7 +24,7 @@ import io.ktor.serialization.kotlinx.json.json
 class FrontendRepositoryImpl(
     val url: String,
 ) : FrontendRepository {
-    // pasar esto por DI
+
     private val client =
         HttpClient {
             install(ContentNegotiation) {

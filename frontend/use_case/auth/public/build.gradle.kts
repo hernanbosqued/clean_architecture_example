@@ -19,6 +19,7 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":domain"))
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.ktor.http)
         }
 
         jvmMain.dependencies {

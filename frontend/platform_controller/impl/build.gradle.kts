@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.serialization)
 }
 
 group = "hernanbosqued.frontend.platform_controller"
@@ -20,8 +21,10 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.http)
+            implementation(libs.multiplatform.setting)
+            implementation(libs.kotlinx.serialization.json)
 
-            implementation(project(":frontend:platform_controller:public"))
+            implementation(project(":frontend:use_case:auth:public"))
             implementation(project(":domain"))
         }
         desktopMain.dependencies {

@@ -2,6 +2,7 @@ package hernanbosqued.frontend.use_case.auth.impl
 
 import hernanbosqued.domain.FrontendRepository
 import hernanbosqued.domain.UserData
+import hernanbosqued.frontend.usecase.auth.Persistence
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
 import io.ktor.http.Parameters
 import io.ktor.http.URLBuilder
@@ -12,12 +13,25 @@ abstract class BaseAuthUseCase(
     val redirectUri: String,
     val scopes: List<String>,
     val repository: FrontendRepository,
+    val authPersistence: Persistence
 ) : AuthUseCase {
 
     override val userData: MutableSharedFlow<UserData?> = MutableSharedFlow(replay = 1)
 
-    override suspend fun getUserDataFromAuthCode(authCode: String){
+    override suspend fun init(){
+        authPersistence.loadUserData()?.let {
+            userData.emit(it)
+        }
+    }
+
+    override suspend fun logout() {
+        authPersistence.clearUserData()
+        userData.emit(null)
+    }
+
+    override suspend fun getUserDataFromAuthCode(authCode: String) {
         val userData = repository.sendAuthorizationCode(authCode, clientId, redirectUri)
+        authPersistence.saveUserData(userData)
         this.userData.emit(userData)
     }
 

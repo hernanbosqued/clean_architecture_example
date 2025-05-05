@@ -18,6 +18,7 @@ object DesktopAuthUseCaseModule {
                     scopes = scopes,
                     desktopPlatformController = get(),
                     frontendRepository = get(),
+                    authPersistence = get()
                 )
             }
         }

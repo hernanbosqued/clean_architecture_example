@@ -17,9 +17,16 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.koin.core)
+            implementation(libs.multiplatform.setting)
+            implementation(libs.kotlinx.serialization.json)
+
             implementation(project(":frontend:platform_controller:impl"))
-            implementation(project(":frontend:platform_controller:public"))
+            implementation(project(":frontend:use_case:auth:public"))
             implementation(project(":domain"))
+        }
+
+        wasmJsMain.dependencies {
+            implementation(libs.kotlinx.browser)
         }
     }
 }

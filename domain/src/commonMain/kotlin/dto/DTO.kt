@@ -1,4 +1,4 @@
-package hernanbosqued.backend.presenter
+package hernanbosqued.domain.dto
 
 import hernanbosqued.domain.IdTask
 import hernanbosqued.domain.Priority
