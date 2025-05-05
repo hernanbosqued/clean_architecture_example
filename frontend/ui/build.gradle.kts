@@ -13,6 +13,8 @@ plugins {
     alias(libs.plugins.composeCompiler)
 }
 
+apply(plugin = "com.autonomousapps.dependency-analysis")
+
 kotlin {
     jvm("desktop")
 

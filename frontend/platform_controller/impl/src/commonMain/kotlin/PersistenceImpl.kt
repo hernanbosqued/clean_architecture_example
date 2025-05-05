@@ -8,9 +8,8 @@ import kotlinx.serialization.json.Json
 
 class PersistenceImpl(
     private val settings: Settings,
-    private val json: Json
+    private val json: Json,
 ) : Persistence {
-
     companion object {
         private const val KEY_USER_DATA = "auth_user_data"
     }
@@ -23,9 +22,8 @@ class PersistenceImpl(
 
             settings.set(
                 KEY_USER_DATA,
-                value = userJson
+                value = userJson,
             )
-
         } catch (e: Exception) {
             println("Error serializando UserData: ${e.message}")
             settings.remove(KEY_USER_DATA)

@@ -5,8 +5,8 @@ import androidx.compose.ui.window.application
 import hernanbosqued.frontend.buildconfig.BuildKonfig
 import hernanbosqued.frontend.platform_controller.di.DesktopPlatformControllerModule
 import hernanbosqued.frontend.repository.di.RepositoryModule
-import hernanbosqued.frontend.use_case.task.di.TaskUseCaseModule
 import hernanbosqued.frontend.use_case.auth.di.DesktopAuthUseCaseModule
+import hernanbosqued.frontend.use_case.task.di.TaskUseCaseModule
 import hernanbosqued.frontend.viewmodel.auth.di.DesktopAuthViewModelModule
 import hernanbosqued.frontend.viewmodel.task.di.TaskViewModelModule
 import kotlinx.coroutines.CoroutineScope

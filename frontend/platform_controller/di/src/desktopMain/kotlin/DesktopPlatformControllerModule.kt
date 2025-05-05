@@ -11,22 +11,21 @@ import org.koin.dsl.module
 import java.util.prefs.Preferences
 
 object DesktopPlatformControllerModule {
-
-    fun getModule() = module {
-
-        single {
-            Json {
-                ignoreUnknownKeys = true
-                isLenient = true
-                classDiscriminator = "type"
+    fun getModule() =
+        module {
+            single {
+                Json {
+                    ignoreUnknownKeys = true
+                    isLenient = true
+                    classDiscriminator = "type"
+                }
             }
-        }
 
-        single<Settings> {
-            PreferencesSettings(Preferences.userRoot().node("hernanbosqued.frontend.platform_controller"))
-        }
+            single<Settings> {
+                PreferencesSettings(Preferences.userRoot().node("hernanbosqued.frontend.platform_controller"))
+            }
 
-        single<Persistence> { PersistenceImpl(get(), get()) }
-        single<DesktopPlatformController> { DesktopPlatformControllerImpl() }
-    }
+            single<Persistence> { PersistenceImpl(get(), get()) }
+            single<DesktopPlatformController> { DesktopPlatformControllerImpl() }
+        }
 }

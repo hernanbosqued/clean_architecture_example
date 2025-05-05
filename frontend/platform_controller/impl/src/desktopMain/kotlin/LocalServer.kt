@@ -12,19 +12,20 @@ import kotlinx.coroutines.CompletableDeferred
 class LocalServer(port: Int) {
     private val deferred = CompletableDeferred<Parameters>()
 
-    private val server = embeddedServer(factory = Netty, port = port) {
-        routing {
-            get("/") {
-                deferred.complete(call.request.queryParameters)
-                call.respondText(
-                    """
+    private val server =
+        embeddedServer(factory = Netty, port = port) {
+            routing {
+                get("/") {
+                    deferred.complete(call.request.queryParameters)
+                    call.respondText(
+                        """
                         <html><body><h1>Autenticación Exitosa</h1><p>Puedes cerrar esta ventana.</p><script>window.close();</script></body></html>
                     """,
-                    ContentType.Text.Html,
-                )
+                        ContentType.Text.Html,
+                    )
+                }
             }
-        }
-    }.start(wait = false)
+        }.start(wait = false)
 
     suspend fun waitForParameters(): Parameters = deferred.await().also { server.stop() }
 }

@@ -6,7 +6,6 @@ import java.awt.Desktop
 import java.net.URI
 
 class DesktopPlatformControllerImpl() : DesktopPlatformController {
-
     override suspend fun openPageAndWaitForResponse(url: String): Parameters {
         val localServer = LocalServer(8082)
 

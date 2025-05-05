@@ -14,4 +14,3 @@ interface AuthViewModel {
 
     suspend fun getButtonFunction()
 }
-

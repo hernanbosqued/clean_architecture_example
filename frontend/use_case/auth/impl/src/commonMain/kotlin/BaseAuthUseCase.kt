@@ -2,8 +2,8 @@ package hernanbosqued.frontend.use_case.auth.impl
 
 import hernanbosqued.domain.FrontendRepository
 import hernanbosqued.domain.UserData
-import hernanbosqued.frontend.usecase.auth.Persistence
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
+import hernanbosqued.frontend.usecase.auth.Persistence
 import io.ktor.http.Parameters
 import io.ktor.http.URLBuilder
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,12 +13,11 @@ abstract class BaseAuthUseCase(
     val redirectUri: String,
     val scopes: List<String>,
     val repository: FrontendRepository,
-    val authPersistence: Persistence
+    val authPersistence: Persistence,
 ) : AuthUseCase {
-
     override val userData: MutableSharedFlow<UserData?> = MutableSharedFlow(replay = 1)
 
-    override suspend fun init(){
+    override suspend fun init() {
         authPersistence.loadUserData()?.let {
             userData.emit(it)
         }

@@ -22,6 +22,8 @@ kotlin {
 
             api(project(":frontend:use_case:auth:public"))
             api(project(":domain"))
+
+            implementation("com.google.code.gson:gson:2.10.1") // Añade esto temporalmente
         }
     }
 }

@@ -6,12 +6,16 @@ plugins {
 group = "hernanbosqued.backend.auth_api_gateway.google"
 
 dependencies {
-    testImplementation(libs.kotlin.test.junit)
+    api(libs.ktor.client.core)
+    api(libs.kotlinx.serialization.core)
+    api(project(":domain"))
 
+    implementation(libs.ktor.http)
+    implementation(libs.ktor.utils)
     implementation(libs.ktor.client.cio)
     implementation(libs.java.jwt)
 
-    implementation(project(":domain"))
+    testRuntimeOnly(libs.kotlin.test.junit)
 }
 
 kotlin {
@@ -21,6 +25,8 @@ kotlin {
 }
 
 tasks.register("generateConstants") {
+    mustRunAfter(":backend:auth_api_gateway:google:impl:explodeCodeSourceMain")
+
     group = "build setup"
     description = "Generates Constants.kt from gradle properties"
 

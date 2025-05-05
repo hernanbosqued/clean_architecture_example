@@ -1,15 +1,15 @@
 plugins {
-    // this is necessary to avoid the plugins to be loaded multiple times
-    // in each subproject's classloader
+    alias(libs.plugins.dependencyAnalysis)
+    alias(libs.plugins.ktlint)
     alias(libs.plugins.composeMultiplatform) apply false
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.buildKonfig) apply false
-    alias(libs.plugins.ktlint)
 }
 
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "com.autonomousapps.dependency-analysis")
 
     version = "1.0"
 

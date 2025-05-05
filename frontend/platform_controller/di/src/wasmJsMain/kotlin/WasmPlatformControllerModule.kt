@@ -10,17 +10,18 @@ import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
 object WasmPlatformControllerModule {
-    fun getModule() = module {
-        single {
-            Json {
-                ignoreUnknownKeys = true
-                isLenient = true
-                classDiscriminator = "type"
+    fun getModule() =
+        module {
+            single {
+                Json {
+                    ignoreUnknownKeys = true
+                    isLenient = true
+                    classDiscriminator = "type"
+                }
             }
-        }
 
-        single<Settings> { StorageSettings() }
-        single<Persistence> { PersistenceImpl(get(), get()) }
-        single<WasmPlatformController> { WasmPlatformControllerImpl() }
-    }
+            single<Settings> { StorageSettings() }
+            single<Persistence> { PersistenceImpl(get(), get()) }
+            single<WasmPlatformController> { WasmPlatformControllerImpl() }
+        }
 }

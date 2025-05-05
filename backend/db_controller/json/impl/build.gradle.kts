@@ -4,7 +4,9 @@ plugins {
 
 group = "hernanbosqued.backend.db_controller.json"
 dependencies {
-    testImplementation(libs.kotlin.test.junit)
     implementation(libs.gson)
-    implementation(project(":domain"))
+    api(project(":domain"))
+
+    testImplementation(libs.junit)
+    testRuntimeOnly(libs.kotlin.test.junit)
 }

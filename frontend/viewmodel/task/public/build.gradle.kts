@@ -19,5 +19,9 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":domain"))
         }
+
+        wasmJsMain.dependencies {
+            implementation(libs.kotlinx.browser)
+        }
     }
 }

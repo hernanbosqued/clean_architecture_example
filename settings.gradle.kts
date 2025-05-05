@@ -22,7 +22,6 @@ include(":frontend:ui")
 
 include(":frontend:platform_controller:di")
 include(":frontend:platform_controller:impl")
-include(":frontend:platform_controller:public")
 
 include(":frontend:viewmodel:auth:di")
 include(":frontend:viewmodel:auth:impl")
@@ -34,7 +33,6 @@ include(":frontend:viewmodel:task:public")
 
 include(":frontend:repository:di")
 include(":frontend:repository:impl")
-include(":frontend:repository:public")
 
 include(":frontend:use_case:auth:di")
 include(":frontend:use_case:auth:impl")

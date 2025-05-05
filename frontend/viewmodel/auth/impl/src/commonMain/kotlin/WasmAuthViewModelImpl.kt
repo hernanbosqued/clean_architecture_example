@@ -8,7 +8,6 @@ class WasmAuthViewModelImpl(
     val wasmAuthUseCase: AuthUseCase,
     coroutineScope: CoroutineScope,
 ) : AuthViewModelImpl(wasmAuthUseCase, coroutineScope), WasmAuthViewModel {
-
     override suspend fun setUserData(authCode: String) {
         wasmAuthUseCase.getUserDataFromAuthCode(authCode)
     }

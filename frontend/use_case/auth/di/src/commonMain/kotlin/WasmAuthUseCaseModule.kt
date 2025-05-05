@@ -9,17 +9,16 @@ object WasmAuthUseCaseModule {
         clientId: String,
         redirectUri: String,
         scopes: List<String>,
-    ) =
-        module {
-            single<AuthUseCase> {
-                WasmAuthUseCaseImpl(
-                    clientId = clientId,
-                    redirectUri = redirectUri,
-                    scopes = scopes,
-                    wasmPlatformController = get(),
-                    persistence = get(),
-                    frontendRepository = get(),
-                )
-            }
+    ) = module {
+        single<AuthUseCase> {
+            WasmAuthUseCaseImpl(
+                clientId = clientId,
+                redirectUri = redirectUri,
+                scopes = scopes,
+                wasmPlatformController = get(),
+                persistence = get(),
+                frontendRepository = get(),
+            )
         }
+    }
 }

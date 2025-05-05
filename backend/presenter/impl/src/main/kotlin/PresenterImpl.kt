@@ -1,9 +1,5 @@
 package hernanbosqued.backend.presenter.impl
 
-import hernanbosqued.domain.dto.DTOIdTask
-import hernanbosqued.domain.dto.DTOTask
-import hernanbosqued.domain.dto.DTOTokenRequest
-import hernanbosqued.domain.dto.DTOUserData
 import hernanbosqued.backend.presenter.Presenter
 import hernanbosqued.backend.presenter.Result
 import hernanbosqued.backend.presenter.StatusCode
@@ -11,6 +7,10 @@ import hernanbosqued.backend.presenter.toDto
 import hernanbosqued.backend.use_case.auth.AuthUseCase
 import hernanbosqued.backend.use_case.db.DbUseCase
 import hernanbosqued.domain.Priority
+import hernanbosqued.domain.dto.DTOIdTask
+import hernanbosqued.domain.dto.DTOTask
+import hernanbosqued.domain.dto.DTOTokenRequest
+import hernanbosqued.domain.dto.DTOUserData
 
 class PresenterImpl(
     private val dbUseCase: DbUseCase,

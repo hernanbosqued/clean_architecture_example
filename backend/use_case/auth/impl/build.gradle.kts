@@ -5,8 +5,8 @@ plugins {
 group = "hernanbosqued.backend.use_case.auth"
 
 dependencies {
-    testImplementation(libs.kotlin.test.junit)
+    api(project(":backend:use_case:auth:public"))
+    api(project(":domain"))
 
-    implementation(project(":backend:use_case:auth:public"))
-    implementation(project(":domain"))
+    testRuntimeOnly(libs.kotlin.test.junit)
 }

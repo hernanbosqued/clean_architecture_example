@@ -1,4 +1,4 @@
-import kotlin.test.Test
+import org.junit.Test
 
 class PresenterImplTest {
     @Test

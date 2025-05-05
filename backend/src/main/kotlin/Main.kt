@@ -3,13 +3,13 @@ package hernanbosqued.backend
 import hernanbosqued.backend.auth.di.AuthUseCaseModule
 import hernanbosqued.backend.auth_api_gateway.google.di.GoogleAuthApiGatewayModule
 import hernanbosqued.backend.db_controller.di.DbControllerModule
-import hernanbosqued.domain.dto.DTOTask
-import hernanbosqued.domain.dto.DTOTokenRequest
 import hernanbosqued.backend.presenter.Presenter
 import hernanbosqued.backend.presenter.Result
 import hernanbosqued.backend.presenter.StatusCode
 import hernanbosqued.backend.presenter.di.PresenterModule
 import hernanbosqued.backend.use_case.db.di.DbUseCaseModule
+import hernanbosqued.domain.dto.DTOTask
+import hernanbosqued.domain.dto.DTOTokenRequest
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode

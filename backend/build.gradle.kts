@@ -5,18 +5,21 @@ plugins {
 group = "hernanbosqued.backend"
 
 dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-
-    // ktor
+    api(libs.koin.core)
+    implementation(libs.koin.ktor)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.cors)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.content)
     implementation(libs.ktor.serialization)
-    implementation("ch.qos.logback:logback-classic:1.5.18")
-    // koin
-    implementation(libs.koin.ktor)
+    implementation(libs.ktor.serialization.json)
+    implementation(libs.ktor.http)
+    implementation(libs.ktor.utils)
+    implementation(libs.kotlinx.serialization.json)
+    runtimeOnly(libs.logback.classic)
 
+    implementation(project(":domain"))
+    implementation(project(":backend:presenter:public"))
     implementation(project(":backend:presenter:di"))
     implementation(project(":backend:db_controller:sqlite:di"))
     implementation(project(":backend:auth_api_gateway:google:di"))
