@@ -13,11 +13,6 @@ class WasmAuthUseCaseImpl(
     val wasmPlatformController: WasmPlatformController,
 ) : BaseAuthUseCase(clientId, redirectUri, scopes, frontendRepository, persistence) {
     override suspend fun login() {
-        val userData = authPersistence.loadUserData()
-        if (userData == null) {
-            wasmPlatformController.openPage(super.generateAuthorizationUrl())
-        } else {
-            this.userData.emit(userData)
-        }
+        wasmPlatformController.openPage(super.generateAuthorizationUrl())
     }
 }

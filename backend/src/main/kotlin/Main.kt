@@ -78,7 +78,7 @@ fun Application.main(path: String) {
                 call.respond(userData)
             }
 
-            post("/refreshToke") {
+            post("/refresh_token") {
                 val code = call.receive<DTOAuthRefreshTokenRequest>()
                 val response = presenter.refreshToken(code)
                 call.respond(response)

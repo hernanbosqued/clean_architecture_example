@@ -19,9 +19,15 @@ abstract class BaseAuthUseCase(
 
     override suspend fun init() {
         authPersistence.loadUserData()?.let {
-            val accessToken = frontendRepository.refreshToken(it.refreshToken)
+            val refreshToken = it.refreshToken
 
-            userData.emit(it)
+            if(refreshToken != null){
+                val userData = frontendRepository.refreshToken(refreshToken)
+                authPersistence.saveUserData(userData)
+                this.userData.emit(authPersistence.loadUserData())
+            }else{
+                login()
+            }
         }
     }
 

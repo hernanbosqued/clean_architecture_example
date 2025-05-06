@@ -13,12 +13,7 @@ class DesktopAuthUseCaseImpl(
     val desktopPlatformController: DesktopPlatformController,
 ) : BaseAuthUseCase(clientId, redirectUri, scopes, frontendRepository, authPersistence) {
     override suspend fun login() {
-        val userData = authPersistence.loadUserData()
-        if (userData == null) {
-            val parameters = desktopPlatformController.openPageAndWaitForResponse(super.generateAuthorizationUrl())
-            getUserDataFromAuthCode(requireNotNull(parameters["code"]))
-        } else {
-            this.userData.emit(userData)
-        }
+        val parameters = desktopPlatformController.openPageAndWaitForResponse(super.generateAuthorizationUrl())
+        getUserDataFromAuthCode(requireNotNull(parameters["code"]))
     }
 }

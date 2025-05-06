@@ -4,6 +4,7 @@ import hernanbosqued.domain.IdTask
 import hernanbosqued.domain.Priority
 import hernanbosqued.domain.Task
 import hernanbosqued.domain.AuthCodeRequest
+import hernanbosqued.domain.AuthRefreshTokenRequest
 import hernanbosqued.domain.UserData
 import kotlinx.serialization.Serializable
 
@@ -31,19 +32,14 @@ data class DTOAuthCodeRequest(
 
 @Serializable
 data class DTOAuthRefreshTokenRequest(
-    val refreshToken: String,
-)
-
-@Serializable
-data class DTOAuthRefreshTokenResponse(
-    val accessToken: String,
-)
+    override val refreshToken: String,
+): AuthRefreshTokenRequest
 
 @Serializable
 data class DTOUserData(
-    override val name: String,
+    override val name: String?,
     override val email: String,
-    override val pictureUrl: String,
+    override val pictureUrl: String?,
     override val accessToken: String,
-    override val refreshToken: String
+    override val refreshToken: String?
 ) : UserData

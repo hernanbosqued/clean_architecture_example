@@ -5,6 +5,7 @@ import com.auth0.jwt.interfaces.DecodedJWT
 import hernanbosqued.config.Constants
 import hernanbosqued.domain.AuthApiGateway
 import hernanbosqued.domain.AuthCodeRequest
+import hernanbosqued.domain.AuthRefreshTokenRequest
 import hernanbosqued.domain.UserData
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -20,7 +21,8 @@ class GoogleAuthApiGateway(
 ) : AuthApiGateway {
     override suspend fun getUserData(code: AuthCodeRequest): UserData {
         val tokenResponse = getGoogleTokens(
-            clientId = code.clientId,
+            grantType = "authorization_code",
+            clientId = code.clientId, //PASAR A CONST EN EL BACKEND
             clientSecret = Constants.GOOGLE_SECRET,
             redirectUri = code.redirectUri,
             authorizationCode = code.authorizationCode,
@@ -29,22 +31,35 @@ class GoogleAuthApiGateway(
         return extractUserDataFromIdToken(tokenResponse)
     }
 
+    override suspend fun refreshToken(code: AuthRefreshTokenRequest): UserData {
+        val tokenResponse = getGoogleTokens(
+            grantType = "refresh_token",
+            clientId = "842809767945-3b6q9v34d40rct3q2rfl3goq8isd5f3p.apps.googleusercontent.com", //PASAR A CONST EN EL BACKEND
+            clientSecret = Constants.GOOGLE_SECRET,
+            refreshToken = code.refreshToken
+        )
+        return extractUserDataFromIdToken(tokenResponse)
+    }
+
     suspend fun getGoogleTokens(
+        grantType: String,
         clientId: String,
         clientSecret: String,
-        redirectUri: String,
-        authorizationCode: String,
+        redirectUri: String? = null,
+        authorizationCode: String? = null,
+        refreshToken: String? = null,
     ): DTOGoogleTokens {
         val response =
             httpClient.post("https://oauth2.googleapis.com/token") {
                 setBody(
                     FormDataContent(
                         Parameters.build {
-                            append("code", authorizationCode)
+                            append("grant_type", grantType)
                             append("client_id", clientId)
                             append("client_secret", clientSecret)
-                            append("redirect_uri", redirectUri)
-                            append("grant_type", "authorization_code")
+                            authorizationCode?.let { append("code", authorizationCode) }
+                            redirectUri?.let { append("redirect_uri", redirectUri) }
+                            refreshToken?.let { append("refresh_token", refreshToken) }
                         },
                     ),
                 )
@@ -57,11 +72,11 @@ class GoogleAuthApiGateway(
     fun extractUserDataFromIdToken(tokenResponse: DTOGoogleTokens): UserData {
         val jwt: DecodedJWT = JWT.decode(tokenResponse.idToken)
         return object : UserData {
-            override val name: String = requireNotNull(jwt.claims["name"]).asString()
+            override val name: String? = jwt.claims["name"]?.asString()
             override val email: String = requireNotNull(jwt.claims["email"]).asString()
-            override val pictureUrl: String = requireNotNull(jwt.claims["picture"]).asString()
+            override val pictureUrl: String? = jwt.claims["picture"]?.asString()
             override val accessToken: String = tokenResponse.accessToken
-            override val refreshToken: String = tokenResponse.refreshToken
+            override val refreshToken: String? = tokenResponse.refreshToken
         }
     }
 }

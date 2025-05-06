@@ -5,10 +5,9 @@ import hernanbosqued.domain.IdTask
 import hernanbosqued.domain.Priority
 import hernanbosqued.domain.Task
 import hernanbosqued.domain.UserData
-import hernanbosqued.domain.dto.DTOIdTask
-import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
 import hernanbosqued.domain.dto.DTOAuthCodeRequest
-import hernanbosqued.domain.dto.DTOAuthRefreshTokenResponse
+import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
+import hernanbosqued.domain.dto.DTOIdTask
 import hernanbosqued.domain.dto.DTOUserData
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -39,7 +38,7 @@ class FrontendRepositoryImpl(
             }
         }
 
-    override suspend fun allTasks(): List<IdTask> = client.get("$url/tasks").body()
+    override suspend fun allTasks(): List<IdTask> = client.get("$url/tasks").body<List<DTOIdTask>>()
 
     override suspend fun taskById(taskId: Int): IdTask = client.get("$url/tasks/id/$taskId").body()
 
@@ -67,15 +66,13 @@ class FrontendRepositoryImpl(
         return client.post("$url/auth/code") {
             contentType(ContentType.Application.Json)
             setBody(DTOAuthCodeRequest(clientId, redirectUri, code))
-        }.body()
+        }.body<DTOUserData>()
     }
 
-    override suspend fun refreshToken(refreshToken: String): String {
-        val response: DTOAuthRefreshTokenResponse = client.post("$url/auth/refreshToken") {
+    override suspend fun refreshToken(refreshToken: String): UserData {
+        return client.post("$url/auth/refresh_token") {
             contentType(ContentType.Application.Json)
             setBody(DTOAuthRefreshTokenRequest(refreshToken))
-        }.body()
-
-        return response.accessToken
+        }.body<DTOUserData>()
     }
 }

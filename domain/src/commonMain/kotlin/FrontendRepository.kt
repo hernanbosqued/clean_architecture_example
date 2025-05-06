@@ -17,5 +17,5 @@ interface FrontendRepository {
         redirectUri: String,
     ): UserData
 
-    suspend fun refreshToken(refreshToken: String):String
+    suspend fun refreshToken(refreshToken: String): UserData
 }

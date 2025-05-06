@@ -15,16 +15,20 @@ class PersistenceImpl(
     }
 
     override fun saveUserData(user: UserData) {
+        val loadedUserData = loadUserData()
+        println("LOADED --------> $loadedUserData")
         try {
             val serializableUserData = DTOUserData(
-                name = user.name,
+                name = user.name ?: loadedUserData?.name,
                 email = user.email,
-                pictureUrl = user.pictureUrl,
+                pictureUrl = user.pictureUrl ?: loadedUserData?.pictureUrl,
                 accessToken = user.accessToken,
-                refreshToken = user.refreshToken
+                refreshToken = user.refreshToken ?: loadedUserData?.refreshToken
             )
 
             val userJson = json.encodeToString(serializableUserData)
+
+            println("SAVED  --------> $serializableUserData")
 
             settings.set(
                 KEY_USER_DATA,

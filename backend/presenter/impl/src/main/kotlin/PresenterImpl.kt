@@ -7,11 +7,10 @@ import hernanbosqued.backend.presenter.toDto
 import hernanbosqued.backend.use_case.auth.AuthUseCase
 import hernanbosqued.backend.use_case.db.DbUseCase
 import hernanbosqued.domain.Priority
-import hernanbosqued.domain.dto.DTOIdTask
-import hernanbosqued.domain.dto.DTOTask
 import hernanbosqued.domain.dto.DTOAuthCodeRequest
 import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
-import hernanbosqued.domain.dto.DTOAuthRefreshTokenResponse
+import hernanbosqued.domain.dto.DTOIdTask
+import hernanbosqued.domain.dto.DTOTask
 import hernanbosqued.domain.dto.DTOUserData
 
 class PresenterImpl(
@@ -60,7 +59,7 @@ class PresenterImpl(
         return authUseCase.getUserData(code).toDto()
     }
 
-    override suspend fun refreshToken(code: DTOAuthRefreshTokenRequest): DTOAuthRefreshTokenResponse {
+    override suspend fun refreshToken(code: DTOAuthRefreshTokenRequest): DTOUserData {
         return authUseCase.refreshToken(code).toDto()
     }
 }
