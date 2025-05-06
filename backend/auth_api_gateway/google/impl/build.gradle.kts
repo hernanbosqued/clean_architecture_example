@@ -13,7 +13,7 @@ dependencies {
     implementation(libs.ktor.http)
     implementation(libs.ktor.utils)
     implementation(libs.ktor.client.cio)
-    implementation(libs.java.jwt)
+    implementation(libs.ktor.server.auth.jwt)
 
     testRuntimeOnly(libs.kotlin.test.junit)
 }

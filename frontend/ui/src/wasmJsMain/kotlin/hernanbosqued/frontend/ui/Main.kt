@@ -50,6 +50,7 @@ fun main() {
         if (window.location.search.isBlank().not()) {
             coroutineScope.launch {
                 authViewModel.setUserData(getAuthCodeFromQuerystring(window.location.search))
+                window.history.replaceState(null,document.title,window.location.pathname)
             }
         }
 

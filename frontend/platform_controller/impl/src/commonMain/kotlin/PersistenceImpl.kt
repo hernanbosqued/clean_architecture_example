@@ -3,7 +3,7 @@ import com.russhwolf.settings.get
 import com.russhwolf.settings.set
 import hernanbosqued.domain.UserData
 import hernanbosqued.domain.dto.DTOUserData
-import hernanbosqued.frontend.usecase.auth.Persistence
+import hernanbosqued.domain.Persistence
 import kotlinx.serialization.json.Json
 
 class PersistenceImpl(

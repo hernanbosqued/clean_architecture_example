@@ -2,7 +2,7 @@ package hernanbosqued.frontend.use_case.auth.impl
 
 import hernanbosqued.domain.FrontendRepository
 import hernanbosqued.frontend.usecase.auth.DesktopPlatformController
-import hernanbosqued.frontend.usecase.auth.Persistence
+import hernanbosqued.domain.Persistence
 
 class DesktopAuthUseCaseImpl(
     clientId: String,
