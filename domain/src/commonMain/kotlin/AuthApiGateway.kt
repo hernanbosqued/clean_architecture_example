@@ -1,5 +1,5 @@
 package hernanbosqued.domain
 
 interface AuthApiGateway {
-    suspend fun getUserData(code: TokenRequest): UserData
+    suspend fun getUserData(code: AuthCodeRequest): UserData
 }

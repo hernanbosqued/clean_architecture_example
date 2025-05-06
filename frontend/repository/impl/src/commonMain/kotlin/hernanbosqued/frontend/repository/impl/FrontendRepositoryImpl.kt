@@ -1,10 +1,14 @@
 package hernanbosqued.frontend.repository.impl
 
 import hernanbosqued.domain.FrontendRepository
+import hernanbosqued.domain.IdTask
 import hernanbosqued.domain.Priority
 import hernanbosqued.domain.Task
+import hernanbosqued.domain.UserData
 import hernanbosqued.domain.dto.DTOIdTask
-import hernanbosqued.domain.dto.DTOTokenRequest
+import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
+import hernanbosqued.domain.dto.DTOAuthCodeRequest
+import hernanbosqued.domain.dto.DTOAuthRefreshTokenResponse
 import hernanbosqued.domain.dto.DTOUserData
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -35,11 +39,12 @@ class FrontendRepositoryImpl(
             }
         }
 
-    override suspend fun allTasks(): List<DTOIdTask> = client.get("$url/tasks").body()
+    override suspend fun allTasks(): List<IdTask> = client.get("$url/tasks").body()
 
-    override suspend fun taskById(taskId: Int): DTOIdTask = client.get("$url/tasks/id/$taskId").body()
+    override suspend fun taskById(taskId: Int): IdTask = client.get("$url/tasks/id/$taskId").body()
 
-    override suspend fun taskByPriority(priority: Priority): List<DTOIdTask> = client.get("$url/tasks/priority/$priority").body()
+    override suspend fun taskByPriority(priority: Priority): List<IdTask> =
+        client.get("$url/tasks/priority/$priority").body()
 
     override suspend fun addTask(task: Task) {
         client.post("$url/tasks") {
@@ -58,10 +63,19 @@ class FrontendRepositoryImpl(
         code: String,
         clientId: String,
         redirectUri: String,
-    ): DTOUserData {
-        return client.post("$url/code") {
+    ): UserData {
+        return client.post("$url/auth/code") {
             contentType(ContentType.Application.Json)
-            setBody(DTOTokenRequest(clientId, redirectUri, code))
+            setBody(DTOAuthCodeRequest(clientId, redirectUri, code))
         }.body()
+    }
+
+    override suspend fun refreshToken(refreshToken: String): String {
+        val response: DTOAuthRefreshTokenResponse = client.post("$url/auth/refreshToken") {
+            contentType(ContentType.Application.Json)
+            setBody(DTOAuthRefreshTokenRequest(refreshToken))
+        }.body()
+
+        return response.accessToken
     }
 }

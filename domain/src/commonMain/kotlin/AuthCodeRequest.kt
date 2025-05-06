@@ -1,6 +1,6 @@
 package hernanbosqued.domain
 
-interface TokenRequest {
+interface AuthCodeRequest {
     val clientId: String
     val redirectUri: String
     val authorizationCode: String

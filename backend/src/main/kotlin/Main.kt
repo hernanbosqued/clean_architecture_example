@@ -9,7 +9,8 @@ import hernanbosqued.backend.presenter.StatusCode
 import hernanbosqued.backend.presenter.di.PresenterModule
 import hernanbosqued.backend.use_case.db.di.DbUseCaseModule
 import hernanbosqued.domain.dto.DTOTask
-import hernanbosqued.domain.dto.DTOTokenRequest
+import hernanbosqued.domain.dto.DTOAuthCodeRequest
+import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
@@ -70,11 +71,20 @@ fun Application.main(path: String) {
     routing {
         staticResources("static", "static")
 
-        post("/code") {
-            val code = call.receive<DTOTokenRequest>()
-            val userData = presenter.getUserData(code)
-            call.respond(userData)
+        route("/auth") {
+            post("/code") {
+                val code = call.receive<DTOAuthCodeRequest>()
+                val userData = presenter.getUserData(code)
+                call.respond(userData)
+            }
+
+            post("/refreshToke") {
+                val code = call.receive<DTOAuthRefreshTokenRequest>()
+                val response = presenter.refreshToken(code)
+                call.respond(response)
+            }
         }
+
 
         route("/tasks") {
             get {

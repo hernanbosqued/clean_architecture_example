@@ -2,7 +2,9 @@ package hernanbosqued.backend.presenter
 
 import hernanbosqued.domain.dto.DTOIdTask
 import hernanbosqued.domain.dto.DTOTask
-import hernanbosqued.domain.dto.DTOTokenRequest
+import hernanbosqued.domain.dto.DTOAuthCodeRequest
+import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
+import hernanbosqued.domain.dto.DTOAuthRefreshTokenResponse
 import hernanbosqued.domain.dto.DTOUserData
 
 interface Presenter {
@@ -16,5 +18,7 @@ interface Presenter {
 
     fun removeTask(taskId: Long?): Result<Unit, StatusCode>
 
-    suspend fun getUserData(code: DTOTokenRequest): DTOUserData
+    suspend fun getUserData(code: DTOAuthCodeRequest): DTOUserData
+
+    suspend fun refreshToken(code: DTOAuthRefreshTokenRequest): DTOAuthRefreshTokenResponse
 }

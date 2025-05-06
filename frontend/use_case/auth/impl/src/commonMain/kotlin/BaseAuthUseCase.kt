@@ -12,13 +12,15 @@ abstract class BaseAuthUseCase(
     val clientId: String,
     val redirectUri: String,
     val scopes: List<String>,
-    val repository: FrontendRepository,
+    val frontendRepository: FrontendRepository,
     val authPersistence: Persistence,
 ) : AuthUseCase {
     override val userData: MutableSharedFlow<UserData?> = MutableSharedFlow(replay = 1)
 
     override suspend fun init() {
         authPersistence.loadUserData()?.let {
+            val accessToken = frontendRepository.refreshToken(it.refreshToken)
+
             userData.emit(it)
         }
     }
@@ -29,7 +31,7 @@ abstract class BaseAuthUseCase(
     }
 
     override suspend fun getUserDataFromAuthCode(authCode: String) {
-        val userData = repository.sendAuthorizationCode(authCode, clientId, redirectUri)
+        val userData = frontendRepository.sendAuthorizationCode(authCode, clientId, redirectUri)
         authPersistence.saveUserData(userData)
         this.userData.emit(userData)
     }

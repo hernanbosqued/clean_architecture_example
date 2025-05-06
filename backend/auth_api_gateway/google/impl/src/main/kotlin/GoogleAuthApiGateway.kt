@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.interfaces.DecodedJWT
 import hernanbosqued.config.Constants
 import hernanbosqued.domain.AuthApiGateway
-import hernanbosqued.domain.TokenRequest
+import hernanbosqued.domain.AuthCodeRequest
 import hernanbosqued.domain.UserData
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -18,14 +18,13 @@ import io.ktor.http.contentType
 class GoogleAuthApiGateway(
     val httpClient: HttpClient,
 ) : AuthApiGateway {
-    override suspend fun getUserData(code: TokenRequest): UserData {
-        val tokenResponse =
-            getGoogleTokens(
-                clientId = code.clientId,
-                clientSecret = Constants.GOOGLE_SECRET,
-                redirectUri = code.redirectUri,
-                authorizationCode = code.authorizationCode,
-            )
+    override suspend fun getUserData(code: AuthCodeRequest): UserData {
+        val tokenResponse = getGoogleTokens(
+            clientId = code.clientId,
+            clientSecret = Constants.GOOGLE_SECRET,
+            redirectUri = code.redirectUri,
+            authorizationCode = code.authorizationCode,
+        )
 
         return extractUserDataFromIdToken(tokenResponse)
     }
@@ -61,6 +60,8 @@ class GoogleAuthApiGateway(
             override val name: String = requireNotNull(jwt.claims["name"]).asString()
             override val email: String = requireNotNull(jwt.claims["email"]).asString()
             override val pictureUrl: String = requireNotNull(jwt.claims["picture"]).asString()
+            override val accessToken: String = tokenResponse.accessToken
+            override val refreshToken: String = tokenResponse.refreshToken
         }
     }
 }

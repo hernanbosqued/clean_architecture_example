@@ -16,4 +16,6 @@ interface FrontendRepository {
         clientId: String,
         redirectUri: String,
     ): UserData
+
+    suspend fun refreshToken(refreshToken: String):String
 }
