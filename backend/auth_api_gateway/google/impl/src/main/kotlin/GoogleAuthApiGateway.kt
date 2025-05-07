@@ -2,7 +2,7 @@ package hernanbosqued.backend.auth_api_gateway_google.impl
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.interfaces.DecodedJWT
-import hernanbosqued.config.Constants
+import hernanbosqued.constants.Constants
 import hernanbosqued.domain.AuthApiGateway
 import hernanbosqued.domain.AuthCodeRequest
 import hernanbosqued.domain.AuthRefreshTokenRequest
@@ -20,24 +20,26 @@ class GoogleAuthApiGateway(
     val httpClient: HttpClient,
 ) : AuthApiGateway {
     override suspend fun getUserData(code: AuthCodeRequest): UserData {
-        val tokenResponse = getGoogleTokens(
-            grantType = "authorization_code",
-            clientId = code.clientId, //PASAR A CONST EN EL BACKEND
-            clientSecret = Constants.GOOGLE_SECRET,
-            redirectUri = code.redirectUri,
-            authorizationCode = code.authorizationCode,
-        )
+        val tokenResponse =
+            getGoogleTokens(
+                grantType = "authorization_code",
+                clientId = Constants.GOOGLE_CLIENT,
+                clientSecret = Constants.GOOGLE_SECRET,
+                redirectUri = code.redirectUri,
+                authorizationCode = code.authorizationCode,
+            )
 
         return extractUserDataFromIdToken(tokenResponse)
     }
 
     override suspend fun refreshToken(code: AuthRefreshTokenRequest): UserData {
-        val tokenResponse = getGoogleTokens(
-            grantType = "refresh_token",
-            clientId = "842809767945-3b6q9v34d40rct3q2rfl3goq8isd5f3p.apps.googleusercontent.com", //PASAR A CONST EN EL BACKEND
-            clientSecret = Constants.GOOGLE_SECRET,
-            refreshToken = code.refreshToken
-        )
+        val tokenResponse =
+            getGoogleTokens(
+                grantType = "refresh_token",
+                clientId = Constants.GOOGLE_CLIENT,
+                clientSecret = Constants.GOOGLE_SECRET,
+                refreshToken = code.refreshToken,
+            )
         return extractUserDataFromIdToken(tokenResponse)
     }
 

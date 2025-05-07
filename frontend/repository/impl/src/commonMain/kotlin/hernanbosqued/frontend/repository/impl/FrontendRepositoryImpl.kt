@@ -2,6 +2,7 @@ package hernanbosqued.frontend.repository.impl
 
 import hernanbosqued.domain.FrontendRepository
 import hernanbosqued.domain.IdTask
+import hernanbosqued.domain.Persistence
 import hernanbosqued.domain.Priority
 import hernanbosqued.domain.Task
 import hernanbosqued.domain.UserData
@@ -9,7 +10,6 @@ import hernanbosqued.domain.dto.DTOAuthCodeRequest
 import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
 import hernanbosqued.domain.dto.DTOIdTask
 import hernanbosqued.domain.dto.DTOUserData
-import hernanbosqued.domain.Persistence
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.auth.Auth
@@ -26,12 +26,11 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
 
 class FrontendRepositoryImpl(
     val url: String,
-    val authPersistence: Persistence
+    val authPersistence: Persistence,
 ) : FrontendRepository {
     private val client =
         HttpClient {
@@ -103,8 +102,7 @@ class FrontendRepositoryImpl(
 
     override suspend fun taskById(taskId: Int): IdTask = client.get("$url/tasks/id/$taskId").body()
 
-    override suspend fun taskByPriority(priority: Priority): List<IdTask> =
-        client.get("$url/tasks/priority/$priority").body()
+    override suspend fun taskByPriority(priority: Priority): List<IdTask> = client.get("$url/tasks/priority/$priority").body()
 
     override suspend fun addTask(task: Task) {
         client.post("$url/tasks") {

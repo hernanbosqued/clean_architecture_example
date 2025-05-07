@@ -1,9 +1,9 @@
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.get
 import com.russhwolf.settings.set
+import hernanbosqued.domain.Persistence
 import hernanbosqued.domain.UserData
 import hernanbosqued.domain.dto.DTOUserData
-import hernanbosqued.domain.Persistence
 import kotlinx.serialization.json.Json
 
 class PersistenceImpl(
@@ -18,13 +18,14 @@ class PersistenceImpl(
         val loadedUserData = loadUserData()
         println("LOADED --------> $loadedUserData")
         try {
-            val serializableUserData = DTOUserData(
-                name = user.name ?: loadedUserData?.name,
-                email = user.email,
-                pictureUrl = user.pictureUrl ?: loadedUserData?.pictureUrl,
-                accessToken = user.accessToken,
-                refreshToken = user.refreshToken ?: loadedUserData?.refreshToken
-            )
+            val serializableUserData =
+                DTOUserData(
+                    name = user.name ?: loadedUserData?.name,
+                    email = user.email,
+                    pictureUrl = user.pictureUrl ?: loadedUserData?.pictureUrl,
+                    accessToken = user.accessToken,
+                    refreshToken = user.refreshToken ?: loadedUserData?.refreshToken,
+                )
 
             val userJson = json.encodeToString(serializableUserData)
 

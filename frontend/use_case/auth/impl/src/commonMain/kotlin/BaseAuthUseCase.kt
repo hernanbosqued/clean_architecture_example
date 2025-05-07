@@ -1,9 +1,9 @@
 package hernanbosqued.frontend.use_case.auth.impl
 
 import hernanbosqued.domain.FrontendRepository
+import hernanbosqued.domain.Persistence
 import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
-import hernanbosqued.domain.Persistence
 import io.ktor.http.Parameters
 import io.ktor.http.URLBuilder
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,11 +21,11 @@ abstract class BaseAuthUseCase(
         authPersistence.loadUserData()?.let {
             val refreshToken = it.refreshToken
 
-            if(refreshToken != null){
+            if (refreshToken != null) {
                 val userData = frontendRepository.refreshToken(refreshToken)
                 authPersistence.saveUserData(userData)
                 this.userData.emit(authPersistence.loadUserData())
-            }else{
+            } else {
                 login()
             }
         }

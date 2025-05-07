@@ -3,8 +3,8 @@ package hernanbosqued.frontend.platform_controller.di
 import PersistenceImpl
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.StorageSettings
-import hernanbosqued.frontend.platform_controller.impl.WasmPlatformControllerImpl
 import hernanbosqued.domain.Persistence
+import hernanbosqued.frontend.platform_controller.impl.WasmPlatformControllerImpl
 import hernanbosqued.frontend.usecase.auth.WasmPlatformController
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module

@@ -7,5 +7,3 @@ interface UserData {
     val accessToken: String
     val refreshToken: String?
 }
-
-

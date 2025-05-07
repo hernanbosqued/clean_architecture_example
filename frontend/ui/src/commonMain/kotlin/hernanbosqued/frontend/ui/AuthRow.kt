@@ -39,7 +39,7 @@ fun AuthRow() {
         userData?.let {
             Text(
                 modifier = Modifier.padding(padding),
-                text = it.name?:"NO NAME",
+                text = it.name ?: "NO NAME",
             )
 
             AsyncImage(

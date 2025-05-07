@@ -3,9 +3,9 @@ package hernanbosqued.frontend.platform_controller.di
 import PersistenceImpl
 import com.russhwolf.settings.PreferencesSettings
 import com.russhwolf.settings.Settings
+import hernanbosqued.domain.Persistence
 import hernanbosqued.frontend.platform_controller.impl.DesktopPlatformControllerImpl
 import hernanbosqued.frontend.usecase.auth.DesktopPlatformController
-import hernanbosqued.domain.Persistence
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 import java.util.prefs.Preferences

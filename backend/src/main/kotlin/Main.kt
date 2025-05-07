@@ -9,6 +9,7 @@ import hernanbosqued.backend.presenter.Result
 import hernanbosqued.backend.presenter.StatusCode
 import hernanbosqued.backend.presenter.di.PresenterModule
 import hernanbosqued.backend.use_case.db.di.DbUseCaseModule
+import hernanbosqued.constants.Constants
 import hernanbosqued.domain.dto.DTOAuthCodeRequest
 import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
 import hernanbosqued.domain.dto.DTOTask
@@ -18,7 +19,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
-import io.ktor.server.application.log
 import io.ktor.server.auth.Authentication
 import io.ktor.server.auth.authenticate
 import io.ktor.server.auth.jwt.JWTPrincipal
@@ -67,23 +67,20 @@ fun Application.main(path: String) {
         json()
     }
 
-    val googleJwksUrl = "https://www.googleapis.com/oauth2/v3/certs" // URL CORRECTA del JWKS de Google
-    val googleIssuerForVerification = "https://accounts.google.com" // Asegúrate de que esta variable exista y tenga el valor correcto
-    val googleAudience = "842809767945-3b6q9v34d40rct3q2rfl3goq8isd5f3p.apps.googleusercontent.com" // Tu Client ID
-
-    val jwkProvider = JwkProviderBuilder(URL(googleJwksUrl)) // <--- CAMBIO IMPORTANTE AQUÍ
+    val jwkProvider =
+        JwkProviderBuilder(URL(Constants.GOOGLE_JWKS))
             .cached(1, 5, TimeUnit.MINUTES)
             .rateLimited(10, 10, TimeUnit.SECONDS)
             .build()
 
     install(Authentication) {
         jwt("auth-google") {
-            verifier(jwkProvider, googleIssuerForVerification) {
+            verifier(jwkProvider, Constants.GOOGLE_ISSUER) {
                 acceptLeeway(3)
-                withAudience(googleAudience)
+                withAudience(Constants.GOOGLE_CLIENT)
             }
 
-            validate{ credential -> JWTPrincipal(credential.payload) }
+            validate { credential -> JWTPrincipal(credential.payload) }
 
             challenge { defaultScheme, realm ->
                 call.respond(HttpStatusCode.Unauthorized, "Token is not valid or has expired")
@@ -94,7 +91,7 @@ fun Application.main(path: String) {
     install(CORS) {
         anyHost()
         allowHeader(HttpHeaders.ContentType)
-        allowHeader(HttpHeaders.Authorization) // ¡IMPORTANTE! Permite el header Authorization
+        allowHeader(HttpHeaders.Authorization)
         allowMethod(HttpMethod.Get)
         allowMethod(HttpMethod.Post)
         allowMethod(HttpMethod.Delete)

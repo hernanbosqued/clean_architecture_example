@@ -3,7 +3,7 @@ package hernanbosqued.frontend.ui
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
-import hernanbosqued.frontend.buildconfig.BuildKonfig
+import hernanbosqued.constants.Constants
 import hernanbosqued.frontend.platform_controller.di.WasmPlatformControllerModule
 import hernanbosqued.frontend.repository.di.RepositoryModule
 import hernanbosqued.frontend.use_case.auth.di.WasmAuthUseCaseModule
@@ -32,12 +32,12 @@ fun main() {
             },
             WasmPlatformControllerModule.getModule(),
             TaskViewModelModule.getModule(),
-            RepositoryModule.getModule(BuildKonfig.apiUrl),
+            RepositoryModule.getModule(Constants.API_URL),
             TaskUseCaseModule.getModule(),
             WasmAuthViewModelModule.getModule(),
             WasmAuthUseCaseModule.getModule(
-                clientId = BuildKonfig.clientId,
-                redirectUri = BuildKonfig.webRedirectUri,
+                clientId = Constants.GOOGLE_CLIENT,
+                redirectUri = Constants.WEB_REDIRECT_URL,
                 scopes = listOf("profile", "email"),
             ),
         )
@@ -50,7 +50,7 @@ fun main() {
         if (window.location.search.isBlank().not()) {
             coroutineScope.launch {
                 authViewModel.setUserData(getAuthCodeFromQuerystring(window.location.search))
-                window.history.replaceState(null,document.title,window.location.pathname)
+                window.history.replaceState(null, document.title, window.location.pathname)
             }
         }
 

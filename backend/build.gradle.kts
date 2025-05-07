@@ -1,8 +1,13 @@
 plugins {
     kotlin("jvm")
+    application
 }
 
 group = "hernanbosqued.backend"
+
+application {
+    mainClass.set("hernanbosqued.backend.MainKt")
+}
 
 dependencies {
     api(libs.koin.core)
@@ -30,15 +35,40 @@ dependencies {
     implementation(project(":backend:use_case:auth:di"))
 }
 
-tasks.jar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+distributions {
+    main { // O el nombre de tu distribución si es diferente
+        contents {
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+            // Aquí puedes refinar más si es necesario, por ejemplo:
+            // from(sourceSets.main.output)
+            // into("lib") {
+            //     from(configurations.runtimeClasspath)
+            // }
+        }
+    }
+}
 
+tasks.jar {
+    archiveBaseName.set(project.name)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes["Main-Class"] = "hernanbosqued.backend.MainKt"
     }
 
-    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    // Incluye las clases compiladas y recursos de este módulo
     from(sourceSets.main.get().output)
 
+    // Incluye todas las dependencias de runtime
+    from({
+        configurations.runtimeClasspath.get()
+            .filter { it.exists() }
+            .map { if (it.isDirectory) it else zipTree(it) }
+    })
+
     destinationDirectory.set(file("output"))
+}
+
+tasks.named<JavaExec>("run") {
+    dependsOn(":domain:generateConstants")
+    args("output/database/database.db")
 }

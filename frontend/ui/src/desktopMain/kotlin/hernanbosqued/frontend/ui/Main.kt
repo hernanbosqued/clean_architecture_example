@@ -2,7 +2,7 @@ package hernanbosqued.frontend.ui
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import hernanbosqued.frontend.buildconfig.BuildKonfig
+import hernanbosqued.constants.Constants
 import hernanbosqued.frontend.platform_controller.di.DesktopPlatformControllerModule
 import hernanbosqued.frontend.repository.di.RepositoryModule
 import hernanbosqued.frontend.use_case.auth.di.DesktopAuthUseCaseModule
@@ -25,12 +25,12 @@ fun main() =
                     }
                 },
                 TaskViewModelModule.getModule(),
-                RepositoryModule.getModule(BuildKonfig.apiUrl),
+                RepositoryModule.getModule(Constants.API_URL),
                 TaskUseCaseModule.getModule(),
                 DesktopPlatformControllerModule.getModule(),
                 DesktopAuthUseCaseModule.getModule(
-                    clientId = BuildKonfig.clientId,
-                    redirectUri = BuildKonfig.desktopRedirectUri,
+                    clientId = Constants.GOOGLE_CLIENT,
+                    redirectUri = Constants.DESKTOP_REDIRECT_URL,
                     scopes = listOf("profile", "email"),
                 ),
                 DesktopAuthViewModelModule.getModule(),

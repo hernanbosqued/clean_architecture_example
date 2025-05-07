@@ -6,5 +6,6 @@ import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
 
 interface AuthUseCase {
     suspend fun getUserData(code: AuthCodeRequest): UserData
+
     suspend fun refreshToken(code: DTOAuthRefreshTokenRequest): UserData
 }
