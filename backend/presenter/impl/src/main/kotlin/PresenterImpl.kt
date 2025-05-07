@@ -7,6 +7,7 @@ import hernanbosqued.backend.presenter.toDto
 import hernanbosqued.backend.use_case.auth.AuthUseCase
 import hernanbosqued.backend.use_case.db.DbUseCase
 import hernanbosqued.domain.Priority
+import hernanbosqued.domain.Task
 import hernanbosqued.domain.dto.DTOAuthCodeRequest
 import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
 import hernanbosqued.domain.dto.DTOIdTask
@@ -17,31 +18,29 @@ class PresenterImpl(
     private val dbUseCase: DbUseCase,
     private val authUseCase: AuthUseCase,
 ) : Presenter {
-    override fun allTasks(): List<DTOIdTask> {
-        return dbUseCase.allTasks().map { it.toDto() }
+    override fun allTasks(userId: String): List<DTOIdTask> {
+        return dbUseCase.allTasks(userId).map { it.toDto() }
     }
 
-    override fun taskById(taskId: Long?): Result<DTOIdTask, StatusCode> {
-        if (taskId == null) return Result.Error(StatusCode.BadRequest)
-
-        return when (val task = dbUseCase.taskById(taskId)) {
-            null -> Result.Error(StatusCode.NotFound)
-            else -> Result.Success(task.toDto())
-        }
-    }
-
-    override fun taskByPriority(priorityStr: String?): Result<List<DTOIdTask>, StatusCode> {
+    override fun taskByPriority(userId: String, priorityStr: String?): Result<List<DTOIdTask>, StatusCode> {
         if (priorityStr.isNullOrBlank()) return Result.Error(StatusCode.BadRequest)
 
         val priority = Priority.entries.find { it.name.equals(priorityStr, ignoreCase = true) }
 
         return when (priority) {
             null -> Result.Error(StatusCode.BadRequest)
-            else -> Result.Success(dbUseCase.tasksByPriority(priority).map { it.toDto() })
+            else -> Result.Success(dbUseCase.tasksByPriority(userId, priority).map { it.toDto() })
         }
     }
 
-    override fun addTask(task: DTOTask): Result<Unit, StatusCode> {
+    override fun addTask(userId: String, dtoTask: DTOTask): Result<Unit, StatusCode> {
+        val task = object : Task {
+            override val userId: String = userId
+            override val name: String = dtoTask.name
+            override val description: String = dtoTask.description
+            override val priority: Priority = dtoTask.priority
+
+        }
         dbUseCase.addTask(task)
         return Result.Success(Unit)
     }

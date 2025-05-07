@@ -7,13 +7,11 @@ import hernanbosqued.domain.dto.DTOTask
 import hernanbosqued.domain.dto.DTOUserData
 
 interface Presenter {
-    fun allTasks(): List<DTOIdTask>
+    fun allTasks(userId: String): List<DTOIdTask>
 
-    fun taskById(taskId: Long?): Result<DTOIdTask, StatusCode>
+    fun taskByPriority(userId: String, priorityStr: String?): Result<List<DTOIdTask>, StatusCode>
 
-    fun taskByPriority(priorityStr: String?): Result<List<DTOIdTask>, StatusCode>
-
-    fun addTask(task: DTOTask): Result<Unit, StatusCode>
+    fun addTask(userId: String, dtoTask: DTOTask): Result<Unit, StatusCode>
 
     fun removeTask(taskId: Long?): Result<Unit, StatusCode>
 

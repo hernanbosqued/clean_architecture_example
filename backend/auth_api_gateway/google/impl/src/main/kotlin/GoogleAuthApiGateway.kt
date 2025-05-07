@@ -77,7 +77,7 @@ class GoogleAuthApiGateway(
             override val name: String? = jwt.claims["name"]?.asString()
             override val email: String = requireNotNull(jwt.claims["email"]).asString()
             override val pictureUrl: String? = jwt.claims["picture"]?.asString()
-            override val accessToken: String = tokenResponse.idToken
+            override val idToken: String = tokenResponse.idToken
             override val refreshToken: String? = tokenResponse.refreshToken
         }
     }

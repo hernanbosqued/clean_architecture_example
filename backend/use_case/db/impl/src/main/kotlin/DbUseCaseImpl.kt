@@ -9,8 +9,8 @@ import hernanbosqued.domain.Task
 class DbUseCaseImpl(
     private val dbController: DbController,
 ) : DbUseCase {
-    override fun allTasks(): List<IdTask> {
-        return dbController.allTasks()
+    override fun allTasks(userId: String): List<IdTask> {
+        return dbController.allTasks(userId)
     }
 
     override fun addTask(task: Task) {
@@ -21,11 +21,7 @@ class DbUseCaseImpl(
         return dbController.removeTask(id)
     }
 
-    override fun tasksByPriority(priority: Priority): List<IdTask> {
-        return dbController.tasksByPriority(priority)
-    }
-
-    override fun taskById(taskId: Long): IdTask? {
-        return dbController.taskById(taskId)
+    override fun tasksByPriority(userId: String, priority: Priority): List<IdTask> {
+        return dbController.tasksByPriority(userId, priority)
     }
 }

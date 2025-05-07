@@ -12,11 +12,9 @@ class JsonDbController(path: String) : DbController {
 
     private fun getDb(): List<DAOTask> = Gson().fromJson(db.readText(), Array<DAOTask>::class.java).toList()
 
-    override fun allTasks(): List<IdTask> = getDb()
+    override fun allTasks(userId: String): List<IdTask> = getDb().filter { it.userId == userId}
 
-    override fun tasksByPriority(priority: Priority): List<IdTask> = getDb().filter { it.priority == priority }
-
-    override fun taskById(taskId: Long) = getDb().find { it.id == taskId }
+    override fun tasksByPriority(userId: String, priority: Priority): List<IdTask> = getDb().filter { it.userId == userId && it.priority == priority }
 
     override fun addTask(task: Task) {
         val allTasks =
@@ -24,6 +22,7 @@ class JsonDbController(path: String) : DbController {
                 add(
                     DAOTask(
                         id = this.maxOf { it.id } + 1,
+                        userId = task.userId,
                         name = task.name,
                         description = task.description,
                         priority = task.priority,

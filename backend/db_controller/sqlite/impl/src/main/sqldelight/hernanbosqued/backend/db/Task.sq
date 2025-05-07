@@ -1,8 +1,10 @@
-selectAll:
-SELECT * FROM taskEntity;
+selectByUserId:
+SELECT * FROM taskEntity WHERE user_id = ?;
+
+
 
 insert:
-INSERT INTO taskEntity (name, description, priority) VALUES (?, ?, ?);
+INSERT INTO taskEntity (user_id, name, description, priority) VALUES (?, ?, ?, ?);
 
 remove:
 DELETE FROM taskEntity WHERE id = ?;

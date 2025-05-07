@@ -12,6 +12,7 @@ import hernanbosqued.backend.use_case.db.di.DbUseCaseModule
 import hernanbosqued.constants.Constants
 import hernanbosqued.domain.dto.DTOAuthCodeRequest
 import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
+import hernanbosqued.domain.dto.DTOIdTask
 import hernanbosqued.domain.dto.DTOTask
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
@@ -31,6 +32,7 @@ import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import io.ktor.server.routing.RoutingCall
 import io.ktor.server.routing.delete
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
@@ -119,34 +121,28 @@ fun Application.main(path: String) {
         authenticate("auth-google") {
             route("/tasks") {
                 get {
-                    val principal = call.principal<JWTPrincipal>()
-                    val userEmail = principal?.payload?.getClaim("email")?.asString()
-                    userEmail
-                    call.respond(presenter.allTasks())
-                }
-
-                get("/id/{taskId}") {
-                    val taskId = call.parameters["taskId"]?.toLongOrNull()
-
-                    when (val result = presenter.taskById(taskId)) {
-                        is Result.Success -> call.respond(result.value)
-                        is Result.Error -> call.respond(result.error.map())
+                    call.withUserId { userId ->
+                        call.respond(presenter.allTasks(userId))
                     }
                 }
 
                 get("/priority/{priority}") {
-                    val priorityAsText = call.parameters["priority"]?.lowercase()
+                    call.withUserId { userId ->
+                        val priorityAsText = call.parameters["priority"]?.lowercase()
 
-                    when (val result = presenter.taskByPriority(priorityAsText)) {
-                        is Result.Success -> call.respond(result.value)
-                        is Result.Error -> call.respond(result.error.map())
+                        when (val result = presenter.taskByPriority(userId, priorityAsText)) {
+                            is Result.Success -> call.respond(result.value)
+                            is Result.Error -> call.respond(result.error.map())
+                        }
                     }
                 }
 
                 post {
-                    val task = call.receive<DTOTask>()
-                    presenter.addTask(task)
-                    call.respond(HttpStatusCode.Created)
+                    call.withUserId { userId ->
+                        val payload = call.receive<DTOTask>()
+                        presenter.addTask(userId, payload)
+                        call.respond(HttpStatusCode.Created)
+                    }
                 }
 
                 delete("/{taskId}") {
@@ -165,5 +161,15 @@ private fun StatusCode.map(): HttpStatusCode {
     return when (this) {
         StatusCode.BadRequest -> HttpStatusCode.BadRequest
         StatusCode.NotFound -> HttpStatusCode.NotFound
+    }
+}
+
+private suspend inline fun RoutingCall.withUserId(block:(String) -> Unit) {
+    val principal = principal<JWTPrincipal>()
+    val userId = principal?.payload?.getClaim("sub")?.asString()
+    userId?.let {
+        block(it)
+    } ?: run {
+        respond(HttpStatusCode.BadRequest, "User identifier (sub claim) missing or invalid in token")
     }
 }

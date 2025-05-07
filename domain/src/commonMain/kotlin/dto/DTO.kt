@@ -10,14 +10,15 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DTOTask(
-    override val name: String,
-    override val description: String,
-    override val priority: Priority,
-) : Task
+    val name: String,
+    val description: String,
+    val priority: Priority,
+)
 
 @Serializable
 data class DTOIdTask(
     override val id: Long,
+    override val userId: String,
     override val name: String,
     override val description: String,
     override val priority: Priority,
@@ -40,6 +41,6 @@ data class DTOUserData(
     override val name: String?,
     override val email: String,
     override val pictureUrl: String?,
-    override val accessToken: String,
+    override val idToken: String,
     override val refreshToken: String?,
 ) : UserData

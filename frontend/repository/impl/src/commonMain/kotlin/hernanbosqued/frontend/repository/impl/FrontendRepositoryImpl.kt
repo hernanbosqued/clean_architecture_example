@@ -13,9 +13,12 @@ import hernanbosqued.domain.dto.DTOUserData
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.authProviders
+import io.ktor.client.plugins.auth.providers.BearerAuthProvider
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
@@ -26,6 +29,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
 
 class FrontendRepositoryImpl(
@@ -38,62 +42,46 @@ class FrontendRepositoryImpl(
                 json()
             }
             install(Logging) {
-                logger = Logger.SIMPLE
+                logger = Logger.DEFAULT
                 level = LogLevel.ALL
             }
             install(Auth) {
                 bearer {
                     loadTokens {
-                        // Carga los tokens desde tu persistencia
+                        println("--------------LAMADA A LOADTOKENS-----------------")
+
                         val userData = authPersistence.loadUserData()
-                        if (userData != null && userData.accessToken.isNotBlank()) {
-                            BearerTokens(userData.accessToken, userData.refreshToken ?: "")
+                        if (userData != null && userData.idToken.isNotBlank()) {
+                            BearerTokens(userData.idToken, userData.refreshToken ?: "")
                         } else {
-                            null // No hay tokens o el access token está vacío
+                            null
                         }
                     }
 
                     refreshTokens {
-                        // Lógica para refrescar el token si loadTokens devuelve null o si una petición falla con 401
-                        // Este bloque se ejecutará si el servidor devuelve 401 Unauthorized.
                         val currentData = authPersistence.loadUserData()
                         val currentRefreshToken = currentData?.refreshToken
 
                         if (currentRefreshToken != null) {
                             try {
-                                // Llama a tu lógica de refresh token del repositorio
-                                // ¡IMPORTANTE! Esta llamada a frontendRepository.refreshToken
-                                // NO debe ser interceptada por este mismo Auth bearer provider.
-                                // sendWithoutRequest se encarga de esto.
                                 val newUserData = refreshToken(currentRefreshToken)
-                                authPersistence.saveUserData(newUserData) // Guarda los nuevos tokens
-                                BearerTokens(newUserData.accessToken, newUserData.refreshToken ?: "")
+                                authPersistence.saveUserData(newUserData)
+                                BearerTokens(newUserData.idToken, newUserData.refreshToken ?: "")
                             } catch (e: Exception) {
-                                // Si el refresh falla (ej. refresh token inválido),
-                                // limpia los tokens y devuelve null para indicar fallo.
                                 authPersistence.clearUserData()
-                                // Podrías emitir un evento para que la UI reaccione (ej. redirigir a login)
-                                // authUseCase.userData.emit(null) // O similar, cuidado con el contexto de corrutina
                                 println("Error refreshing token: ${e.message}")
                                 null
                             }
                         } else {
-                            // No hay refresh token, no se puede refrescar
-                            authPersistence.clearUserData() // Limpia por si acaso
+                            authPersistence.clearUserData()
                             null
                         }
                     }
 
-                    // Configura para qué peticiones NO se debe enviar el token.
-                    // Es crucial para evitar enviar el token a los endpoints de login/refresh.
-//                    sendWithoutRequest { request ->
-//                        // Compara con las rutas de tus endpoints de autenticación
-//                        val path = request.url.encodedPath
-//         //               path.contains("/tasks") || // Endpoint para iniciar sesión
-//                        path.endsWith("/auth/code") || // Endpoint para enviar authCode
-//                        path.endsWith("/auth/refresh_token") // Endpoint para refrescar token
-//                        // Añade aquí cualquier otra ruta pública que no requiera autenticación
-//                    }
+                    sendWithoutRequest { request ->
+                        val path = request.url.encodedPath
+                        path.endsWith("/auth/code") || path.endsWith("/auth/refresh_token")
+                    }
                 }
             }
         }
@@ -133,5 +121,9 @@ class FrontendRepositoryImpl(
             contentType(ContentType.Application.Json)
             setBody(DTOAuthRefreshTokenRequest(refreshToken))
         }.body<DTOUserData>()
+    }
+
+    override fun invalidateTokens() {
+        (client.authProviders.first() as BearerAuthProvider).clearToken()
     }
 }

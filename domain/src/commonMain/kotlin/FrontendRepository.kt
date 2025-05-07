@@ -18,4 +18,6 @@ interface FrontendRepository {
     ): UserData
 
     suspend fun refreshToken(refreshToken: String): UserData
+
+    fun invalidateTokens()
 }

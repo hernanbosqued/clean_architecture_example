@@ -4,6 +4,6 @@ interface UserData {
     val name: String?
     val email: String
     val pictureUrl: String?
-    val accessToken: String
+    val idToken: String
     val refreshToken: String?
 }

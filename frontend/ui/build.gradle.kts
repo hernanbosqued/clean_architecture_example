@@ -49,6 +49,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
+            runtimeOnly(libs.logback.classic)
 
             implementation(project(":frontend:platform_controller:di"))
 
