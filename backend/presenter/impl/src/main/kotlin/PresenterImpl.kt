@@ -34,14 +34,7 @@ class PresenterImpl(
     }
 
     override fun addTask(userId: String, dtoTask: DTOTask): Result<Unit, StatusCode> {
-        val task = object : Task {
-            override val userId: String = userId
-            override val name: String = dtoTask.name
-            override val description: String = dtoTask.description
-            override val priority: Priority = dtoTask.priority
-
-        }
-        dbUseCase.addTask(task)
+        dbUseCase.addTask(userId, dtoTask)
         return Result.Success(Unit)
     }
 

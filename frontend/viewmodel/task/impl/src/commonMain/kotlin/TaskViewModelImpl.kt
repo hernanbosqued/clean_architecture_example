@@ -1,6 +1,7 @@
 package hernanbosqued.frontend.viewmodel.task.impl
 
 import hernanbosqued.domain.IdTask
+import hernanbosqued.domain.Priority
 import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.viewmodel.task.TaskUseCase
 import hernanbosqued.frontend.viewmodel.task.TaskViewModel
@@ -13,7 +14,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class TaskViewModelImpl(
-    taskUseCase: TaskUseCase,
+    private val taskUseCase: TaskUseCase,
 ) : TaskViewModel {
+    override suspend fun addTask(name: String, description: String, priority: Priority) {
+        taskUseCase.addTask(name, description, priority)
+    }
+
     override val tasks: StateFlow<List<IdTask>> = taskUseCase.tasks
 }

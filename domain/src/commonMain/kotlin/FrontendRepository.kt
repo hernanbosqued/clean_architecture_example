@@ -7,8 +7,6 @@ interface FrontendRepository {
 
     suspend fun allTasks(): List<IdTask>
 
-    suspend fun taskById(taskId: Int): IdTask
-
     suspend fun taskByPriority(priority: Priority): List<IdTask>
 
     suspend fun addTask(task: Task)

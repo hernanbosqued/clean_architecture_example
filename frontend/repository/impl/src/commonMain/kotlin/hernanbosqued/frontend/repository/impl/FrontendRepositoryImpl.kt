@@ -9,6 +9,7 @@ import hernanbosqued.domain.UserData
 import hernanbosqued.domain.dto.DTOAuthCodeRequest
 import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
 import hernanbosqued.domain.dto.DTOIdTask
+import hernanbosqued.domain.dto.DTOTask
 import hernanbosqued.domain.dto.DTOUserData
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -81,14 +82,12 @@ class FrontendRepositoryImpl(
 
     override suspend fun allTasks(): List<IdTask> = client.get("$url/tasks").body<List<DTOIdTask>>()
 
-    override suspend fun taskById(taskId: Int): IdTask = client.get("$url/tasks/id/$taskId").body()
-
     override suspend fun taskByPriority(priority: Priority): List<IdTask> = client.get("$url/tasks/priority/$priority").body()
 
     override suspend fun addTask(task: Task) {
         client.post("$url/tasks") {
             contentType(ContentType.Application.Json)
-            setBody(task)
+            setBody(DTOTask(task.name, task.description, task.priority))
         }
     }
 

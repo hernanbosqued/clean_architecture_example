@@ -2,18 +2,20 @@ package hernanbosqued.domain.dto
 
 import hernanbosqued.domain.AuthCodeRequest
 import hernanbosqued.domain.AuthRefreshTokenRequest
+import hernanbosqued.domain.Id
 import hernanbosqued.domain.IdTask
 import hernanbosqued.domain.Priority
 import hernanbosqued.domain.Task
 import hernanbosqued.domain.UserData
+import hernanbosqued.domain.UserId
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class DTOTask(
-    val name: String,
-    val description: String,
-    val priority: Priority,
-)
+    override val name: String,
+    override val description: String,
+    override val priority: Priority,
+): Task
 
 @Serializable
 data class DTOIdTask(

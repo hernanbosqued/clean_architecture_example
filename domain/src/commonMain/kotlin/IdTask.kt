@@ -1,3 +1,3 @@
 package hernanbosqued.domain
 
-interface IdTask : Id, Task
+interface IdTask : Id, UserId, Task

@@ -13,8 +13,8 @@ class DbUseCaseImpl(
         return dbController.allTasks(userId)
     }
 
-    override fun addTask(task: Task) {
-        dbController.addTask(task)
+    override fun addTask(userId: String, task: Task) {
+        dbController.addTask(userId, task)
     }
 
     override fun removeTask(id: Long): Boolean {

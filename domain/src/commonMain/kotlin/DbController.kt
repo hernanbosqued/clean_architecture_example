@@ -1,7 +1,7 @@
 package hernanbosqued.domain
 
 interface DbController {
-    fun addTask(task: Task)
+    fun addTask(userId: String, task: Task)
 
     fun removeTask(id: Long): Boolean
 

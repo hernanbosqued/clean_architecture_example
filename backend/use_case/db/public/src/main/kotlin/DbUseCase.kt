@@ -7,7 +7,7 @@ import hernanbosqued.domain.Task
 interface DbUseCase {
     fun allTasks(userId: String): List<IdTask>
 
-    fun addTask(task: Task)
+    fun addTask(userId: String, task: Task)
 
     fun removeTask(id: Long): Boolean
 

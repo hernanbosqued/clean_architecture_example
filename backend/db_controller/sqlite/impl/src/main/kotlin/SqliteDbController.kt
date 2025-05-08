@@ -24,8 +24,8 @@ class SqliteDbController(
 
     override fun tasksByPriority(userId: String, priority: Priority): List<IdTask> = getDb(userId).filter { it.priority == priority }
 
-    override fun addTask(task: Task) {
-        db.taskQueries.insert(task.userId, task.name, task.description, task.priority.name)
+    override fun addTask(userId: String, task: Task) {
+        db.taskQueries.insert(userId, task.name, task.description, task.priority.name)
     }
 
     override fun removeTask(id: Long): Boolean {
