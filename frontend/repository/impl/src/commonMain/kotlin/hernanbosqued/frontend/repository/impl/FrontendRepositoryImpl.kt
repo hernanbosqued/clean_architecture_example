@@ -91,7 +91,7 @@ class FrontendRepositoryImpl(
         }
     }
 
-    override suspend fun removeTask(taskId: Int?) {
+    override suspend fun removeTask(taskId: Long) {
         client.delete("$url/tasks/$taskId") {
             contentType(ContentType.Application.Json)
         }

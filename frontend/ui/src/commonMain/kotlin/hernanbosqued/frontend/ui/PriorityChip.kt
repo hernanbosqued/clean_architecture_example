@@ -32,7 +32,7 @@ fun PriorityChip(priority: Priority) {
     Surface(
         color = backgroundColor,
         shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.Companion.padding(start = 8.dp),
+        modifier = Modifier.Companion.padding(start = 0.dp),
     ) {
         Text(
             text = priority.toString(),

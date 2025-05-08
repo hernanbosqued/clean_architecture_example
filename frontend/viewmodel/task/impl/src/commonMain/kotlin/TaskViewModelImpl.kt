@@ -16,9 +16,14 @@ import kotlinx.coroutines.launch
 class TaskViewModelImpl(
     private val taskUseCase: TaskUseCase,
 ) : TaskViewModel {
+
+    override val tasks: StateFlow<List<IdTask>> = taskUseCase.tasks
+
     override suspend fun addTask(name: String, description: String, priority: Priority) {
         taskUseCase.addTask(name, description, priority)
     }
 
-    override val tasks: StateFlow<List<IdTask>> = taskUseCase.tasks
+    override suspend fun removeTask(taskId: Long) {
+        taskUseCase.removeTask(taskId)
+    }
 }
