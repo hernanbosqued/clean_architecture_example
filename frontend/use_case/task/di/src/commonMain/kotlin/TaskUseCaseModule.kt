@@ -11,7 +11,6 @@ object TaskUseCaseModule {
                 println("Atlanta 4")
                 TaskUseCaseImpl(
                     frontendRepository = get(),
-                    persistence = get(),
                     coroutineScope = get()
                 )
             }

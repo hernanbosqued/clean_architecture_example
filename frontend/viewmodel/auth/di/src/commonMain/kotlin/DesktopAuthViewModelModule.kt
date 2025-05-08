@@ -9,8 +9,7 @@ object DesktopAuthViewModelModule {
         module {
             single<AuthViewModel> {
                 AuthViewModelImpl(
-                    authUseCase = get(),
-                    coroutineScope = get(),
+                    authUseCase = get()
                 )
             }
         }

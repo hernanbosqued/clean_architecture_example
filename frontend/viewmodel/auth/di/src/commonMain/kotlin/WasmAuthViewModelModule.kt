@@ -11,8 +11,7 @@ object WasmAuthViewModelModule {
         module {
             single<WasmAuthViewModel> {
                 WasmAuthViewModelImpl(
-                    wasmAuthUseCase = get(),
-                    coroutineScope = get(),
+                    wasmAuthUseCase = get()
                 )
             }.bind(AuthViewModel::class)
         }

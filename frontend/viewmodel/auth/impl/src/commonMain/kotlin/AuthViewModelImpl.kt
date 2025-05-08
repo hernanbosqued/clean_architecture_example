@@ -13,23 +13,16 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 open class AuthViewModelImpl(
-    private val authUseCase: AuthUseCase,
-    coroutineScope: CoroutineScope,
+    private val authUseCase: AuthUseCase
 ) : AuthViewModel {
 
     override val userData: StateFlow<UserData?> = authUseCase.userData
 
     override suspend fun login() = authUseCase.login()
 
-    override suspend fun logout() {
-        authUseCase.logout()
-    }
+    override suspend fun logout() = authUseCase.logout()
 
-    override fun getButtonText(): String {
-        return if (userData.value != null) "Logout" else "Login with Google"
-    }
+    override fun getButtonText(): String = if (userData.value != null) "Logout" else "Login with Google"
 
-    override suspend fun getButtonFunction() {
-        return (if (userData.value != null) logout() else login())
-    }
+    override suspend fun getButtonFunction() = if (userData.value != null) logout() else login()
 }

@@ -1,35 +1,27 @@
 package hernanbosqued.frontend.use_case.auth.impl
 
 import hernanbosqued.domain.FrontendRepository
-import hernanbosqued.domain.Persistence
 import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
 import io.ktor.http.Parameters
 import io.ktor.http.URLBuilder
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 
 abstract class BaseAuthUseCase(
     val clientId: String,
     val redirectUri: String,
     val scopes: List<String>,
-    val frontendRepository: FrontendRepository,
-    val authPersistence: Persistence,
+    val frontendRepository: FrontendRepository
 ) : AuthUseCase {
 
-    override val userData: StateFlow<UserData?> = authPersistence.userData
+    override val userData: StateFlow<UserData?> = frontendRepository.userData
 
     override suspend fun logout() {
-        authPersistence.clearUserData()
+        frontendRepository.logout()
     }
 
     override suspend fun getUserDataFromAuthCode(authCode: String) {
-        val userData = frontendRepository.sendAuthorizationCode(authCode, clientId, redirectUri)
-        authPersistence.saveUserData(userData)
+       frontendRepository.sendAuthorizationCode(authCode, clientId, redirectUri)
     }
 
     fun generateAuthorizationUrl(): String {

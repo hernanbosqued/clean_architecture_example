@@ -22,25 +22,22 @@ import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
-import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class FrontendRepositoryImpl(
     val url: String,
     val authPersistence: Persistence,
 ) : FrontendRepository {
+
+    override val userData: StateFlow<UserData?> = authPersistence.userData
+
     private val client =
         HttpClient {
             install(ContentNegotiation) {
@@ -53,30 +50,24 @@ class FrontendRepositoryImpl(
             install(Auth) {
                 bearer {
                     loadTokens {
-                        println("--------------LAMADA A LOADTOKENS-----------------")
-
+                        println("--------------LLAMADA A LOADTOKENS-----------------")
                         val userData = authPersistence.userData.value
                         if (userData != null && userData.idToken.isNotBlank()) {
-                            BearerTokens(userData.idToken, userData.refreshToken ?: "")
+                            BearerTokens(userData.idToken, userData.refreshToken)
                         } else {
                             null
                         }
                     }
 
                     refreshTokens {
-                        println("--------------LAMADA A REFRESHTOKENS-----------------")
-
-                        val currentData = authPersistence.userData.value
-                        val currentRefreshToken = currentData?.refreshToken
-
+                        println("--------------LLAMADA A REFRESHTOKENS-----------------")
+                        val currentRefreshToken = authPersistence.userData.value?.refreshToken
                         if (currentRefreshToken != null) {
                             try {
                                 val newUserData = refreshToken(currentRefreshToken)
-                                authPersistence.saveUserData(newUserData)
-                                BearerTokens(newUserData.idToken, newUserData.refreshToken ?: "")
-                            } catch (e: Exception) {
+                                BearerTokens(newUserData.idToken, newUserData.refreshToken)
+                            } catch (_: Exception) {
                                 authPersistence.clearUserData()
-                                println("Error refreshing token: ${e.message}")
                                 null
                             }
                         } else {
@@ -111,23 +102,33 @@ class FrontendRepositoryImpl(
         code: String,
         clientId: String,
         redirectUri: String,
-    ): UserData {
+    ) {
         invalidateTokens()
 
-        return client.post("$url/auth/code") {
+        val userData = client.post("$url/auth/code") {
             contentType(ContentType.Application.Json)
             setBody(DTOAuthCodeRequest(clientId, redirectUri, code))
         }.body<DTOUserData>()
+
+        authPersistence.saveUserData(userData)
     }
 
-    override suspend fun refreshToken(refreshToken: String): UserData {
-        return client.post("$url/auth/refresh_token") {
+    override suspend fun refreshToken(refreshToken: String): UserData{
+        val userData = client.post("$url/auth/refresh_token") {
             contentType(ContentType.Application.Json)
             setBody(DTOAuthRefreshTokenRequest(refreshToken))
         }.body<DTOUserData>()
+
+        authPersistence.saveUserData(userData)
+
+        return userData
     }
 
-    override fun invalidateTokens() {
+    override suspend fun logout() {
+        authPersistence.clearUserData()
+    }
+
+    private fun invalidateTokens() {
         (client.authProviders.first() as BearerAuthProvider).clearToken()
     }
 }

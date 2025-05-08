@@ -16,8 +16,7 @@ object DesktopAuthUseCaseModule {
                 redirectUri = redirectUri,
                 scopes = scopes,
                 desktopPlatformController = get(),
-                frontendRepository = get(),
-                authPersistence = get(),
+                frontendRepository = get()
             )
         }
     }

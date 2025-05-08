@@ -16,8 +16,7 @@ object WasmAuthUseCaseModule {
                 redirectUri = redirectUri,
                 scopes = scopes,
                 wasmPlatformController = get(),
-                persistence = get(),
-                frontendRepository = get(),
+                frontendRepository = get()
             )
         }
     }
