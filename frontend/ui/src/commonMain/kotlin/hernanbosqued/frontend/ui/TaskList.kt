@@ -71,9 +71,12 @@ fun TaskList(
             }
         }
     ) { innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
+        LazyColumn(
+            modifier = Modifier.padding(innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             items(tasks.size) { task ->
-                TaskItem(task = tasks[task])
+                TaskItem(task = tasks[task], { taskId -> coroutineScope.launch { viewModel.removeTask(taskId) } })
             }
         }
 

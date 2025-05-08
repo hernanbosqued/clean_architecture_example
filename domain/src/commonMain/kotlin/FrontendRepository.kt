@@ -11,7 +11,7 @@ interface FrontendRepository {
 
     suspend fun addTask(task: Task)
 
-    suspend fun removeTask(taskId: Int?)
+    suspend fun removeTask(taskId: Long)
 
     suspend fun sendAuthorizationCode(code: String, clientId: String, redirectUri: String)
 

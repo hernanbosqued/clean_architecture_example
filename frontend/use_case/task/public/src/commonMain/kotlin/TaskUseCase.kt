@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.StateFlow
 interface TaskUseCase {
     val tasks: StateFlow<List<IdTask>>
     suspend fun addTask(name: String, description: String, priority: Priority)
+    suspend fun removeTask(taskId: Long)
 }

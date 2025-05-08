@@ -49,4 +49,9 @@ class TaskUseCaseImpl(
         })
         refreshTasksTrigger.tryEmit(Unit)
     }
+
+    override suspend fun removeTask(taskId: Long) {
+        frontendRepository.removeTask(taskId)
+        refreshTasksTrigger.tryEmit(Unit)
+    }
 }

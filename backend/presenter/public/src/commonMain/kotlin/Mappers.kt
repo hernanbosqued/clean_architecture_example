@@ -5,6 +5,6 @@ import hernanbosqued.domain.UserData
 import hernanbosqued.domain.dto.DTOIdTask
 import hernanbosqued.domain.dto.DTOUserData
 
-fun IdTask.toDto(): DTOIdTask = DTOIdTask(id, userId, name, description, priority)
+fun IdTask.toDto(): DTOIdTask = DTOIdTask(id, name, description, priority)
 
 fun UserData.toDto(): DTOUserData = DTOUserData(name, email, pictureUrl, idToken, refreshToken)

@@ -13,7 +13,6 @@ class SqliteDbController(
         db.taskQueries.selectByUserId(userId).executeAsList().map {
             object : IdTask {
                 override val id: Long = it.id
-                override val userId: String = it.user_id
                 override val name: String = it.name
                 override val description: String = it.description
                 override val priority: Priority = Priority.valueOf(it.priority)
