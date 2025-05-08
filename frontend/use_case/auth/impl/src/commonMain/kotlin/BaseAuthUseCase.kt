@@ -6,7 +6,12 @@ import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
 import io.ktor.http.Parameters
 import io.ktor.http.URLBuilder
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 
 abstract class BaseAuthUseCase(
     val clientId: String,
@@ -15,24 +20,16 @@ abstract class BaseAuthUseCase(
     val frontendRepository: FrontendRepository,
     val authPersistence: Persistence,
 ) : AuthUseCase {
-    override val userData: MutableSharedFlow<UserData?> = MutableSharedFlow(replay = 1)
 
-    override suspend fun init() {
-        authPersistence.loadUserData()?.let {
-            this.userData.emit(it)
-        }
-    }
+    override val userData: StateFlow<UserData?> = authPersistence.userData
 
     override suspend fun logout() {
         authPersistence.clearUserData()
-        frontendRepository.invalidateTokens()
-        userData.emit(null)
     }
 
     override suspend fun getUserDataFromAuthCode(authCode: String) {
         val userData = frontendRepository.sendAuthorizationCode(authCode, clientId, redirectUri)
         authPersistence.saveUserData(userData)
-        this.userData.emit(userData)
     }
 
     fun generateAuthorizationUrl(): String {

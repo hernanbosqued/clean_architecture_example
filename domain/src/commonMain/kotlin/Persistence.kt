@@ -1,9 +1,11 @@
 package hernanbosqued.domain
 
+import kotlinx.coroutines.flow.StateFlow
+
 interface Persistence {
-    fun saveUserData(user: UserData)
+    val userData: StateFlow<UserData?>
 
-    fun loadUserData(): UserData?
+    suspend fun saveUserData(user: UserData)
 
-    fun clearUserData()
+    suspend fun clearUserData()
 }

@@ -31,6 +31,11 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class FrontendRepositoryImpl(
     val url: String,
@@ -50,7 +55,7 @@ class FrontendRepositoryImpl(
                     loadTokens {
                         println("--------------LAMADA A LOADTOKENS-----------------")
 
-                        val userData = authPersistence.loadUserData()
+                        val userData = authPersistence.userData.value
                         if (userData != null && userData.idToken.isNotBlank()) {
                             BearerTokens(userData.idToken, userData.refreshToken ?: "")
                         } else {
@@ -59,7 +64,9 @@ class FrontendRepositoryImpl(
                     }
 
                     refreshTokens {
-                        val currentData = authPersistence.loadUserData()
+                        println("--------------LAMADA A REFRESHTOKENS-----------------")
+
+                        val currentData = authPersistence.userData.value
                         val currentRefreshToken = currentData?.refreshToken
 
                         if (currentRefreshToken != null) {
@@ -76,11 +83,6 @@ class FrontendRepositoryImpl(
                             authPersistence.clearUserData()
                             null
                         }
-                    }
-
-                    sendWithoutRequest { request ->
-                        val path = request.url.encodedPath
-                        path.endsWith("/auth/code") || path.endsWith("/auth/refresh_token")
                     }
                 }
             }
@@ -110,6 +112,8 @@ class FrontendRepositoryImpl(
         clientId: String,
         redirectUri: String,
     ): UserData {
+        invalidateTokens()
+
         return client.post("$url/auth/code") {
             contentType(ContentType.Application.Json)
             setBody(DTOAuthCodeRequest(clientId, redirectUri, code))

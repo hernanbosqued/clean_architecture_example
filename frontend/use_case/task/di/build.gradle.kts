@@ -17,16 +17,12 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.kotlinx.coroutines.core)
             implementation(libs.koin.core)
+
             api(project(":domain"))
             api(project(":frontend:use_case:task:public"))
             implementation(project(":frontend:use_case:task:impl"))
-        }
-
-        jvmMain.dependencies {
-        }
-
-        wasmJsMain.dependencies {
         }
     }
 }

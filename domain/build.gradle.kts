@@ -21,6 +21,7 @@ kotlin {
             kotlin.srcDir(layout.buildDirectory.dir("generated/source/constants/kotlin"))
 
             dependencies {
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
             }
         }

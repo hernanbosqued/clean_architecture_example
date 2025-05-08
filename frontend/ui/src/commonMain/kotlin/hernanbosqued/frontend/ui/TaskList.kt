@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,16 +24,10 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 
 @Composable
-@Preview
 fun TaskList() {
     val viewModel = koinInject<TaskViewModel>()
+    val tasks by viewModel.tasks.collectAsState()
     val scrollState = rememberScrollState()
-    var tasks by remember { mutableStateOf<List<IdTask>>(emptyList()) }
-    val coroutineScope = rememberCoroutineScope()
-
-    coroutineScope.launch {
-        tasks = viewModel.getTasks()
-    }
 
     Box(
         modifier = Modifier.Companion.fillMaxSize(),

@@ -1,7 +1,8 @@
 package hernanbosqued.frontend.viewmodel.task
 
 import hernanbosqued.domain.IdTask
+import kotlinx.coroutines.flow.StateFlow
 
 interface TaskViewModel {
-    suspend fun getTasks(): List<IdTask>
+    val tasks: StateFlow<List<IdTask>>
 }

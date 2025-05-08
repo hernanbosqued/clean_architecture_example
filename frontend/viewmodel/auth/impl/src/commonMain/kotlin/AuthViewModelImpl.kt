@@ -3,6 +3,7 @@ package hernanbosqued.frontend.viewmodel.auth.impl
 import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
 import hernanbosqued.frontend.viewmodel.auth.AuthViewModel
+import hernanbosqued.frontend.viewmodel.task.TaskUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,18 +16,8 @@ open class AuthViewModelImpl(
     private val authUseCase: AuthUseCase,
     coroutineScope: CoroutineScope,
 ) : AuthViewModel {
-    private val _authState = MutableStateFlow<UserData?>(null)
-    override val authState: StateFlow<UserData?> = _authState.asStateFlow()
 
-    init {
-        coroutineScope.launch {
-            authUseCase.init()
-        }
-
-        authUseCase.userData
-            .onEach { _authState.value = it }
-            .launchIn(coroutineScope)
-    }
+    override val userData: StateFlow<UserData?> = authUseCase.userData
 
     override suspend fun login() = authUseCase.login()
 
@@ -35,10 +26,10 @@ open class AuthViewModelImpl(
     }
 
     override fun getButtonText(): String {
-        return if (authState.value != null) "Logout" else "Login with Google"
+        return if (userData.value != null) "Logout" else "Login with Google"
     }
 
     override suspend fun getButtonFunction() {
-        return (if (authState.value != null) logout() else login())
+        return (if (userData.value != null) logout() else login())
     }
 }

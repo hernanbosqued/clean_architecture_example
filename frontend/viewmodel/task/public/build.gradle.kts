@@ -17,11 +17,9 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":domain"))
-        }
+            implementation(libs.kotlinx.coroutines.core)
 
-        wasmJsMain.dependencies {
-            implementation(libs.kotlinx.browser)
+            implementation(project(":domain"))
         }
     }
 }

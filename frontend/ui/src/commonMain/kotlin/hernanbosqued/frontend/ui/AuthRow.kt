@@ -26,7 +26,7 @@ import org.koin.compose.koinInject
 @Composable
 fun AuthRow() {
     val viewModel: AuthViewModel = koinInject<AuthViewModel>()
-    val userData by viewModel.authState.collectAsState()
+    val userData by viewModel.userData.collectAsState()
     val coroutineScope = rememberCoroutineScope()
     val padding = 6.dp
     val rowSize = 60.dp

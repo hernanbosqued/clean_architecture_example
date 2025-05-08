@@ -9,7 +9,11 @@ object TaskUseCaseModule {
         module {
             single<TaskUseCase> {
                 println("Atlanta 4")
-                TaskUseCaseImpl(get())
+                TaskUseCaseImpl(
+                    frontendRepository = get(),
+                    persistence = get(),
+                    coroutineScope = get()
+                )
             }
         }
 }

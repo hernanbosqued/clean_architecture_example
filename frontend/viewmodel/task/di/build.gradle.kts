@@ -18,15 +18,11 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.koin.core)
+            implementation(libs.kotlinx.coroutines.core)
+
             api(project(":frontend:viewmodel:task:public"))
             implementation(project(":frontend:viewmodel:task:impl"))
             implementation(project(":frontend:use_case:task:public"))
-        }
-
-        jvmMain.dependencies {
-        }
-
-        wasmJsMain.dependencies {
         }
     }
 }

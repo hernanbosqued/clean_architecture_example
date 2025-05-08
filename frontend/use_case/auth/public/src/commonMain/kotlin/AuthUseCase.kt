@@ -2,11 +2,10 @@ package hernanbosqued.frontend.usecase.auth
 
 import hernanbosqued.domain.UserData
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 
 interface AuthUseCase {
-    val userData: SharedFlow<UserData?>
-
-    suspend fun init()
+    val userData: StateFlow<UserData?>
 
     suspend fun login()
 

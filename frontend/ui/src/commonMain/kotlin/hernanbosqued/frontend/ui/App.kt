@@ -12,13 +12,16 @@ import org.koin.compose.koinInject
 @Composable
 fun App() {
     KoinContext {
-        val authViewModel = koinInject<AuthViewModel>()
-        val authState by authViewModel.authState.collectAsState()
-
         MaterialTheme {
             Column {
+                val authViewModel = koinInject<AuthViewModel>()
+                val userData by authViewModel.userData.collectAsState()
+
+                println("---------------AUTHSTATE----------$userData")
+
                 AuthRow()
-                if (authState != null) {
+                if (userData != null) {
+                    println("---------------SE COMPONE TASKLIST----------")
                     TaskList()
                 }
             }

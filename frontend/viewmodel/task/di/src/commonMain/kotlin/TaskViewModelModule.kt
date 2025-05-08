@@ -9,7 +9,9 @@ object TaskViewModelModule {
         module {
             single<TaskViewModel> {
                 println("Atlanta 2")
-                TaskViewModelImpl(get())
+                TaskViewModelImpl(
+                    taskUseCase = get()
+                )
             }
         }
 }
