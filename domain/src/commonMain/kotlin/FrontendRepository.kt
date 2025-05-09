@@ -9,7 +9,7 @@ interface FrontendRepository {
 
     suspend fun removeTask(taskId: Long)
 
-    suspend fun getUserData(code: String, clientId: String, redirectUri: String): UserData
+    suspend fun getUserData(authorizationCode: String, clientId: String, redirectUri: String): UserData
 
     suspend fun refreshToken(refreshToken: String): UserData
 }

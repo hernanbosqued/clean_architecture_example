@@ -28,7 +28,7 @@ fun TaskItem(task: IdTask, onDeleteClick: (Long) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth(0.5f)
-            .padding(8.dp)
+            .padding(8.dp),
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
