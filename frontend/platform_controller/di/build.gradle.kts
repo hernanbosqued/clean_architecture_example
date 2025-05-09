@@ -18,6 +18,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.koin.core)
             implementation(libs.multiplatform.setting)
+            implementation(libs.ktor.client.core)
             implementation(libs.kotlinx.serialization.json)
 
             implementation(project(":frontend:platform_controller:impl"))

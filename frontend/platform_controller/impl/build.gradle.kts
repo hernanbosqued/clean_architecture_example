@@ -20,9 +20,15 @@ kotlin {
 
         commonMain.dependencies {
             implementation(libs.koin.core)
-            implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.http)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.auth)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.serialization.kotlinx.json)
+            implementation(libs.ktor.client.logging)
+
             implementation(libs.multiplatform.setting)
+            implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
 
             implementation(project(":frontend:use_case:auth:public"))

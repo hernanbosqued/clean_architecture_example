@@ -10,7 +10,9 @@ class WasmAuthUseCaseImpl(
     scopes: List<String>,
     frontendRepository: FrontendRepository,
     val wasmPlatformController: WasmPlatformController,
-) : BaseAuthUseCase(clientId, redirectUri, scopes, frontendRepository) {
+    persistence: Persistence,
+    tokenInvalidator: ()-> Unit
+) : BaseAuthUseCase(clientId, redirectUri, scopes, frontendRepository, persistence, tokenInvalidator) {
     override suspend fun login() {
         wasmPlatformController.openPage(super.generateAuthorizationUrl())
     }

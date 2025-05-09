@@ -1,3 +1,5 @@
+package hernanbosqued.frontend.platform_controller.impl
+
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.get
 import com.russhwolf.settings.set

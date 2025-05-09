@@ -25,9 +25,11 @@ fun main() =
                     }
                 },
                 TaskViewModelModule.getModule(),
-                RepositoryModule.getModule(Constants.API_URL),
+                RepositoryModule.getModule(
+                    apiUrl = Constants.API_URL
+                ),
                 TaskUseCaseModule.getModule(),
-                DesktopPlatformControllerModule.getModule(),
+                *DesktopPlatformControllerModule.getModules().toTypedArray(),
                 DesktopAuthUseCaseModule.getModule(
                     clientId = Constants.GOOGLE_CLIENT,
                     redirectUri = Constants.DESKTOP_REDIRECT_URL,

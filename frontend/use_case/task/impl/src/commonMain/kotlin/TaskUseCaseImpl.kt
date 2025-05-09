@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 
 class TaskUseCaseImpl(
+    private val persistence: Persistence,
     private val frontendRepository: FrontendRepository,
     coroutineScope: CoroutineScope
 ) : TaskUseCase {
@@ -27,7 +28,7 @@ class TaskUseCaseImpl(
     ).also { it.tryEmit(Unit) }
 
     override val tasks: StateFlow<List<IdTask>> = combine(
-        flow = frontendRepository.userData,
+        flow = persistence.userData,
         flow2 = refreshTasksTrigger
     ) { userData, _ ->
         if (userData == null) {

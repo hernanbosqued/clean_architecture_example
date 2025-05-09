@@ -1,10 +1,6 @@
 package hernanbosqued.domain
 
-import kotlinx.coroutines.flow.StateFlow
-
 interface FrontendRepository {
-    val userData: StateFlow<UserData?>
-
     suspend fun allTasks(): List<IdTask>
 
     suspend fun taskByPriority(priority: Priority): List<IdTask>
@@ -13,9 +9,7 @@ interface FrontendRepository {
 
     suspend fun removeTask(taskId: Long)
 
-    suspend fun sendAuthorizationCode(code: String, clientId: String, redirectUri: String)
+    suspend fun getUserData(code: String, clientId: String, redirectUri: String): UserData
 
     suspend fun refreshToken(refreshToken: String): UserData
-
-    suspend fun logout()
 }

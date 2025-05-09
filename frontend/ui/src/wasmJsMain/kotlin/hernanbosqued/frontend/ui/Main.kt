@@ -30,9 +30,11 @@ fun main() {
                     CoroutineScope(SupervisorJob() + Dispatchers.Default)
                 }
             },
-            WasmPlatformControllerModule.getModule(),
+            *WasmPlatformControllerModule.getModules().toTypedArray(),
             TaskViewModelModule.getModule(),
-            RepositoryModule.getModule(Constants.API_URL),
+            RepositoryModule.getModule(
+                apiUrl = Constants.API_URL
+            ),
             TaskUseCaseModule.getModule(),
             WasmAuthViewModelModule.getModule(),
             WasmAuthUseCaseModule.getModule(

@@ -1,9 +1,8 @@
 package hernanbosqued.domain
 
-interface UserData {
+interface UserData : AuthData {
     val name: String?
     val email: String
     val pictureUrl: String?
-    val idToken: String
-    val refreshToken: String?
 }
+

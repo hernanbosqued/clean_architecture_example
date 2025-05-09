@@ -10,6 +10,7 @@ object TaskUseCaseModule {
             single<TaskUseCase> {
                 println("Atlanta 4")
                 TaskUseCaseImpl(
+                    persistence = get(),
                     frontendRepository = get(),
                     coroutineScope = get()
                 )

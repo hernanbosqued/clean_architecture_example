@@ -18,6 +18,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.koin.core)
+            implementation(libs.ktor.client.core)
             api(project(":domain"))
             api(project(":frontend:repository:impl"))
         }
