@@ -20,7 +20,6 @@ data class DTOTask(
 @Serializable
 data class DTOIdTask(
     override val id: Long,
-    override val userId: String,
     override val name: String,
     override val description: String,
     override val priority: Priority,

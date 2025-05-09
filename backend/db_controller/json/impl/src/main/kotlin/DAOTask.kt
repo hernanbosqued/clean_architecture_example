@@ -2,6 +2,7 @@ package hernanbosqued.backend.db_controller.json
 
 import hernanbosqued.domain.IdTask
 import hernanbosqued.domain.Priority
+import hernanbosqued.domain.UserId
 
 data class DAOTask(
     override val id: Long,
@@ -9,4 +10,4 @@ data class DAOTask(
     override val name: String,
     override val description: String,
     override val priority: Priority,
-) : IdTask
+) : IdTask, UserId

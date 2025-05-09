@@ -16,13 +16,13 @@ class JsonDbController(path: String) : DbController {
 
     override fun tasksByPriority(userId: String, priority: Priority): List<IdTask> = getDb().filter { it.userId == userId && it.priority == priority }
 
-    override fun addTask(task: Task) {
+    override fun addTask(userId: String, task: Task) {
         val allTasks =
             getDb().toMutableList().apply {
                 add(
                     DAOTask(
                         id = this.maxOf { it.id } + 1,
-                        userId = task.userId,
+                        userId = userId,
                         name = task.name,
                         description = task.description,
                         priority = task.priority,
