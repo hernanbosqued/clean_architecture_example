@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -27,8 +28,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun TaskItem(task: IdTask, onDeleteClick: (Long) -> Unit) {
     Box(
         modifier = Modifier
-            .fillMaxWidth(0.5f)
-            .padding(8.dp),
+            .widthIn(max = 600.dp)
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),

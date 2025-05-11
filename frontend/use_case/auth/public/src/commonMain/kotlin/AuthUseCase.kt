@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface AuthUseCase {
     val userData: StateFlow<UserData?>
 
-    suspend fun login()
+    suspend fun login(authCode: String? = null)
 
     suspend fun getUserDataFromAuthCode(authCode: String)
 

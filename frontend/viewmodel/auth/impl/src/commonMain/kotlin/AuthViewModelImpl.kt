@@ -18,11 +18,7 @@ open class AuthViewModelImpl(
 
     override val userData: StateFlow<UserData?> = authUseCase.userData
 
-    override suspend fun login() = authUseCase.login()
+    override suspend fun login(authCode: String?) = authUseCase.login(authCode)
 
     override suspend fun logout() = authUseCase.logout()
-
-    override fun getButtonText(): String = if (userData.value != null) "Logout" else "Login with Google"
-
-    override suspend fun getButtonFunction() = if (userData.value != null) logout() else login()
 }

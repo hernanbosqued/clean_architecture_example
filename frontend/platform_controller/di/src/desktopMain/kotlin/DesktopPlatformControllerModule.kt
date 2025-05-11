@@ -1,6 +1,5 @@
 package hernanbosqued.frontend.platform_controller.di
 
-import CommonPlatformControllerModule
 import com.russhwolf.settings.PreferencesSettings
 import com.russhwolf.settings.Settings
 import hernanbosqued.frontend.platform_controller.impl.DesktopPlatformControllerImpl

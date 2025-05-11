@@ -75,4 +75,8 @@ class TaskUseCaseImpl(
     override suspend fun removeTask(taskId: Long) {
         operationTrigger.tryEmit(Operation.RemoveTask(taskId))
     }
+
+    override suspend fun refreshTasks() {
+        operationTrigger.tryEmit(Operation.LoadList)
+    }
 }

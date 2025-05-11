@@ -2,8 +2,9 @@ package hernanbosqued.frontend.ui
 
 import android.app.Application
 import hernanbosqued.constants.Constants
-import hernanbosqued.frontend.platform_controller.di.DesktopPlatformControllerModule
+import hernanbosqued.frontend.platform_controller.di.AndroidPlatformControllerModule
 import hernanbosqued.frontend.repository.di.RepositoryModule
+import hernanbosqued.frontend.use_case.auth.di.AndroidAuthUseCaseModule
 import hernanbosqued.frontend.use_case.auth.di.DesktopAuthUseCaseModule
 import hernanbosqued.frontend.use_case.task.di.TaskUseCaseModule
 import hernanbosqued.frontend.viewmodel.auth.di.DesktopAuthViewModelModule
@@ -36,8 +37,8 @@ class AndroidApplication : Application() {
                     apiUrl = Constants.API_URL
                 ),
                 TaskUseCaseModule.getModule(),
-                *DesktopPlatformControllerModule.getModules().toTypedArray(),
-                DesktopAuthUseCaseModule.getModule(
+                *AndroidPlatformControllerModule.getModules().toTypedArray(),
+                AndroidAuthUseCaseModule.getModule(
                     clientId = Constants.GOOGLE_CLIENT,
                     redirectUri = Constants.DESKTOP_REDIRECT_URL,
                     scopes = listOf("profile", "email"),

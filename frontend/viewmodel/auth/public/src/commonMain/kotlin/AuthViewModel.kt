@@ -6,11 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface AuthViewModel {
     val userData: StateFlow<UserData?>
 
-    suspend fun login()
+    suspend fun login(authCode: String? = null)
 
     suspend fun logout()
-
-    fun getButtonText(): String
-
-    suspend fun getButtonFunction()
 }

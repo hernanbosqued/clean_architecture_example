@@ -14,7 +14,7 @@ class DesktopAuthUseCaseImpl(
     val desktopPlatformController: DesktopPlatformController,
 ) : BaseAuthUseCase(clientId, redirectUri, scopes, frontendRepository, persistence, tokenInvalidator) {
 
-    override suspend fun login() {
+    override suspend fun login(authCode: String?) {
         val parameters = desktopPlatformController.openPageAndWaitForResponse(super.generateAuthorizationUrl())
         getUserDataFromAuthCode(requireNotNull(parameters["code"]))
     }
