@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -44,11 +45,19 @@ fun TaskList(
                 modifier = Modifier.padding(padding),
                 horizontalArrangement = Arrangement.spacedBy(padding),
             ) {
-                FloatingActionButton(onClick = { coroutineScope.launch { viewModel.refreshTasks() } }) {
+                FloatingActionButton(
+                    onClick = { coroutineScope.launch { viewModel.refreshTasks() } },
+                    backgroundColor = MaterialTheme.colors.primary, // Color de fondo como un botón normal
+                    contentColor = MaterialTheme.colors.onPrimary    // Color del contenido (icono)
+                ) {
                     Icon(Icons.Filled.Refresh, contentDescription = "Refresh Task")
                 }
 
-                FloatingActionButton(onClick = { showDialog = true }) {
+                FloatingActionButton(
+                    onClick = { showDialog = true },
+                    backgroundColor = MaterialTheme.colors.primary, // Color de fondo como un botón normal
+                    contentColor = MaterialTheme.colors.onPrimary    // Color del contenido (icono)
+                ) {
                     Icon(Icons.Filled.Add, contentDescription = "Add Task")
                 }
             }
