@@ -19,4 +19,8 @@ class TaskViewModelImpl(
     override suspend fun removeTask(taskId: Long) {
         taskUseCase.removeTask(taskId)
     }
+
+    override suspend fun refreshTasks() {
+        taskUseCase.refreshTasks()
+    }
 }

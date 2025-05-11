@@ -9,4 +9,5 @@ interface TaskViewModel {
 
     suspend fun addTask(name: String, description: String, priority: Priority)
     suspend fun removeTask(taskId: Long)
+    suspend fun refreshTasks()
 }

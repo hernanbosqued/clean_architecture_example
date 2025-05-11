@@ -1,5 +1,6 @@
 package hernanbosqued.frontend.ui
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -10,9 +11,17 @@ import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 
 @Composable
-fun App() {
+fun App(
+    darkTheme: Boolean = isSystemInDarkTheme()
+) {
+    val colors = if (darkTheme) {
+        DarkColorPalette
+    } else {
+        LightColorPalette
+    }
+
     KoinContext {
-        MaterialTheme {
+        MaterialTheme(colors = colors) {
             Column {
                 val authViewModel = koinInject<AuthViewModel>()
                 val userData by authViewModel.userData.collectAsState()

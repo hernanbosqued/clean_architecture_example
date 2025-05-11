@@ -1,3 +1,5 @@
+package hernanbosqued.frontend.platform_controller.di
+
 import hernanbosqued.domain.Persistence
 import hernanbosqued.frontend.platform_controller.impl.HttpClientFactory
 import hernanbosqued.frontend.platform_controller.impl.PersistenceImpl

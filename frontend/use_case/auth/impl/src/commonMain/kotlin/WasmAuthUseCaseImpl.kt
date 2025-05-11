@@ -13,7 +13,7 @@ class WasmAuthUseCaseImpl(
     persistence: Persistence,
     tokenInvalidator: ()-> Unit
 ) : BaseAuthUseCase(clientId, redirectUri, scopes, frontendRepository, persistence, tokenInvalidator) {
-    override suspend fun login() {
+    override suspend fun login(authCode: String?) {
         wasmPlatformController.openPage(super.generateAuthorizationUrl())
     }
 }

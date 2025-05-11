@@ -43,6 +43,8 @@ fun main() =
             onCloseRequest = ::exitApplication,
             title = "Clean Architecture Example",
         ) {
+            window.minimumSize = java.awt.Dimension(400, 300)
+
             App()
         }
     }
