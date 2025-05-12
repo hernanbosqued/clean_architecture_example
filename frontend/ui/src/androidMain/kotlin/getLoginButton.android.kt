@@ -1,7 +1,6 @@
 package hernanbosqued.frontend.ui
 
 import android.app.Activity.RESULT_OK
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
@@ -19,7 +18,6 @@ import com.google.android.gms.common.api.ApiException
 import hernanbosqued.constants.Constants
 import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.viewmodel.auth.AuthViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 

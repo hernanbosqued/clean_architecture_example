@@ -44,19 +44,24 @@ tasks.register("generateConstants") {
         val googleJwks = providers.gradleProperty("COMMON.GOOGLE.JWKS").get()
         val googleIssuer = providers.gradleProperty("COMMON.GOOGLE.ISSUER").get()
         val desktopRedirectUrl = providers.gradleProperty("COMMON.DESKTOP.REDIRECT_URL").get()
+
+        val environment = providers.gradleProperty("ENVIRONMENT").get()
+        println("***** El environment es: $environment *****")
+
         var webRedirectUrl: String
         var apiUrl: String
 
-        when (currentBuildVariant()) {
+        when (environment) {
             "remote" -> {
                 apiUrl = providers.gradleProperty("REMOTE.API_URL").get()
                 webRedirectUrl = providers.gradleProperty("REMOTE.WEB.REDIRECT_URL").get()
             }
 
-            else -> { // LOCAL
+            "local" -> { // LOCAL
                 apiUrl = providers.gradleProperty("LOCAL.API_URL").get()
                 webRedirectUrl = providers.gradleProperty("LOCAL.WEB.REDIRECT_URL").get()
             }
+            else -> throw RuntimeException()
         }
 
         outputFile.get().asFile.parentFile.mkdirs()
@@ -96,7 +101,6 @@ tasks.named("runKtlintCheckOverCommonMainSourceSet") {
 private fun currentBuildVariant(): String {
     val variants = setOf("local", "remote")
     val variant = System.getProperty("variant")
-    println("***** El variant pasado por parametro es: $variant *****")
 
-    return variant.takeIf { it in variants } ?: "local"
+    return variant.takeIf { it in variants } ?: "remote"
 }
