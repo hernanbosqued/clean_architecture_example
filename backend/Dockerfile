@@ -1,4 +1,4 @@
-FROM openjdk:19-jdk-slim
+FROM eclipse-temurin:21-jdk-jammy
 WORKDIR /app
 RUN mkdir -p /app/database
 COPY output/backend-1.0.jar /app/backend.jar
