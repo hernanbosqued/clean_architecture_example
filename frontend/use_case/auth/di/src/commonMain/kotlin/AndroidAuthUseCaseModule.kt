@@ -17,7 +17,6 @@ object AndroidAuthUseCaseModule {
                 clientId = clientId,
                 redirectUri = redirectUri,
                 scopes = scopes,
-                androidPlatformController = get(),
                 frontendRepository = get(),
                 persistence = get(),
                 tokenInvalidator = get(named("TOKEN_INVALIDATOR"))

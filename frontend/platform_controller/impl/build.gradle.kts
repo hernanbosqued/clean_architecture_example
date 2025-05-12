@@ -43,6 +43,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
 
             implementation(project(":frontend:use_case:auth:public"))
+            implementation(project(":frontend:platform_controller:public"))
             implementation(project(":domain"))
         }
         desktopMain.dependencies {
@@ -52,6 +53,10 @@ kotlin {
 
         wasmJsMain.dependencies {
             implementation(libs.kotlinx.browser)
+        }
+        androidMain.dependencies {
+            implementation(libs.play.services.auth)
+            implementation(libs.androidx.activity.compose)
         }
     }
 }

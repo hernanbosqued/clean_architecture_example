@@ -33,6 +33,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
 
             implementation(project(":frontend:platform_controller:impl"))
+            api(project(":frontend:platform_controller:public"))
             implementation(project(":frontend:use_case:auth:public"))
             implementation(project(":domain"))
         }
