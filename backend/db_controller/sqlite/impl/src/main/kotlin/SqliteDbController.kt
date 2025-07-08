@@ -31,4 +31,8 @@ class SqliteDbController(
         db.taskQueries.remove(id)
         return true
     }
+
+    override fun getMfaSecret(userId: String): String? = db.mfaQueries.selectByUserId(userId).executeAsOneOrNull()?.mfaSecret
+
+    override fun addMfaSecret(userId: String, mfaSecret: String) = db.mfaQueries.insert(userId, mfaSecret)
 }

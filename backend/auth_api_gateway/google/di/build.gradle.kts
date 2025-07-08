@@ -14,6 +14,6 @@ dependencies {
     implementation(libs.ktor.serialization.json)
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(project(":backend:auth_api_gateway:google:impl"))
+    api(project(":backend:auth_api_gateway:google:impl")) //cambiar esto despues
     implementation(project(":domain"))
 }

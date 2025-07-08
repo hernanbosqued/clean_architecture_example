@@ -20,6 +20,7 @@ object GoogleAuthApiGatewayModule {
             single<AuthApiGateway> {
                 GoogleAuthApiGateway(
                     httpClient = get(),
+                    dbController = get()
                 )
             }
         }

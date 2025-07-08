@@ -1,0 +1,5 @@
+selectByUserId:
+SELECT * FROM mfaEntity WHERE user_id = ?;
+
+insert:
+INSERT INTO mfaEntity (user_id, mfaSecret) VALUES (?, ?);

@@ -6,4 +6,7 @@ CREATE TABLE taskEntity (
   priority TEXT NOT NULL
 );
 
-INSERT INTO taskEntity (user_id, name, description, priority) VALUES ('115747023026092176959', 'cleaning', 'Clean the house', 'Low');
+CREATE TABLE mfaEntity (
+  user_id TEXT PRIMARY KEY,
+  mfaSecret TEXT NOT NULL
+);

@@ -2,10 +2,12 @@ package hernanbosqued.backend.auth_api_gateway_google.impl
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.interfaces.DecodedJWT
+import com.warrenstrange.googleauth.GoogleAuthenticator
 import hernanbosqued.constants.Constants
 import hernanbosqued.domain.AuthApiGateway
 import hernanbosqued.domain.AuthCodeRequest
 import hernanbosqued.domain.AuthRefreshTokenRequest
+import hernanbosqued.domain.DbController
 import hernanbosqued.domain.UserData
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -18,6 +20,7 @@ import io.ktor.http.contentType
 
 class GoogleAuthApiGateway(
     val httpClient: HttpClient,
+    val dbController: DbController
 ) : AuthApiGateway {
     override suspend fun getUserData(code: AuthCodeRequest): UserData {
         val tokenResponse =
@@ -79,6 +82,19 @@ class GoogleAuthApiGateway(
             override val pictureUrl: String? = jwt.claims["picture"]?.asString()
             override val idToken: String = tokenResponse.idToken
             override val refreshToken: String? = tokenResponse.refreshToken
+            override val mfaSecret: String = getMfaSecret(jwt.claims["sub"]?.asString() ?: throw RuntimeException("sub must exist in token"))
+
+            private fun getMfaSecret(userId: String): String {
+                var mfaSecret = dbController.getMfaSecret(userId)
+
+                if (mfaSecret != null) {
+                    return mfaSecret
+                } else {
+                    mfaSecret = GoogleAuthenticator().createCredentials().key
+                    dbController.addMfaSecret(userId, mfaSecret)
+                    return mfaSecret
+                }
+            }
         }
     }
 }

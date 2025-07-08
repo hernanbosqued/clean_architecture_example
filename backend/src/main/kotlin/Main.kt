@@ -12,7 +12,6 @@ import hernanbosqued.backend.use_case.db.di.DbUseCaseModule
 import hernanbosqued.constants.Constants
 import hernanbosqued.domain.dto.DTOAuthCodeRequest
 import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
-import hernanbosqued.domain.dto.DTOIdTask
 import hernanbosqued.domain.dto.DTOTask
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod

@@ -14,6 +14,14 @@ class JsonDbController(path: String) : DbController {
 
     override fun allTasks(userId: String): List<IdTask> = getDb().filter { it.userId == userId}
 
+    override fun getMfaSecret(userId: String): String? {
+        TODO("Not yet implemented")
+    }
+
+    override fun addMfaSecret(userId: String, mfaSecret: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun tasksByPriority(userId: String, priority: Priority): List<IdTask> = getDb().filter { it.userId == userId && it.priority == priority }
 
     override fun addTask(userId: String, task: Task) {

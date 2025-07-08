@@ -30,6 +30,7 @@ class PersistenceImpl(
                     pictureUrl = user.pictureUrl ?: userData.value?.pictureUrl,
                     idToken = user.idToken,
                     refreshToken = user.refreshToken ?: userData.value?.refreshToken,
+                    mfaSecret = user.mfaSecret,
                 )
 
             val userJson = json.encodeToString(serializableUserData)

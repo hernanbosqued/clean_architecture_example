@@ -33,6 +33,8 @@ dependencies {
     implementation(project(":backend:auth_api_gateway:google:di"))
     implementation(project(":backend:use_case:db:di"))
     implementation(project(":backend:use_case:auth:di"))
+
+    implementation("com.warrenstrange:googleauth:1.5.0") //cambiar
 }
 
 distributions {

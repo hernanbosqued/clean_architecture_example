@@ -4,5 +4,6 @@ interface UserData : AuthData {
     val name: String?
     val email: String
     val pictureUrl: String?
+    val mfaSecret: String
 }
 

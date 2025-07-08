@@ -9,19 +9,11 @@ import hernanbosqued.domain.Task
 class DbUseCaseImpl(
     private val dbController: DbController,
 ) : DbUseCase {
-    override fun allTasks(userId: String): List<IdTask> {
-        return dbController.allTasks(userId)
-    }
+    override fun allTasks(userId: String): List<IdTask> = dbController.allTasks(userId)
+    override fun addTask(userId: String, task: Task) = dbController.addTask(userId, task)
+    override fun removeTask(id: Long): Boolean = dbController.removeTask(id)
+    override fun tasksByPriority(userId: String, priority: Priority): List<IdTask> = dbController.tasksByPriority(userId, priority)
 
-    override fun addTask(userId: String, task: Task) {
-        dbController.addTask(userId, task)
-    }
-
-    override fun removeTask(id: Long): Boolean {
-        return dbController.removeTask(id)
-    }
-
-    override fun tasksByPriority(userId: String, priority: Priority): List<IdTask> {
-        return dbController.tasksByPriority(userId, priority)
-    }
+    override fun getMfaSecret(userId: String): String? = dbController.getMfaSecret(userId)
+    override fun addMfaSecret(userId: String, mfaSecret: String) = dbController.addMfaSecret(userId, mfaSecret)
 }
