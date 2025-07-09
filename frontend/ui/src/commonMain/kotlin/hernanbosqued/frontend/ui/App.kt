@@ -29,9 +29,11 @@ fun App(
                 println("---------------AUTHSTATE----------$userData")
 
                 AuthRow()
-                if (userData != null) {
-                    println("---------------SE COMPONE TASKLIST----------")
-                    TaskList()
+
+                when {
+                    userData == null -> Unit
+                    userData?.isMfaAuthenticated == true -> TaskList()
+                    else -> MfaDialog(userData!!.mfaSecret)
                 }
             }
         }

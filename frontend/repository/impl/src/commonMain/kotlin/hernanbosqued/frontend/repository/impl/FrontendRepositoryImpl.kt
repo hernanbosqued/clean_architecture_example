@@ -49,4 +49,10 @@ class FrontendRepositoryImpl(
         contentType(ContentType.Application.Json)
         setBody(DTOAuthRefreshTokenRequest(refreshToken))
     }.body<DTOUserData>()
+
+    override suspend fun sendTotp(totp: Int): Boolean = client.post("$url/totp") {
+        contentType(ContentType.Application.Json)
+        setBody(totp)
+    }.body<Boolean>()
+
 }

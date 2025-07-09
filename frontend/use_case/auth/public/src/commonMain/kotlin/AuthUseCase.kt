@@ -12,4 +12,5 @@ interface AuthUseCase {
     suspend fun logout()
     fun provideTokens(): AuthData?
     suspend fun refreshTokens(): AuthData?
+    suspend fun sendTotp(totp: Int): Boolean
 }

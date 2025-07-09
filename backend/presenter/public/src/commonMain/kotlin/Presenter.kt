@@ -18,4 +18,6 @@ interface Presenter {
     suspend fun getUserData(code: DTOAuthCodeRequest): DTOUserData
 
     suspend fun refreshToken(code: DTOAuthRefreshTokenRequest): DTOUserData
+
+    fun verifyTotp(userId: String, totp: Int): Boolean
 }

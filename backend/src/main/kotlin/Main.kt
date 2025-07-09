@@ -118,6 +118,13 @@ fun Application.main(path: String) {
         }
 
         authenticate("auth-google") {
+            post("/totp") {
+                call.withUserId { userId ->
+                    val totp = call.receive<Int>()
+                    call.respond(presenter.verifyTotp(userId, totp))
+                }
+            }
+
             route("/tasks") {
                 get {
                     call.withUserId { userId ->
@@ -163,7 +170,7 @@ private fun StatusCode.map(): HttpStatusCode {
     }
 }
 
-private suspend inline fun RoutingCall.withUserId(block:(String) -> Unit) {
+private suspend inline fun RoutingCall.withUserId(block: (String) -> Unit) {
     val principal = principal<JWTPrincipal>()
     val userId = principal?.payload?.getClaim("sub")?.asString()
     userId?.let {

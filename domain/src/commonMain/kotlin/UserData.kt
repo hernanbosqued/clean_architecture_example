@@ -5,5 +5,6 @@ interface UserData : AuthData {
     val email: String
     val pictureUrl: String?
     val mfaSecret: String
+    val isMfaAuthenticated: Boolean
 }
 

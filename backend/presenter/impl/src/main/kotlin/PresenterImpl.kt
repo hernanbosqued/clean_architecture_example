@@ -54,4 +54,10 @@ class PresenterImpl(
     override suspend fun refreshToken(code: DTOAuthRefreshTokenRequest): DTOUserData {
         return authUseCase.refreshToken(code).toDto()
     }
+
+    override fun verifyTotp(userId: String, totp: Int): Boolean {
+        return dbUseCase.getMfaSecret(userId)?.let { mfaSecret ->
+            authUseCase.verifyTotp(mfaSecret, totp)
+        } ?: false
+    }
 }
