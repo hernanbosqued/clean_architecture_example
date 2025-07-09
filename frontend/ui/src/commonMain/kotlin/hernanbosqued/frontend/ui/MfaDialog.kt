@@ -1,9 +1,11 @@
 package hernanbosqued.frontend.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
@@ -30,13 +32,14 @@ import org.koin.compose.koinInject
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MfaDialog(
-    authorizationCode: String
+    qrCode: String
 ) {
     var totp by remember { mutableStateOf("") }
     var isMfaAuthenticated: Boolean? by remember { mutableStateOf(null) }
     val viewModel: AuthViewModel = koinInject<AuthViewModel>()
     val coroutineScope = rememberCoroutineScope()
     val focusRequester = remember { FocusRequester() }
+    val imageBitmap = base64EncodedImageBitmap(qrCode)
 
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -47,13 +50,6 @@ fun MfaDialog(
         title = { Text("MFA authentication") },
         text = {
             Column {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = authorizationCode,
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
                 TextField(
                     modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                     value = totp,
@@ -66,11 +62,16 @@ fun MfaDialog(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     color = if (isMfaAuthenticated == false) Color.Red else Color.Transparent,
                     text = "Wrong code, try again",
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Image(
+                    bitmap = imageBitmap,
+                    contentDescription = "Código QR para 2FA",
+                    modifier = Modifier.size(200.dp)
                 )
             }
         },
@@ -88,3 +89,4 @@ fun MfaDialog(
         }
     )
 }
+

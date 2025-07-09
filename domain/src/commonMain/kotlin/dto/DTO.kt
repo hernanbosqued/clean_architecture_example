@@ -44,6 +44,6 @@ data class DTOUserData(
     override val pictureUrl: String?,
     override val idToken: String,
     override val refreshToken: String?,
-    override val mfaSecret: String,
+    override val qrCode: String,
     override val isMfaAuthenticated: Boolean
 ) : UserData

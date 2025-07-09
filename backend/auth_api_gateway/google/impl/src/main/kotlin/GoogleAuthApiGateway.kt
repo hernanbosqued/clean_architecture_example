@@ -2,6 +2,9 @@ package hernanbosqued.backend.auth_api_gateway_google.impl
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.interfaces.DecodedJWT
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.client.j2se.MatrixToImageWriter
+import com.google.zxing.qrcode.QRCodeWriter
 import com.warrenstrange.googleauth.GoogleAuthenticator
 import hernanbosqued.constants.Constants
 import hernanbosqued.domain.AuthApiGateway
@@ -17,6 +20,8 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.Parameters
 import io.ktor.http.contentType
+import java.io.ByteArrayOutputStream
+import java.util.Base64
 
 class GoogleAuthApiGateway(
     val httpClient: HttpClient,
@@ -80,18 +85,29 @@ class GoogleAuthApiGateway(
             override val pictureUrl: String? = jwt.claims["picture"]?.asString()
             override val idToken: String = tokenResponse.idToken
             override val refreshToken: String? = tokenResponse.refreshToken
-            override val mfaSecret: String = getMfaSecret(jwt.claims["sub"]?.asString() ?: throw RuntimeException("sub must exist in token"))
+            override val qrCode: String = createQrCode(email)
             override val isMfaAuthenticated: Boolean = false
 
             private fun getMfaSecret(userId: String): String {
-                var mfaSecret = dbController.getMfaSecret(userId)
+                return dbController.getMfaSecret(userId)?:run {
+                    GoogleAuthenticator().createCredentials().key.also {
+                        dbController.addMfaSecret(userId, it)
+                    }
+                }
+            }
 
-                if (mfaSecret != null) {
-                    return mfaSecret
-                } else {
-                    mfaSecret = GoogleAuthenticator().createCredentials().key
-                    dbController.addMfaSecret(userId, mfaSecret)
-                    return mfaSecret
+            fun createQrCode(email: String): String {
+                val mfaSecret = getMfaSecret(jwt.claims["sub"]?.asString() ?: throw RuntimeException("sub must exist in token"))
+                val qrCodeUrl = "otpauth://totp/$email?secret=$mfaSecret&issuer=CleanArch"
+
+                return try {
+                    val qrCodeWriter = QRCodeWriter()
+                    val bitMatrix = qrCodeWriter.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 200, 200)
+                    val pngOutputStream = ByteArrayOutputStream()
+                    MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream)
+                    "data:image/png;base64,${Base64.getEncoder().encodeToString(pngOutputStream.toByteArray())}"
+                } catch (e: Exception) {
+                    throw RuntimeException("Error generando el código QR", e)
                 }
             }
         }

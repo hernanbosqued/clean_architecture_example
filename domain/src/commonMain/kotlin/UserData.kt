@@ -4,7 +4,7 @@ interface UserData : AuthData {
     val name: String?
     val email: String
     val pictureUrl: String?
-    val mfaSecret: String
+    val qrCode: String
     val isMfaAuthenticated: Boolean
 }
 

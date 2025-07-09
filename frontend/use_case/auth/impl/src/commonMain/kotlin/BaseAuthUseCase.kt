@@ -74,7 +74,7 @@ abstract class BaseAuthUseCase(
                 override val name = userData.name
                 override val email = userData.email
                 override val pictureUrl = userData.pictureUrl
-                override val mfaSecret = userData.mfaSecret
+                override val qrCode = userData.qrCode
                 override val isMfaAuthenticated = isMfaAuthenticated
                 override val idToken = userData.idToken
                 override val refreshToken = userData.refreshToken

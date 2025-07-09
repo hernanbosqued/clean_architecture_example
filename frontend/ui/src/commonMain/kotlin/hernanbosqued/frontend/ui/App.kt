@@ -30,10 +30,10 @@ fun App(
 
                 AuthRow()
 
-                when {
-                    userData == null -> Unit
-                    userData?.isMfaAuthenticated == true -> TaskList()
-                    else -> MfaDialog(userData!!.mfaSecret)
+                when (userData?.isMfaAuthenticated) {
+                    true -> TaskList()
+                    false -> MfaDialog(userData!!.qrCode)
+                    else -> Unit
                 }
             }
         }
