@@ -23,26 +23,24 @@ class GoogleAuthApiGateway(
     val dbController: DbController
 ) : AuthApiGateway {
     override suspend fun getUserData(code: AuthCodeRequest): UserData {
-        val tokenResponse =
-            getGoogleTokens(
-                grantType = "authorization_code",
-                clientId = Constants.GOOGLE_CLIENT,
-                clientSecret = Constants.GOOGLE_SECRET,
-                redirectUri = code.redirectUri,
-                authorizationCode = code.authorizationCode,
-            )
+        val tokenResponse = getGoogleTokens(
+            grantType = "authorization_code",
+            clientId = Constants.GOOGLE_CLIENT,
+            clientSecret = Constants.GOOGLE_SECRET,
+            redirectUri = code.redirectUri,
+            authorizationCode = code.authorizationCode,
+        )
 
         return extractUserDataFromIdToken(tokenResponse)
     }
 
     override suspend fun refreshToken(code: AuthRefreshTokenRequest): UserData {
-        val tokenResponse =
-            getGoogleTokens(
-                grantType = "refresh_token",
-                clientId = Constants.GOOGLE_CLIENT,
-                clientSecret = Constants.GOOGLE_SECRET,
-                refreshToken = code.refreshToken,
-            )
+        val tokenResponse = getGoogleTokens(
+            grantType = "refresh_token",
+            clientId = Constants.GOOGLE_CLIENT,
+            clientSecret = Constants.GOOGLE_SECRET,
+            refreshToken = code.refreshToken,
+        )
         return extractUserDataFromIdToken(tokenResponse)
     }
 
@@ -83,6 +81,7 @@ class GoogleAuthApiGateway(
             override val idToken: String = tokenResponse.idToken
             override val refreshToken: String? = tokenResponse.refreshToken
             override val mfaSecret: String = getMfaSecret(jwt.claims["sub"]?.asString() ?: throw RuntimeException("sub must exist in token"))
+            override val isMfaAuthenticated: Boolean = false
 
             private fun getMfaSecret(userId: String): String {
                 var mfaSecret = dbController.getMfaSecret(userId)

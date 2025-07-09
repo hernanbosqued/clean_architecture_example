@@ -20,6 +20,7 @@ android-minSdk = "24"
 android-targetSdk = "35"
 androidx-activityCompose = "1.10.1"
 playServicesAuth = "21.3.0"
+warrenstrange-googleauth = "1.5.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -67,8 +68,7 @@ coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref 
 coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
 multiplatform-setting = { group = "com.russhwolf", name = "multiplatform-settings", version.ref = "mutltiplatform-settings" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
-
-
+warrenstrange-googleauth = { group = "com.warrenstrange", name = "googleauth", version.ref = "warrenstrange-googleauth" }
 
 [plugins]
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

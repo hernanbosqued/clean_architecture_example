@@ -67,4 +67,18 @@ abstract class BaseAuthUseCase(
             null
         }
     }
+
+    override suspend fun sendTotp(totp: Int): Boolean = frontendRepository.sendTotp(totp).also { isMfaAuthenticated ->
+        userData.value?.let { userData ->
+            persistence.saveUserData(object : UserData {
+                override val name = userData.name
+                override val email = userData.email
+                override val pictureUrl = userData.pictureUrl
+                override val mfaSecret = userData.mfaSecret
+                override val isMfaAuthenticated = isMfaAuthenticated
+                override val idToken = userData.idToken
+                override val refreshToken = userData.refreshToken
+            })
+        }
+    }
 }

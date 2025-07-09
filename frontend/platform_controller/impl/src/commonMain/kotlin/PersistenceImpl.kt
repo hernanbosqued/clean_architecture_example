@@ -31,6 +31,7 @@ class PersistenceImpl(
                     idToken = user.idToken,
                     refreshToken = user.refreshToken ?: userData.value?.refreshToken,
                     mfaSecret = user.mfaSecret,
+                    isMfaAuthenticated = user.isMfaAuthenticated
                 )
 
             val userJson = json.encodeToString(serializableUserData)
