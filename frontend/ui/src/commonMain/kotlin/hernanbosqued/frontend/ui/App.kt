@@ -32,7 +32,7 @@ fun App(
 
                 when (userData?.isMfaAuthenticated) {
                     true -> TaskList()
-                    false -> MfaDialog(userData!!.qrCode)
+                    false -> MfaDialog(userData = requireNotNull(userData))
                     else -> Unit
                 }
             }

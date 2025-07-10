@@ -3,11 +3,10 @@ package hernanbosqued.backend.presenter.impl
 import hernanbosqued.backend.presenter.Presenter
 import hernanbosqued.backend.presenter.Result
 import hernanbosqued.backend.presenter.StatusCode
-import hernanbosqued.backend.presenter.toDto
+import hernanbosqued.domain.dto.toDto
 import hernanbosqued.backend.use_case.auth.AuthUseCase
 import hernanbosqued.backend.use_case.db.DbUseCase
 import hernanbosqued.domain.Priority
-import hernanbosqued.domain.Task
 import hernanbosqued.domain.dto.DTOAuthCodeRequest
 import hernanbosqued.domain.dto.DTOAuthRefreshTokenRequest
 import hernanbosqued.domain.dto.DTOIdTask

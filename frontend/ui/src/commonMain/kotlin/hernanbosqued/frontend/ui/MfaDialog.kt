@@ -13,18 +13,16 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.viewmodel.auth.AuthViewModel
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -32,18 +30,13 @@ import org.koin.compose.koinInject
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MfaDialog(
-    qrCode: String
+    userData: UserData
 ) {
     var totp by remember { mutableStateOf("") }
     var isMfaAuthenticated: Boolean? by remember { mutableStateOf(null) }
     val viewModel: AuthViewModel = koinInject<AuthViewModel>()
     val coroutineScope = rememberCoroutineScope()
-    val focusRequester = remember { FocusRequester() }
-    val imageBitmap = base64EncodedImageBitmap(qrCode)
-
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
+    val imageBitmap = base64EncodedImageBitmap(userData.totpUriQrCode)
 
     AlertDialog(
         onDismissRequest = { },
@@ -51,7 +44,7 @@ fun MfaDialog(
         text = {
             Column {
                 TextField(
-                    modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+                    modifier = Modifier.fillMaxWidth(),
                     value = totp,
                     label = { Text("6-digit code") },
                     onValueChange = { newValue ->
@@ -68,6 +61,7 @@ fun MfaDialog(
                     text = "Wrong code, try again",
                 )
                 Spacer(modifier = Modifier.height(8.dp))
+
                 Image(
                     bitmap = imageBitmap,
                     contentDescription = "Código QR para 2FA",

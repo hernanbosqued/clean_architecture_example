@@ -4,6 +4,7 @@ import hernanbosqued.domain.AuthData
 import hernanbosqued.domain.FrontendRepository
 import hernanbosqued.domain.Persistence
 import hernanbosqued.domain.UserData
+import hernanbosqued.domain.dto.toDto
 import hernanbosqued.frontend.usecase.auth.AuthUseCase
 import io.ktor.http.Parameters
 import io.ktor.http.URLBuilder
@@ -70,15 +71,7 @@ abstract class BaseAuthUseCase(
 
     override suspend fun sendTotp(totp: Int): Boolean = frontendRepository.sendTotp(totp).also { isMfaAuthenticated ->
         userData.value?.let { userData ->
-            persistence.saveUserData(object : UserData {
-                override val name = userData.name
-                override val email = userData.email
-                override val pictureUrl = userData.pictureUrl
-                override val qrCode = userData.qrCode
-                override val isMfaAuthenticated = isMfaAuthenticated
-                override val idToken = userData.idToken
-                override val refreshToken = userData.refreshToken
-            })
+            persistence.saveUserData(userData.toDto().copy(isMfaAuthenticated = isMfaAuthenticated))
         }
     }
 }

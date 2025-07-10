@@ -33,12 +33,12 @@ class AndroidPlatform : Platform {
 actual fun getPlatform(): Platform = AndroidPlatform()
 
 @Composable
-actual fun base64EncodedImageBitmap(qrBase64: String): ImageBitmap {
-    return remember(qrBase64) {
-        val pureBase64 = if (qrBase64.contains(",")) {
-            qrBase64.substringAfter(",")
+actual fun base64EncodedImageBitmap(totpUri: String): ImageBitmap {
+    return remember(totpUri) {
+        val pureBase64 = if (totpUri.contains(",")) {
+            totpUri.substringAfter(",")
         } else {
-            qrBase64
+            totpUri
         }
         val decodedBytes = base64Decode(pureBase64)
         BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)?.asImageBitmap()!!
@@ -87,5 +87,18 @@ actual fun getLoginButton(text: String, userData: UserData?, viewModel: AuthView
         },
     ) {
         Text(text)
+    }
+}
+
+@Composable
+actual fun getFido2LoginButton(viewModel: AuthViewModel, padding: Dp) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
+    Button(
+        modifier = Modifier.padding(padding),
+        onClick = {},
+    ) {
+        Text("Login with Fido2")
     }
 }

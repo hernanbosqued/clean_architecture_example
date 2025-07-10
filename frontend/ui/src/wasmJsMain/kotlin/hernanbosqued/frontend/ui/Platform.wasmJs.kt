@@ -58,17 +58,22 @@ actual fun base64Decode(encoded: String): ByteArray {
 }
 
 @Composable
-actual fun base64EncodedImageBitmap(qrBase64: String): ImageBitmap {
-    return remember(qrBase64) {
-        val pureBase64 = if (qrBase64.contains(",")) {
-            qrBase64.substringAfter(",")
+actual fun base64EncodedImageBitmap(totpUri: String): ImageBitmap {
+    return remember(totpUri) {
+        val pureBase64 = if (totpUri.contains(",")) {
+            totpUri.substringAfter(",")
         } else {
-            qrBase64
+            totpUri
         }
 
         val decodedBytes = base64Decode(pureBase64)
         Image.makeFromEncoded(decodedBytes).toComposeImageBitmap()
     }
+}
+
+@Composable
+actual fun getFido2LoginButton(viewModel: AuthViewModel, padding: Dp) {
+    //Not implemented for this platform
 }
 
 private external fun atob(encoded: String): String

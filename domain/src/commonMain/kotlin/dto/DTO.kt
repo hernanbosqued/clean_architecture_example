@@ -39,11 +39,13 @@ data class DTOAuthRefreshTokenRequest(
 
 @Serializable
 data class DTOUserData(
-    override val name: String?,
+    override val userId: String,
+    override val name: String,
     override val email: String,
     override val pictureUrl: String?,
     override val idToken: String,
     override val refreshToken: String?,
-    override val qrCode: String,
+    override val totpUri: String,
+    override val totpUriQrCode: String,
     override val isMfaAuthenticated: Boolean
 ) : UserData

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -46,6 +47,8 @@ fun AuthRow() {
                 contentDescription = null,
             )
         }
+
+        getFido2LoginButton(viewModel, padding)
 
         getLoginButton(buttonText, userData, viewModel, padding)
     }

@@ -79,16 +79,19 @@ class GoogleAuthApiGateway(
 
     fun extractUserDataFromIdToken(tokenResponse: DTOGoogleTokens): UserData {
         val jwt: DecodedJWT = JWT.decode(tokenResponse.idToken)
+
         return object : UserData {
-            override val name: String? = jwt.claims["name"]?.asString()
-            override val email: String = requireNotNull(jwt.claims["email"]).asString()
+            override val userId: String = jwt.claims["sub"]?.asString() ?: throw RuntimeException("claim sub must exist in the idToken")
+            override val name: String = jwt.claims["name"]?.asString() ?: throw RuntimeException("claim name must exist in the idToken")
+            override val email: String = jwt.claims["email"]?.asString() ?: throw RuntimeException("claim email must exist in the idToken")
             override val pictureUrl: String? = jwt.claims["picture"]?.asString()
             override val idToken: String = tokenResponse.idToken
             override val refreshToken: String? = tokenResponse.refreshToken
-            override val qrCode: String = createQrCode(email)
+            override val totpUri: String = "otpauth://totp/$email?secret=${getMfaSecret()}&issuer=CleanArch"
+            override val totpUriQrCode: String = createQrCode()
             override val isMfaAuthenticated: Boolean = false
 
-            private fun getMfaSecret(userId: String): String {
+            private fun getMfaSecret(): String {
                 return dbController.getMfaSecret(userId)?:run {
                     GoogleAuthenticator().createCredentials().key.also {
                         dbController.addMfaSecret(userId, it)
@@ -96,13 +99,10 @@ class GoogleAuthApiGateway(
                 }
             }
 
-            fun createQrCode(email: String): String {
-                val mfaSecret = getMfaSecret(jwt.claims["sub"]?.asString() ?: throw RuntimeException("sub must exist in token"))
-                val qrCodeUrl = "otpauth://totp/$email?secret=$mfaSecret&issuer=CleanArch"
-
+            fun createQrCode(): String {
                 return try {
                     val qrCodeWriter = QRCodeWriter()
-                    val bitMatrix = qrCodeWriter.encode(qrCodeUrl, BarcodeFormat.QR_CODE, 200, 200)
+                    val bitMatrix = qrCodeWriter.encode(totpUri, BarcodeFormat.QR_CODE, 200, 200)
                     val pngOutputStream = ByteArrayOutputStream()
                     MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream)
                     "data:image/png;base64,${Base64.getEncoder().encodeToString(pngOutputStream.toByteArray())}"

@@ -6,6 +6,7 @@ import com.russhwolf.settings.set
 import hernanbosqued.domain.Persistence
 import hernanbosqued.domain.UserData
 import hernanbosqued.domain.dto.DTOUserData
+import hernanbosqued.domain.dto.toDto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.json.Json
@@ -23,24 +24,14 @@ class PersistenceImpl(
 
     override suspend fun saveUserData(user: UserData) {
         try {
-            val serializableUserData =
-                DTOUserData(
-                    name = user.name ?: userData.value?.name,
-                    email = user.email,
-                    pictureUrl = user.pictureUrl ?: userData.value?.pictureUrl,
-                    idToken = user.idToken,
-                    refreshToken = user.refreshToken ?: userData.value?.refreshToken,
-                    qrCode = user.qrCode,
-                    isMfaAuthenticated = user.isMfaAuthenticated
-                )
-
-            val userJson = json.encodeToString(serializableUserData)
+            val userJson = json.encodeToString(user.toDto())
 
             settings.set(
                 key = KEY_USER_DATA,
                 value = userJson,
             )
-            _userData.emit(serializableUserData)
+
+            _userData.emit(user)
         } catch (e: Exception) {
             println("Error serializando UserData: ${e.message}")
             settings.remove(KEY_USER_DATA)
