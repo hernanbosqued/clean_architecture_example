@@ -19,5 +19,15 @@ dependencies {
     implementation(libs.zxing.javase)
     implementation(libs.zxing.core)
 
+    testImplementation(libs.junit)
     testRuntimeOnly(libs.kotlin.test.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    testImplementation(libs.ktor.client.mock)
+    testImplementation(libs.ktor.client.content.negotiation)
+    testImplementation(libs.ktor.server.content.negotiation)
+    testImplementation(libs.ktor.serialization.json)
+    testImplementation(libs.ktor.server.tests.jvm)
+    testImplementation(libs.ktor.client.core)
 }

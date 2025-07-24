@@ -1,11 +1,9 @@
 package hernanbosqued.frontend.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
@@ -36,7 +34,6 @@ fun MfaDialog(
     var isMfaAuthenticated: Boolean? by remember { mutableStateOf(null) }
     val viewModel: AuthViewModel = koinInject<AuthViewModel>()
     val coroutineScope = rememberCoroutineScope()
-    val imageBitmap = base64EncodedImageBitmap(userData.totpUriQrCode)
 
     AlertDialog(
         onDismissRequest = { },
@@ -62,11 +59,7 @@ fun MfaDialog(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Image(
-                    bitmap = imageBitmap,
-                    contentDescription = "Código QR para 2FA",
-                    modifier = Modifier.size(200.dp)
-                )
+                isMfaAuthenticated ?: manageAuthenticator(viewModel, userData, 8.dp)
             }
         },
         confirmButton = {

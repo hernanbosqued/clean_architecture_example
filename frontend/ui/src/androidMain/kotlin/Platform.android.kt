@@ -1,7 +1,11 @@
 package hernanbosqued.frontend.ui
 
 import android.app.Activity.RESULT_OK
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.util.Base64
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -25,6 +29,7 @@ import hernanbosqued.constants.Constants
 import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.viewmodel.auth.AuthViewModel
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
 
 class AndroidPlatform : Platform {
     override val name: String = "Android ${Build.VERSION.SDK_INT}"
@@ -32,21 +37,13 @@ class AndroidPlatform : Platform {
 
 actual fun getPlatform(): Platform = AndroidPlatform()
 
-@Composable
 actual fun base64EncodedImageBitmap(totpUri: String): ImageBitmap {
-    return remember(totpUri) {
-        val pureBase64 = if (totpUri.contains(",")) {
-            totpUri.substringAfter(",")
-        } else {
-            totpUri
-        }
-        val decodedBytes = base64Decode(pureBase64)
-        BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)?.asImageBitmap()!!
-    }
+    TODO("Not implementation needed")
 }
 
 actual fun base64Decode(encoded: String): ByteArray {
-    return Base64.decode(encoded, Base64.DEFAULT)}
+    TODO("Not implementation needed")
+}
 
 @Composable
 actual fun getLoginButton(text: String, userData: UserData?, viewModel: AuthViewModel, padding: Dp) {
@@ -91,14 +88,33 @@ actual fun getLoginButton(text: String, userData: UserData?, viewModel: AuthView
 }
 
 @Composable
-actual fun getFido2LoginButton(viewModel: AuthViewModel, padding: Dp) {
+actual fun manageAuthenticator(viewModel: AuthViewModel, userData: UserData, padding: Dp) {
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
 
     Button(
         modifier = Modifier.padding(padding),
-        onClick = {},
+        onClick = {
+            openActivity(context, userData.totpUri.toUri()) {
+                val authenticatorPackageName = "com.google.android.apps.authenticator2"
+                val uri = "market://details?id=$authenticatorPackageName".toUri()
+                openActivity(context, uri) {}
+            }
+        }
     ) {
-        Text("Login with Fido2")
+        Text("Configure Authenticator")
+    }
+}
+
+fun openActivity(context: Context, uri: Uri, onError: () -> Unit) {
+    try {
+        val intent = Intent(
+            /* action = */ Intent.ACTION_VIEW,
+            /* uri = */ uri
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        context.startActivity(intent)
+    } catch (_: ActivityNotFoundException) {
+        onError()
     }
 }

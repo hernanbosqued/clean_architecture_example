@@ -4,11 +4,13 @@ kotlin = "2.1.10"
 kotlinx-coroutines = "1.10.1"
 kotlinx-serialization = "1.8.1"
 kotlinx-browser = "0.3"
-ktor = "3.1.2"
+kotlinxCoroutinesTest = "1.8.0"
+ktor = "3.2.2"
 gson = "2.13.0"
 koin = "4.0.4"
 ktlint_version = "12.2.0"
 coil = "3.1.0"
+mockk = "1.13.10"
 mutltiplatform-settings = "1.3.0"
 logback = "1.5.18"
 junit = "4.13.2"
@@ -28,6 +30,10 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
 
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
+ktor-server-tests-jvm = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
@@ -38,7 +44,7 @@ kotlinx-browser = { group = "org.jetbrains.kotlinx", name = "kotlinx-browser", v
 ktor-server-cors = { group = "io.ktor", name = "ktor-server-cors", version.ref = "ktor" }
 ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
 ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
-ktor-server-content = { group = "io.ktor", name = "ktor-server-content-negotiation-jvm", version.ref = "ktor" }
+ktor-server-content-negotiation = { group = "io.ktor", name = "ktor-server-content-negotiation", version.ref = "ktor" }
 ktor-server-auth = { group = "io.ktor", name = "ktor-server-auth", version.ref = "ktor" }
 ktor-server-auth-jwt = { group = "io.ktor", name = "ktor-server-auth-jwt", version.ref = "ktor" }
 

@@ -1,6 +1,8 @@
 package hernanbosqued.frontend.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -10,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import hernanbosqued.domain.UserData
 import hernanbosqued.frontend.viewmodel.auth.AuthViewModel
 import kotlinx.coroutines.launch
@@ -45,9 +48,7 @@ actual fun base64Decode(encoded: String): ByteArray {
     return Base64.getDecoder().decode(encoded)
 }
 
-@Composable
 actual fun base64EncodedImageBitmap(totpUri: String): ImageBitmap {
-    return remember(totpUri) {
         val pureBase64 = if (totpUri.contains(",")) {
             totpUri.substringAfter(",")
         } else {
@@ -55,11 +56,16 @@ actual fun base64EncodedImageBitmap(totpUri: String): ImageBitmap {
         }
 
         val bytes = base64Decode(pureBase64)
-        Image.makeFromEncoded(bytes).toComposeImageBitmap()
-    }
+        return Image.makeFromEncoded(bytes).toComposeImageBitmap()
 }
 
 @Composable
-actual fun getFido2LoginButton(viewModel: AuthViewModel, padding: Dp) {
-    //Not implemented for this platform
+actual fun manageAuthenticator(viewModel: AuthViewModel, userData: UserData, padding: Dp) {
+    val imageBitmap = remember { base64EncodedImageBitmap(userData.totpUriQrCode) }
+
+    Image(
+        bitmap = imageBitmap,
+        contentDescription = "Código QR para 2FA",
+        modifier = Modifier.size(200.dp)
+    )
 }
