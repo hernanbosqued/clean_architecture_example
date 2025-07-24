@@ -12,16 +12,16 @@ data class ServerSuccess<T>(val message: String, val content: T)
 data class UserProfile(val userId: String, val displayName: String)
 
 
-@Serializable(with = MessageSerializer::class)
+@Serializable(with = ResponseSerializer::class)
 sealed interface Response {
     val message: String
 
-    @Serializable//(with = SuccessResponseSerializer::class)
+    @Serializable
     data class Success(
         override val message: String,
         val content: JsonElement
     ) : Response {
-        inline fun <reified T> decode(): T = decodeFromJsonElement(serializer<T>(), this.content)
+        inline fun <reified T> decode(): T? = decodeFromJsonElement(serializer<T?>(), this.content)
     }
 
 
@@ -30,4 +30,18 @@ sealed interface Response {
         override val message: String,
         val code: Int
     ) : Response
+}
+
+sealed interface DomainResponse{
+    val message: String
+
+    data class Success<T>(
+        override val message: String,
+        val content: T?
+    ) : DomainResponse
+
+    data class Error(
+        override val message: String,
+        val code: Int
+    ) : DomainResponse
 }
